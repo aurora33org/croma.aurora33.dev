@@ -85,12 +85,12 @@ function handleFiles(files) {
   });
 
   if (validFiles.length === 0) {
-    showError('No valid image files selected. Please upload JPG, PNG, WebP, or GIF files.');
+    showError('No se seleccionaron archivos de imagen válidos. Por favor sube archivos JPG, PNG, WebP o GIF.');
     return;
   }
 
   if (validFiles.length > 20) {
-    showError('Maximum 20 files allowed. Please select fewer files.');
+    showError('Máximo 20 archivos permitidos. Por favor selecciona menos archivos.');
     return;
   }
 
@@ -127,7 +127,7 @@ function displayFiles() {
     fileInfo.appendChild(details);
 
     const removeBtn = document.createElement('button');
-    removeBtn.textContent = 'Remove';
+    removeBtn.textContent = 'Eliminar';
     removeBtn.className = 'text-red-600 hover:text-red-800 text-sm font-medium';
     removeBtn.onclick = () => removeFile(index);
 
@@ -158,7 +158,7 @@ function formatFileSize(bytes) {
 async function startCompression() {
   try {
     compressBtn.disabled = true;
-    compressBtn.textContent = 'Creating job...';
+    compressBtn.textContent = 'Creando trabajo...';
 
     // Create job
     const jobResponse = await fetch(`${API_URL}/jobs`, {
@@ -172,7 +172,7 @@ async function startCompression() {
     state.jobId = jobData.jobId;
 
     // Upload files
-    compressBtn.textContent = 'Uploading files...';
+    compressBtn.textContent = 'Subiendo archivos...';
     const formData = new FormData();
     state.files.forEach(file => formData.append('images', file));
 
@@ -217,9 +217,9 @@ async function startCompression() {
 
   } catch (error) {
     console.error('Compression error:', error);
-    showError(error.message || 'Failed to start compression');
+    showError(error.message || 'Error al iniciar la compresión');
     compressBtn.disabled = false;
-    compressBtn.textContent = 'Compress Images';
+    compressBtn.textContent = 'Comprimir Imágenes';
   }
 }
 
@@ -233,7 +233,7 @@ async function pollStatus() {
     // Update progress
     progressBar.style.width = `${data.progress}%`;
     progressText.textContent = `${data.progress}%`;
-    processingText.textContent = `Processing ${data.processedCount} of ${data.totalFiles} images...`;
+    processingText.textContent = `Procesando ${data.processedCount} de ${data.totalFiles} imágenes...`;
 
     if (data.status === 'completed') {
       // Show download section
@@ -243,39 +243,39 @@ async function pollStatus() {
       // Display stats
       const reduction = data.reduction || 0;
       statsDiv.innerHTML = `
-        <p class="text-lg"><strong>Files processed:</strong> ${data.totalFiles}</p>
-        <p class="text-lg"><strong>Original size:</strong> ${formatFileSize(data.originalSize)}</p>
-        <p class="text-lg"><strong>Compressed size:</strong> ${formatFileSize(data.compressedSize)}</p>
-        <p class="text-lg"><strong>Size reduction:</strong> ${reduction}%</p>
+        <p class="text-lg"><strong>Archivos procesados:</strong> ${data.totalFiles}</p>
+        <p class="text-lg"><strong>Tamaño original:</strong> ${formatFileSize(data.originalSize)}</p>
+        <p class="text-lg"><strong>Tamaño comprimido:</strong> ${formatFileSize(data.compressedSize)}</p>
+        <p class="text-lg"><strong>Reducción de tamaño:</strong> ${reduction}%</p>
       `;
     } else if (data.status === 'failed') {
-      throw new Error(data.error || 'Processing failed');
+      throw new Error(data.error || 'Error al procesar');
     } else {
       // Continue polling
       setTimeout(pollStatus, 1000);
     }
   } catch (error) {
     console.error('Status poll error:', error);
-    showError(error.message || 'Failed to check status');
+    showError(error.message || 'Error al verificar el estado');
   }
 }
 
 async function downloadFiles() {
   try {
     downloadBtn.disabled = true;
-    downloadBtn.textContent = 'Downloading...';
+    downloadBtn.textContent = 'Descargando...';
 
     window.location.href = `${API_URL}/jobs/${state.jobId}/download`;
 
     setTimeout(() => {
       downloadBtn.disabled = false;
-      downloadBtn.textContent = 'Download Compressed Images';
+      downloadBtn.textContent = 'Descargar Imágenes Comprimidas';
     }, 2000);
   } catch (error) {
     console.error('Download error:', error);
-    showError('Failed to download files');
+    showError('Error al descargar los archivos');
     downloadBtn.disabled = false;
-    downloadBtn.textContent = 'Download Compressed Images';
+    downloadBtn.textContent = 'Descargar Imágenes Comprimidas';
   }
 }
 
@@ -303,7 +303,7 @@ function reset() {
   downloadSection.classList.add('hidden');
   errorSection.classList.add('hidden');
   compressBtn.disabled = false;
-  compressBtn.textContent = 'Compress Images';
+  compressBtn.textContent = 'Comprimir Imágenes';
   progressBar.style.width = '0%';
   progressText.textContent = '0%';
   qualitySlider.value = 80;
@@ -314,4 +314,4 @@ function reset() {
 }
 
 // Initialize
-console.log('Image Compressor ready!');
+console.log('Compresor de Imágenes listo!');
