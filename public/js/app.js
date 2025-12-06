@@ -187,12 +187,11 @@ async function startCompression() {
     // Get resize settings
     const resizeWidth = document.getElementById('resize-width').value;
     const resizeHeight = document.getElementById('resize-height').value;
-    const maintainAspect = document.getElementById('maintain-aspect').checked;
 
     const resize = (resizeWidth || resizeHeight) ? {
       width: resizeWidth ? parseInt(resizeWidth) : null,
       height: resizeHeight ? parseInt(resizeHeight) : null,
-      fit: maintainAspect ? 'inside' : 'fill'
+      fit: 'inside'  // Always maintain aspect ratio
     } : null;
 
     // Start processing
