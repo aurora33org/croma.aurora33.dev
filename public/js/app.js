@@ -9,6 +9,18 @@ const state = {
   }
 };
 
+// Tips rotativos para processing
+const tips = [
+  "Las imágenes no optimizadas representan el 45% del peso promedio de una página web",
+  "WebP reduce el tamaño hasta 30% más que JPEG manteniendo la misma calidad",
+  "Google considera la velocidad de carga como factor de ranking SEO",
+  "Un segundo adicional de carga puede reducir conversiones hasta 7%",
+  "Amazon descubrió que 100ms de latencia cuestan 1% en ventas"
+];
+
+let currentTipIndex = 0;
+let tipInterval;
+
 // DOM elements
 const dropZone = document.getElementById('drop-zone');
 const fileInput = document.getElementById('file-input');
@@ -96,7 +108,15 @@ function handleFiles(files) {
 
   state.files = validFiles;
   displayFiles();
-  settingsSection.classList.remove('hidden');
+  settingsSection.style.display = 'block';
+
+  // Show enterprise tip if uploading many files
+  const enterpriseTip = document.getElementById('enterprise-tip');
+  if (validFiles.length >= 15) {
+    enterpriseTip.style.display = 'flex';
+  } else {
+    enterpriseTip.style.display = 'none';
+  }
 }
 
 function displayFiles() {
@@ -104,31 +124,31 @@ function displayFiles() {
 
   state.files.forEach((file, index) => {
     const fileItem = document.createElement('div');
-    fileItem.className = 'flex items-center justify-between p-3 bg-gray-50 rounded-lg';
+    fileItem.className = 'bg-white border border-gray-200 rounded-lg p-4 flex items-center justify-between gap-4';
 
     const fileInfo = document.createElement('div');
-    fileInfo.className = 'flex items-center space-x-3';
+    fileInfo.className = 'flex items-center gap-3 flex-1';
 
     // Create preview
     const reader = new FileReader();
     reader.onload = (e) => {
       const img = document.createElement('img');
       img.src = e.target.result;
-      img.className = 'preview-img rounded';
+      img.className = 'w-12 h-12 object-cover rounded';
       fileInfo.appendChild(img);
     };
     reader.readAsDataURL(file);
 
     const details = document.createElement('div');
     details.innerHTML = `
-      <p class="font-medium text-gray-800">${file.name}</p>
-      <p class="text-sm text-gray-500">${formatFileSize(file.size)}</p>
+      <p class="font-semibold text-text">${file.name}</p>
+      <p class="text-sm text-text-muted">${formatFileSize(file.size)}</p>
     `;
     fileInfo.appendChild(details);
 
     const removeBtn = document.createElement('button');
     removeBtn.textContent = 'Eliminar';
-    removeBtn.className = 'text-red-600 hover:text-red-800 text-sm font-medium';
+    removeBtn.className = 'px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 text-text transition-colors';
     removeBtn.onclick = () => removeFile(index);
 
     fileItem.appendChild(fileInfo);
@@ -141,7 +161,7 @@ function removeFile(index) {
   state.files.splice(index, 1);
   if (state.files.length === 0) {
     fileList.innerHTML = '';
-    settingsSection.classList.add('hidden');
+    settingsSection.style.display = 'none';
   } else {
     displayFiles();
   }
@@ -209,8 +229,11 @@ async function startCompression() {
     if (!processData.success) throw new Error(processData.error);
 
     // Show processing section
-    settingsSection.classList.add('hidden');
-    processingSection.classList.remove('hidden');
+    settingsSection.style.display = 'none';
+    processingSection.style.display = 'block';
+
+    // Start tips rotation
+    startTipRotation();
 
     // Poll for status
     pollStatus();
@@ -236,18 +259,36 @@ async function pollStatus() {
     processingText.textContent = `Procesando ${data.processedCount} de ${data.totalFiles} imágenes...`;
 
     if (data.status === 'completed') {
+      // Stop tips rotation
+      stopTipRotation();
+
       // Show download section
-      processingSection.classList.add('hidden');
-      downloadSection.classList.remove('hidden');
+      processingSection.style.display = 'none';
+      downloadSection.style.display = 'block';
 
       // Display stats
       const reduction = data.reduction || 0;
       statsDiv.innerHTML = `
-        <p class="text-lg"><strong>Archivos procesados:</strong> ${data.totalFiles}</p>
-        <p class="text-lg"><strong>Tamaño original:</strong> ${formatFileSize(data.originalSize)}</p>
-        <p class="text-lg"><strong>Tamaño comprimido:</strong> ${formatFileSize(data.compressedSize)}</p>
-        <p class="text-lg"><strong>Reducción de tamaño:</strong> ${reduction}%</p>
+        <div class="bg-gray-50 rounded-lg p-4 text-center">
+          <div class="text-sm text-text-muted mb-1">Archivos procesados</div>
+          <div class="text-2xl font-bold text-text">${data.totalFiles}</div>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-4 text-center">
+          <div class="text-sm text-text-muted mb-1">Tamaño original</div>
+          <div class="text-2xl font-bold text-text">${formatFileSize(data.originalSize)}</div>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-4 text-center">
+          <div class="text-sm text-text-muted mb-1">Tamaño comprimido</div>
+          <div class="text-2xl font-bold text-text">${formatFileSize(data.compressedSize)}</div>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-4 text-center">
+          <div class="text-sm text-text-muted mb-1">Reducción de tamaño</div>
+          <div class="text-2xl font-bold text-primary">${reduction}%</div>
+        </div>
       `;
+
+      // Display savings visualization
+      displaySavingsVisualization(data.originalSize, data.compressedSize);
     } else if (data.status === 'failed') {
       throw new Error(data.error || 'Error al procesar');
     } else {
@@ -281,8 +322,8 @@ async function downloadFiles() {
 
 function showError(message) {
   errorMessage.textContent = message;
-  errorSection.classList.remove('hidden');
-  processingSection.classList.add('hidden');
+  errorSection.style.display = 'block';
+  processingSection.style.display = 'none';
 }
 
 function reset() {
@@ -298,10 +339,10 @@ function reset() {
   // Reset UI
   fileInput.value = '';
   fileList.innerHTML = '';
-  settingsSection.classList.add('hidden');
-  processingSection.classList.add('hidden');
-  downloadSection.classList.add('hidden');
-  errorSection.classList.add('hidden');
+  settingsSection.style.display = 'none';
+  processingSection.style.display = 'none';
+  downloadSection.style.display = 'none';
+  errorSection.style.display = 'none';
   compressBtn.disabled = false;
   compressBtn.textContent = 'Comprimir Imágenes';
   progressBar.style.width = '0%';
@@ -312,6 +353,132 @@ function reset() {
   document.getElementById('resize-height').value = '';
   document.querySelector('input[name="format"][value="webp"]').checked = true;
 }
+
+// Tips rotation functions
+function startTipRotation() {
+  const tipElement = document.getElementById('processing-tip');
+  if (!tipElement) return;
+
+  tipInterval = setInterval(() => {
+    currentTipIndex = (currentTipIndex + 1) % tips.length;
+    tipElement.textContent = tips[currentTipIndex];
+  }, 4000);
+}
+
+function stopTipRotation() {
+  if (tipInterval) {
+    clearInterval(tipInterval);
+    tipInterval = null;
+  }
+}
+
+// Calculate load time saved
+function calculateLoadTimeSaved(bytesSaved) {
+  // Asumiendo conexión 4G promedio: 10 Mbps = 1.25 MB/s
+  const connectionSpeed = 1.25 * 1024 * 1024; // bytes per second
+  const timeSaved = bytesSaved / connectionSpeed;
+  return timeSaved.toFixed(1);
+}
+
+// Display savings visualization
+function displaySavingsVisualization(originalSize, compressedSize) {
+  const reduction = ((originalSize - compressedSize) / originalSize) * 100;
+  const savingsBar = document.getElementById('savings-bar');
+  const savingsAmount = document.getElementById('savings-amount');
+
+  setTimeout(() => {
+    if (savingsBar && savingsAmount) {
+      savingsBar.style.width = `${reduction}%`;
+      savingsAmount.textContent = `-${formatFileSize(originalSize - compressedSize)}`;
+    }
+  }, 300);
+
+  const timeSaved = calculateLoadTimeSaved(originalSize - compressedSize);
+  const loadTimeElement = document.getElementById('load-time-saved');
+  if (loadTimeElement) {
+    loadTimeElement.textContent = `🚀 Con este ahorro, tu sitio cargará ~${timeSaved}s más rápido en conexiones 4G`;
+  }
+}
+
+// Newsletter subscription
+async function subscribeToNewsletter(email) {
+  const subscribeBtn = document.getElementById('subscribe-btn');
+  const originalText = subscribeBtn.textContent;
+
+  try {
+    subscribeBtn.disabled = true;
+    subscribeBtn.textContent = 'Suscribiendo...';
+
+    const response = await fetch(`${API_URL}/newsletter/subscribe`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      subscribeBtn.textContent = '✓ Suscrito';
+      subscribeBtn.style.background = '#10B981';
+      document.getElementById('email-input').value = '';
+
+      // Show success message briefly
+      setTimeout(() => {
+        subscribeBtn.textContent = originalText;
+        subscribeBtn.style.background = '';
+        subscribeBtn.disabled = false;
+      }, 3000);
+    } else {
+      throw new Error(data.error || 'Error al suscribirse');
+    }
+  } catch (error) {
+    console.error('Newsletter subscription error:', error);
+    subscribeBtn.textContent = 'Error';
+    subscribeBtn.style.background = '#DC2626';
+
+    setTimeout(() => {
+      subscribeBtn.textContent = originalText;
+      subscribeBtn.style.background = '';
+      subscribeBtn.disabled = false;
+    }, 3000);
+  }
+}
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+// Event listener for newsletter subscription
+const subscribeBtn = document.getElementById('subscribe-btn');
+if (subscribeBtn) {
+  subscribeBtn.addEventListener('click', () => {
+    const email = document.getElementById('email-input').value.trim();
+    if (email && isValidEmail(email)) {
+      subscribeToNewsletter(email);
+    } else {
+      alert('Por favor ingresa un email válido');
+    }
+  });
+}
+
+// Tooltip functionality for mobile
+document.querySelectorAll('.tooltip-trigger').forEach(trigger => {
+  trigger.addEventListener('click', (e) => {
+    e.preventDefault();
+    const tooltip = trigger.querySelector('.tooltip-content');
+    if (tooltip) {
+      const isVisible = tooltip.style.opacity === '1';
+      tooltip.style.opacity = isVisible ? '0' : '1';
+
+      if (!isVisible) {
+        // Close after 3 seconds
+        setTimeout(() => {
+          tooltip.style.opacity = '0';
+        }, 3000);
+      }
+    }
+  });
+});
 
 // Initialize
 console.log('Compresor de Imágenes listo!');
