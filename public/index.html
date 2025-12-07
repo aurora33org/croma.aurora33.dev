@@ -3,166 +3,418 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Compresor de Imágenes - Herramienta de Compresión Masiva</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    .drop-zone {
-      transition: all 0.3s ease;
-    }
-    .drop-zone.dragover {
-      background-color: #e0f2fe;
-      border-color: #0ea5e9;
-      transform: scale(1.02);
-    }
-    .preview-img {
-      width: 80px;
-      height: 80px;
-      object-fit: cover;
-    }
-    .spinner {
-      border: 3px solid #f3f3f3;
-      border-top: 3px solid #3b82f6;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-  </style>
+  <title>Compresor de Imágenes - Aurora33</title>
+  <link rel="icon" type="image/png" href="/assets/Aurora33-logo-mini-light2-favicon.png">
+  <link rel="stylesheet" href="/css/output.css">
 </head>
-<body class="bg-gray-50 min-h-screen">
-  <div class="container mx-auto px-4 py-8 max-w-6xl">
-    <!-- Header -->
-    <header class="text-center mb-12">
-      <h1 class="text-4xl font-bold text-gray-900 mb-2">Compresor de Imágenes</h1>
-      <p class="text-gray-600">Comprime y convierte tus imágenes en masa</p>
-    </header>
+<body class="min-h-screen">
 
-    <!-- Main Content -->
-    <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+  <!-- Hero Section -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-      <!-- Step 1: Upload -->
-      <div id="upload-section" class="mb-8">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">1. Subir Imágenes</h2>
-
-        <div id="drop-zone" class="drop-zone border-3 border-dashed border-gray-300 rounded-lg p-12 text-center cursor-pointer bg-gray-50 hover:bg-gray-100">
-          <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-          <p class="text-lg text-gray-700 mb-2">Arrastra y suelta imágenes aquí</p>
-          <p class="text-sm text-gray-500 mb-4">o haz clic para explorar</p>
-          <p class="text-xs text-gray-400">Soporta: JPG, PNG, WebP, GIF (máx. 20 archivos, 10MB cada uno)</p>
-          <input type="file" id="file-input" accept="image/jpeg,image/jpg,image/png,image/webp,image/gif" multiple class="hidden">
-        </div>
-
-        <div id="file-list" class="mt-6 space-y-2"></div>
-      </div>
-
-      <!-- Step 2: Settings -->
-      <div id="settings-section" class="mb-8 hidden">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">2. Configuración de Compresión</h2>
-
-        <div class="grid md:grid-cols-3 gap-6">
-          <!-- Format -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Formato de Salida</label>
-            <div class="space-y-2">
-              <label class="flex items-center">
-                <input type="radio" name="format" value="webp" checked class="mr-2">
-                <span>WebP (recomendado)</span>
-              </label>
-              <label class="flex items-center">
-                <input type="radio" name="format" value="jpeg" class="mr-2">
-                <span>JPEG</span>
-              </label>
-              <label class="flex items-center">
-                <input type="radio" name="format" value="png" class="mr-2">
-                <span>PNG</span>
-              </label>
-            </div>
-          </div>
-
-          <!-- Quality -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              Calidad: <span id="quality-value" class="font-bold">80</span>%
-            </label>
-            <input type="range" id="quality-slider" min="1" max="100" value="80" class="w-full">
-            <div class="flex justify-between text-xs text-gray-500 mt-1">
-              <span>Menor tamaño</span>
-              <span>Mejor calidad</span>
-            </div>
-          </div>
-
-          <!-- Resize -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Redimensionar (opcional)</label>
-            <div class="space-y-2">
-              <input type="number" id="resize-width" placeholder="Ancho máx. (px)" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm">
-              <input type="number" id="resize-height" placeholder="Alto máx. (px)" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm">
-              <p class="text-xs text-gray-500">Las imágenes se redimensionarán dentro de estos límites manteniendo la proporción</p>
-            </div>
-          </div>
-        </div>
-
-        <button id="compress-btn" class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200">
-          Comprimir Imágenes
-        </button>
-      </div>
-
-      <!-- Step 3: Processing -->
-      <div id="processing-section" class="mb-8 hidden">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">3. Procesando</h2>
-
-        <div class="text-center py-8">
-          <div class="spinner mx-auto mb-4"></div>
-          <p class="text-lg text-gray-700 mb-2" id="processing-text">Procesando tus imágenes...</p>
-          <div class="max-w-md mx-auto bg-gray-200 rounded-full h-4 overflow-hidden">
-            <div id="progress-bar" class="bg-blue-600 h-full transition-all duration-300" style="width: 0%"></div>
-          </div>
-          <p class="text-sm text-gray-500 mt-2" id="progress-text">0%</p>
-        </div>
-      </div>
-
-      <!-- Step 4: Download -->
-      <div id="download-section" class="hidden">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">4. Descargar</h2>
-
-        <div class="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
-          <svg class="mx-auto h-16 w-16 text-green-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-          <h3 class="text-xl font-semibold text-green-800 mb-2">¡Compresión Completada!</h3>
-          <div id="stats" class="text-gray-700 mb-6 space-y-1"></div>
-          <button id="download-btn" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-8 rounded-lg transition duration-200">
-            Descargar Imágenes Comprimidas
-          </button>
-          <button id="reset-btn" class="ml-4 bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-8 rounded-lg transition duration-200">
-            Comenzar de Nuevo
-          </button>
-        </div>
-      </div>
-
-      <!-- Error Display -->
-      <div id="error-section" class="hidden mb-8">
-        <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-center">
-          <p class="text-red-800" id="error-message"></p>
-          <button id="error-reset-btn" class="mt-4 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-200">
-            Intentar de Nuevo
-          </button>
-        </div>
-      </div>
-
+    <!-- Logo -->
+    <div class="mb-16">
+      <a href="https://aurora33.dev" target="_blank">
+        <img src="https://img.aurora33.dev/i/63f5ff47-4b0d-464d-aba5-7ae3051660c3.webp" alt="Aurora33" class="h-10">
+      </a>
     </div>
 
-    <!-- Footer -->
-    <footer class="text-center mt-8 text-gray-500 text-sm">
-      <p>Todo el procesamiento ocurre en el servidor. Los archivos se eliminan automáticamente después de 1 hora.</p>
-    </footer>
+    <!-- Main Hero Grid -->
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start mb-16">
+
+      <!-- Left Column: Text Content -->
+      <div class="space-y-8">
+        <div>
+          <h1 class="text-5xl lg:text-6xl font-bold text-text mb-6 leading-tight">
+            Optimiza imágenes
+          </h1>
+          <p class="text-lg text-text mb-4">
+            Comprime hasta 10 imágenes simultáneamente,<br>
+            exporta en formatos optimizados para web,<br>
+            reduce el tamaño de las imágenes en bulk.
+          </p>
+          <p class="text-base text-text-muted">
+            Formatos soportados: JPG, PNG, WebP
+          </p>
+        </div>
+
+        <div class="space-y-4">
+          <div class="flex items-center gap-3">
+            <svg class="w-5 h-5 text-primary flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+            <div>
+              <p class="text-text font-medium">Mejora tu SEO</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <svg class="w-5 h-5 text-primary flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+            <div>
+              <p class="text-text font-medium">Google premia sitios rápidos</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Upload Area -->
+      <div>
+        <!-- Drop Zone -->
+        <div id="drop-zone" class="bg-container border-2 border-dashed border-primary/30 rounded-3xl p-12 text-center cursor-pointer hover:border-primary/50 transition-colors min-h-[400px] flex flex-col items-center justify-center">
+          <input type="file" id="file-input" multiple accept="image/*" class="hidden">
+
+          <div class="mb-4">
+            <svg class="w-16 h-16 text-primary mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+          </div>
+
+          <h3 class="text-xl font-semibold text-text mb-2">Arrastra y suelta imágenes aquí</h3>
+          <p class="text-text-muted mb-4">o haz click para explorar tus archivos</p>
+
+          <div class="mt-4 pt-4 border-t border-primary/20">
+            <p class="text-sm text-text-muted">Máximo 20 archivos simultáneos</p>
+            <p class="text-sm text-text-muted">Formatos: JPG, PNG, WebP, GIF</p>
+            <p class="text-sm text-text font-medium mt-2">Por ahora solo aceptamos archivos de hasta 8 MB</p>
+            <p class="text-xs text-text-muted mt-1">En el futuro permitiremos archivos más grandes</p>
+          </div>
+        </div>
+
+        <!-- File List (initially hidden) -->
+        <div id="file-list" class="mt-6 space-y-3"></div>
+
+        <!-- Enterprise Tip (conditional) -->
+        <div id="enterprise-tip" class="hidden mt-6 bg-primary/5 border-l-4 border-primary rounded-lg p-4 flex gap-3">
+          <span class="text-2xl">💡</span>
+          <div class="flex-1">
+            <p class="font-semibold text-text mb-1">¿Proyecto grande?</p>
+            <p class="text-sm text-text-muted">Para procesar +100 imágenes considera nuestra <a href="https://aurora33.dev" class="text-primary hover:underline">API empresarial</a> o <a href="https://aurora33.dev" class="text-primary hover:underline">servicios personalizados</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trust Badges -->
+    <div class="flex flex-wrap justify-center gap-8 mb-16">
+      <div class="flex items-center gap-2">
+        <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+        </svg>
+        <span class="text-text-muted">100% Gratuito</span>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+        </svg>
+        <span class="text-text-muted">Procesamiento Seguro</span>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+        </svg>
+        <span class="text-text-muted">Otra ventaja</span>
+      </div>
+    </div>
   </div>
+
+  <!-- Settings Section (initially hidden) -->
+  <div id="settings-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 hidden">
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+      <h2 class="text-2xl font-bold text-text mb-6">Configuración de Compresión</h2>
+
+      <div class="grid md:grid-cols-3 gap-6 mb-8">
+        <!-- Format Selection -->
+        <div>
+          <label class="block text-sm font-semibold text-text mb-3">
+            Formato de Salida
+            <span class="tooltip-trigger inline-flex items-center justify-center w-4 h-4 ml-1 text-xs bg-gray-200 text-text-muted rounded-full cursor-help relative group">
+              i
+              <span class="tooltip-content absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-text text-white text-xs rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity">
+                WebP: Mejor para web moderna. JPEG: Compatible universal. PNG: Para transparencias.
+              </span>
+            </span>
+          </label>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="format" value="webp" checked class="w-4 h-4 text-primary">
+              <span class="text-text">WebP (recomendado)</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="format" value="jpeg" class="w-4 h-4 text-primary">
+              <span class="text-text">JPEG</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="format" value="png" class="w-4 h-4 text-primary">
+              <span class="text-text">PNG</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Quality Slider -->
+        <div>
+          <label class="block text-sm font-semibold text-text mb-3">
+            Calidad: <span id="quality-value" class="text-primary">80</span>%
+            <span class="tooltip-trigger inline-flex items-center justify-center w-4 h-4 ml-1 text-xs bg-gray-200 text-text-muted rounded-full cursor-help relative group">
+              i
+              <span class="tooltip-content absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-text text-white text-xs rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity">
+                80-90%: Óptimo para web. 70-80%: Mobile. 90-100%: Impresión
+              </span>
+            </span>
+          </label>
+          <input
+            type="range"
+            id="quality-slider"
+            min="60"
+            max="100"
+            value="80"
+            class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary"
+          >
+        </div>
+
+        <!-- Resize Options -->
+        <div>
+          <label class="block text-sm font-semibold text-text mb-3">
+            Redimensionar (opcional)
+            <span class="tooltip-trigger inline-flex items-center justify-center w-4 h-4 ml-1 text-xs bg-gray-200 text-text-muted rounded-full cursor-help relative group">
+              i
+              <span class="tooltip-content absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-text text-white text-xs rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity">
+                Consejo: 1920px ancho para desktop, 1200px para mobile
+              </span>
+            </span>
+          </label>
+          <div class="space-y-2">
+            <input
+              type="number"
+              id="resize-width"
+              placeholder="Ancho (px)"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+            >
+            <input
+              type="number"
+              id="resize-height"
+              placeholder="Alto (px)"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+            >
+          </div>
+        </div>
+      </div>
+
+      <button
+        id="compress-btn"
+        class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-4 px-8 rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+      >
+        Comprimir Imágenes
+      </button>
+    </div>
+  </div>
+
+  <!-- Processing Section (initially hidden) -->
+  <div id="processing-section" class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center hidden">
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-12">
+      <!-- Spinner -->
+      <div class="mb-6">
+        <svg class="animate-spin h-16 w-16 text-primary mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+      </div>
+
+      <h2 class="text-2xl font-bold text-text mb-2">Procesando tus imágenes</h2>
+      <p id="processing-text" class="text-text-muted mb-6">Iniciando...</p>
+
+      <!-- Progress Bar -->
+      <div class="w-full bg-gray-200 rounded-full h-3 mb-6 overflow-hidden">
+        <div id="progress-bar" class="h-full bg-gradient-to-r from-primary to-primary/80 transition-all duration-300" style="width: 0%"></div>
+      </div>
+      <p id="progress-text" class="text-sm text-text-muted mb-8">0%</p>
+
+      <!-- Rotating Tips -->
+      <div class="bg-primary/5 border-l-4 border-primary rounded-lg p-6 text-left">
+        <p class="font-semibold text-primary mb-2">💡 Sabías que...</p>
+        <p id="processing-tip" class="text-text-muted text-sm leading-relaxed">
+          Las imágenes no optimizadas representan el 45% del peso promedio de una página web
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Download Section (initially hidden) -->
+  <div id="download-section" class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 hidden">
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-12">
+      <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
+          <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <h2 class="text-3xl font-bold text-text mb-2">¡Listo! ✓</h2>
+        <p class="text-text-muted">Tus imágenes han sido optimizadas</p>
+      </div>
+
+      <!-- Stats -->
+      <div id="stats" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8"></div>
+
+      <!-- Savings Visualization -->
+      <div class="mb-8">
+        <div class="w-full h-12 bg-gray-200 rounded-lg overflow-hidden relative">
+          <div id="savings-bar" class="h-full bg-gradient-to-r from-primary to-primary/80 flex items-center justify-end pr-4 text-white font-semibold text-sm transition-all duration-1000" style="width: 0%">
+            <span id="savings-amount">-0 MB</span>
+          </div>
+        </div>
+        <p id="load-time-saved" class="text-center text-text-muted mt-3 text-sm">
+          🚀 Con este ahorro, tu sitio cargará más rápido
+        </p>
+      </div>
+
+      <!-- Download Button -->
+      <button
+        id="download-btn"
+        class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-4 px-8 rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] mb-6"
+      >
+        Descargar Imágenes Comprimidas
+      </button>
+
+      <!-- Lead Capture Card -->
+      <div class="bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 rounded-xl p-8 text-center mb-6">
+        <h4 class="text-xl font-bold text-text mb-2">¿Te gustó esta herramienta?</h4>
+        <p class="text-text-muted mb-4">Recibe tips de optimización web y mejores prácticas</p>
+
+        <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-4">
+          <input
+            type="email"
+            id="email-input"
+            placeholder="tu@email.com"
+            class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+          >
+          <button
+            id="subscribe-btn"
+            class="bg-primary hover:bg-primary/90 text-white font-semibold px-6 py-3 rounded-lg transition-all whitespace-nowrap"
+          >
+            Suscribirse
+          </button>
+        </div>
+
+        <p class="text-sm text-text-muted">
+          o descubre nuestros <a href="https://aurora33.dev" class="text-primary hover:underline font-medium">servicios de desarrollo web</a>
+        </p>
+      </div>
+
+      <!-- Reset Button -->
+      <button
+        id="reset-btn"
+        class="w-full border-2 border-gray-300 hover:border-gray-400 text-text font-semibold py-3 px-8 rounded-xl transition-colors"
+      >
+        Comenzar de Nuevo
+      </button>
+    </div>
+  </div>
+
+  <!-- Error Section (initially hidden) -->
+  <div id="error-section" class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center hidden">
+    <div class="bg-white rounded-2xl shadow-sm border border-red-200 p-12">
+      <div class="inline-flex items-center justify-center w-16 h-16 bg-red-100 rounded-full mb-4">
+        <svg class="w-8 h-8 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+        </svg>
+      </div>
+
+      <h2 class="text-2xl font-bold text-text mb-2">Error</h2>
+      <p id="error-message" class="text-red-600 mb-8"></p>
+
+      <button
+        id="error-reset-btn"
+        class="bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-8 rounded-xl transition-all"
+      >
+        Intentar de Nuevo
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 mt-24">
+    <div class="space-y-12">
+
+      <!-- Format Comparison -->
+      <div>
+        <h3 class="text-2xl font-bold text-text mb-6">Guía de Formatos de Imagen</h3>
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="bg-white border border-gray-200 rounded-xl p-6 text-center">
+            <h4 class="text-xl font-bold text-text mb-2">WebP</h4>
+            <p class="text-sm text-text-muted leading-relaxed">
+              Mejor compresión sin pérdida de calidad visible. Ideal para web moderna.
+              Reduce tamaño hasta 30% vs JPEG.
+            </p>
+          </div>
+
+          <div class="bg-white border border-gray-200 rounded-xl p-6 text-center">
+            <h4 class="text-xl font-bold text-text mb-2">JPEG</h4>
+            <p class="text-sm text-text-muted leading-relaxed">
+              Compatible universalmente. Perfecto para fotografías.
+              No soporta transparencias.
+            </p>
+          </div>
+
+          <div class="bg-white border border-gray-200 rounded-xl p-6 text-center">
+            <h4 class="text-xl font-bold text-text mb-2">PNG</h4>
+            <p class="text-sm text-text-muted leading-relaxed">
+              Soporta transparencias. Ideal para logos e ilustraciones.
+              Archivos más pesados.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ -->
+      <div>
+        <h3 class="text-2xl font-bold text-text mb-6">Preguntas Frecuentes</h3>
+        <div class="space-y-4">
+          <div class="bg-white border border-gray-200 rounded-xl p-6">
+            <h4 class="font-semibold text-text mb-2">¿Es seguro subir mis imágenes?</h4>
+            <p class="text-sm text-text-muted pl-4">
+              → Sí, todo el procesamiento ocurre en nuestro servidor seguro.
+              Las imágenes se eliminan automáticamente después de 1 hora.
+            </p>
+          </div>
+
+          <div class="bg-white border border-gray-200 rounded-xl p-6">
+            <h4 class="font-semibold text-text mb-2">¿Hay límite de uso?</h4>
+            <p class="text-sm text-text-muted pl-4">
+              → Hasta 20 imágenes por lote, sin límite de lotes.
+              Para volúmenes mayores, consulta nuestra <a href="https://aurora33.dev" class="text-primary hover:underline">API empresarial</a>.
+            </p>
+          </div>
+
+          <div class="bg-white border border-gray-200 rounded-xl p-6">
+            <h4 class="font-semibold text-text mb-2">¿Pierdo calidad al comprimir?</h4>
+            <p class="text-sm text-text-muted pl-4">
+              → La reducción de calidad es mínima e imperceptible al ojo humano
+              con configuraciones de 80-90%. Optimizamos para web manteniendo calidad visual.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Branding Footer -->
+      <div class="border-t border-gray-200 pt-8 text-center">
+        <p class="text-text mb-2">
+          Hecho con ❤️ por <a href="https://aurora33.dev" class="text-primary hover:underline font-semibold">Aurora33</a>
+        </p>
+        <p class="text-text-muted mb-4">¿Necesitas soluciones personalizadas para tu negocio?</p>
+
+        <div class="flex flex-wrap justify-center gap-6 mb-6">
+          <a href="https://aurora33.dev" class="text-primary hover:underline font-medium">Desarrollo Web</a>
+          <a href="https://aurora33.dev" class="text-primary hover:underline font-medium">Consultoría</a>
+          <a href="https://aurora33.dev" class="text-primary hover:underline font-medium">Contacto</a>
+        </div>
+
+        <p class="text-sm text-text-muted">© 2024 Aurora33 · Todos los derechos reservados</p>
+      </div>
+    </div>
+  </footer>
 
   <script src="/js/app.js"></script>
 </body>
