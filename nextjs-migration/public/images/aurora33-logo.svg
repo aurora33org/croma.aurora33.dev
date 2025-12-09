@@ -1,9 +1,0 @@
-<svg width="160" height="40" viewBox="0 0 160 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Aurora icon -->
-  <path d="M20 5L25 15L30 5L35 15L30 25L25 15L20 25L15 15L20 5Z" fill="#F84733"/>
-  <circle cx="25" cy="20" r="3" fill="#191A1B"/>
-
-  <!-- Text: Aurora33 -->
-  <text x="42" y="27" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#191A1B">Aurora</text>
-  <text x="108" y="27" font-family="Arial, sans-serif" font-size="18" font-weight="600" fill="#F84733">33</text>
-</svg>
