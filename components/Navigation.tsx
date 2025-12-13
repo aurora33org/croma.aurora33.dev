@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 
 export function Navigation() {
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     // Apply theme class to HTML element
@@ -15,7 +15,7 @@ export function Navigation() {
   }, [darkMode]);
 
   return (
-    <div className="py-8 px-[120px] max-w-[1720px] mx-auto mb-8 border-b border-gray-700 dark:border-gray-700">
+    <div className="py-8 px-[120px] max-w-[1720px] mx-auto mb-8 border-b border-gray-200 dark:border-gray-700">
       <div className="flex items-center justify-between">
         {/* Logo */}
         <a href="https://aurora33.dev" target="_blank" rel="noopener noreferrer">
@@ -31,7 +31,7 @@ export function Navigation() {
           <button
             onClick={() => setDarkMode(false)}
             className={`p-2 rounded-lg transition-colors ${
-              darkMode ? 'hover:bg-gray-700 text-gray-400' : 'hover:bg-gray-200 text-gray-600'
+              darkMode ? 'hover:bg-container-dark text-text-muted-dark' : 'hover:bg-container text-text-muted'
             }`}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -42,7 +42,7 @@ export function Navigation() {
           <button
             onClick={() => setDarkMode(true)}
             className={`p-2 rounded-lg transition-colors ${
-              darkMode ? 'hover:bg-gray-700 text-yellow-400' : 'hover:bg-gray-200 text-gray-600'
+              darkMode ? 'hover:bg-container-dark text-text-muted-dark' : 'hover:bg-container text-text-muted'
             }`}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
