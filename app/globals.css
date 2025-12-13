@@ -24,11 +24,11 @@
 
   /* Dark mode - when html HAS .dark class */
   html.dark {
-    --bg: #191A1B;
-    --text: #F3DDCA;
-    --text-muted: #FCF5EF;
+    --bg: #F8F8F8;
+    --text: #F6F6F6;
+    --text-muted: #F3DDCA;
     --primary: #F84733;
-    --container: #3B3C3E;
+    --container: #221A19;
     color-scheme: dark;
   }
 

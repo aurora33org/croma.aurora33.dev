@@ -3,7 +3,7 @@ export function Footer() {
     <footer className="py-16 px-[120px] max-w-[1720px] mx-auto border-t border-gray-200 dark:border-gray-700">
       <div className="text-center">
         <p className="text-text dark:text-text-dark mb-2">
-          Hecho con ❤️ por{' '}
+          Hecho con IA y ❤️ por{' '}
           <a href="https://aurora33.dev" className="text-primary hover:underline font-semibold">
             Aurora33
           </a>

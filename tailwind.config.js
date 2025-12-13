@@ -23,7 +23,7 @@ module.exports = {
 
         // Dark mode colors - use dark: prefix in components
         'bg-dark': '#191A1B',
-        'text-dark': '#F3DDCA',
+        'text-dark': '#F6F6F6',
         'text-muted-dark': '#FCF5EF',
         'container-dark': '#3B3C3E',
       },
