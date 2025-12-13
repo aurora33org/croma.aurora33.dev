@@ -1117,6 +1117,11 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #f84733e6;
 }
 
+.hover\:bg-gray-300:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity, 1));
+}
+
 .hover\:underline:hover {
   text-decoration-line: underline;
 }
@@ -1249,7 +1254,7 @@ h1, h2, h3, h4, h5, h6 {
   background-color: rgb(31 41 55 / var(--tw-bg-opacity, 1));
 }
 
-.dark\:disabled\:bg-gray-600:disabled:is(.dark *) {
+.dark\:hover\:bg-gray-600:hover:is(.dark *), .dark\:disabled\:bg-gray-600:disabled:is(.dark *) {
   --tw-bg-opacity: 1;
   background-color: rgb(75 85 99 / var(--tw-bg-opacity, 1));
 }

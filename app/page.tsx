@@ -40,8 +40,13 @@ export default function Home() {
   const [isCompressing, setIsCompressing] = useState(false);
 
   const handleFilesSelected = (newFiles: File[]) => {
-    setFiles(newFiles);
-    setCurrentView('settings');
+    // Si ya hay archivos, agregar los nuevos; si no, reemplazar
+    if (files.length > 0) {
+      setFiles([...files, ...newFiles]);
+    } else {
+      setFiles(newFiles);
+      setCurrentView('settings');
+    }
   };
 
   const handleShowSettings = () => {
@@ -262,7 +267,8 @@ export default function Home() {
       {currentView === 'settings' && files.length > 0 && (
         <>
           <div className="py-8 px-[120px] max-w-[1720px] mx-auto mb-8">
-            <div className="space-y-3">
+            <h2 className="text-2xl font-bold text-text dark:text-text-dark mb-6">Imágenes seleccionadas</h2>
+            <div className="space-y-3 mb-8">
               {files.map((file, index) => (
                 <div key={index} className="bg-white dark:bg-container-dark border border-gray-200 dark:border-gray-700 rounded-lg p-4 flex items-center justify-between gap-4">
                   <div className="flex items-center gap-3 flex-1">
@@ -292,6 +298,12 @@ export default function Home() {
                 </div>
               ))}
             </div>
+
+            <h2 className="text-2xl font-bold text-text dark:text-text-dark mb-6">Agregar más imágenes</h2>
+            <ImageUploader
+              onFilesSelected={handleFilesSelected}
+              onShowSettings={handleShowSettings}
+            />
           </div>
 
           <CompressionSettings
