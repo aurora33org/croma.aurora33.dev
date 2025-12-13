@@ -1,29 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap');
 @import "tailwindcss";
 
-/* Dark mode as default */
-:root {
-  --bg: #191A1B;
-  --text: #F3DDCA;
-  --text-muted: #FCF5EF;
-  --primary: #F84733;
-  --container: #3B3C3E;
+@font-face {
+  font-family: "Kangge";
+  src: url("/fonts/Kangge.woff2") format("woff2"),
+       url("/fonts/Kangge.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
 }
 
-/* Light mode */
-html:not(.dark) {
-  --bg: #F8F8F8;
-  --text: #191A1B;
-  --text-muted: #838A8D;
-  --primary: #F84733;
-  --container: #FCF6F0;
-}
+@layer base {
+  /* Light mode as DEFAULT (root) */
+  :root {
+    --bg: #F8F8F8;
+    --text: #191A1B;
+    --text-muted: #838A8D;
+    --primary: #F84733;
+    --container: #FCF6F0;
+    color-scheme: light;
+  }
 
-html {
-  color-scheme: dark;
-}
+  /* Dark mode - when html HAS .dark class */
+  html.dark {
+    --bg: #191A1B;
+    --text: #F3DDCA;
+    --text-muted: #FCF5EF;
+    --primary: #F84733;
+    --container: #3B3C3E;
+    color-scheme: dark;
+  }
 
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Kangge", sans-serif;
+  }
 }
