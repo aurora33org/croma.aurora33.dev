@@ -45,7 +45,7 @@ export function ImageUploader({ onFilesSelected, onShowSettings }: ImageUploader
   };
 
   return (
-    <div className="flex flex-col h-full space-y-8 justify-end pt-8">
+    <div className="flex flex-col h-full space-y-8">
       {/* Drop Zone */}
       <div
         onDragOver={handleDragOver}
