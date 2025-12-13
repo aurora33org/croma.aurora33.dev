@@ -52,10 +52,12 @@ export function ImageUploader({ onFilesSelected, onShowSettings }: ImageUploader
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         onClick={() => document.getElementById('file-input')?.click()}
-        className={`bg-contrast-v2 dark:bg-container-dark border-2 rounded-3xl p-12 text-center cursor-pointer transition-colors min-h-[400px] flex flex-col items-center justify-center ${
-          dragOver ? 'border-contrast bg-primary/5 dark:bg-primary/10' : 'border-contrast dark:border-contrast hover:border-primary/50 dark:hover:border-primary/50'
+        className={`bg-contrast-v2 dark:bg-container-dark border-2 border-primary rounded-3xl p-12 text-center cursor-pointer transition-colors min-h-[400px] flex flex-col items-center justify-center ${
+          dragOver ? 'bg-primary/5 dark:bg-primary/10' : ''
         }`}
-        style={{ boxShadow: '0 16px 24px -8px rgba(0, 0, 0, 0.08)' }}
+        style={{
+          boxShadow: '0 16px 24px -8px rgba(0, 0, 0, 0.08)'
+        }}
       >
         <input
           id="file-input"

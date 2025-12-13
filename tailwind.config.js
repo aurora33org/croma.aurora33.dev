@@ -10,7 +10,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Primary - same for both light and dark
+        // Primary color - same for both light and dark
         primary: '#F84733',
 
         // Light mode colors (default)
