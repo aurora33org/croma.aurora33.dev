@@ -1,43 +1,294 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { Navigation } from '@/components/Navigation';
+import { Hero } from '@/components/Hero';
+import { ImageUploader } from '@/components/ImageUploader';
+import { CompressionSettings } from '@/components/CompressionSettings';
+import { ProcessingView } from '@/components/ProcessingView';
+import { DownloadView } from '@/components/DownloadView';
+import { ErrorView } from '@/components/ErrorView';
+import { FormatGuide } from '@/components/FormatGuide';
+import { FAQ } from '@/components/FAQ';
+import { Footer } from '@/components/Footer';
+
+type ViewType = 'upload' | 'settings' | 'processing' | 'download' | 'error';
+
+interface FileStats {
+  originalSize: number;
+  compressedSize: number;
+  reduction: number;
+}
 
 export default function Home() {
-  const [status, setStatus] = useState('initializing...');
+  const [currentView, setCurrentView] = useState<ViewType>('upload');
+  const [files, setFiles] = useState<File[]>([]);
+  const [jobId, setJobId] = useState<string | null>(null);
+  const [progress, setProgress] = useState(0);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [stats, setStats] = useState<FileStats | undefined>();
 
-  useEffect(() => {
-    // Test health endpoint
-    fetch('/api/health')
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          setStatus('✓ API is healthy');
+  const [settings, setSettings] = useState({
+    format: 'webp',
+    quality: 80,
+    resizeWidth: undefined as number | undefined,
+    resizeHeight: undefined as number | undefined
+  });
+
+  const [isCompressing, setIsCompressing] = useState(false);
+
+  const handleFilesSelected = (newFiles: File[]) => {
+    setFiles(newFiles);
+    setCurrentView('settings');
+  };
+
+  const handleShowSettings = () => {
+    setCurrentView('settings');
+  };
+
+  const handleQualityChange = (quality: number) => {
+    setSettings({ ...settings, quality });
+  };
+
+  const handleFormatChange = (format: string) => {
+    setSettings({ ...settings, format });
+  };
+
+  const handleResizeChange = (width?: number, height?: number) => {
+    setSettings({ ...settings, resizeWidth: width, resizeHeight: height });
+  };
+
+  const handleCompress = async () => {
+    try {
+      setIsCompressing(true);
+      setCurrentView('processing');
+      setProgress(0);
+
+      // Step 1: Create job
+      const jobResponse = await fetch('/api/jobs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      const jobData = await jobResponse.json();
+      if (!jobData.success) throw new Error(jobData.error);
+
+      const newJobId = jobData.jobId;
+      setJobId(newJobId);
+
+      // Step 2: Upload files
+      const formData = new FormData();
+      files.forEach(file => formData.append('images', file));
+
+      const uploadResponse = await fetch(`/api/jobs/${newJobId}/upload`, {
+        method: 'POST',
+        body: formData
+      });
+
+      const uploadData = await uploadResponse.json();
+      if (!uploadData.success) throw new Error(uploadData.error);
+
+      setProgress(30);
+
+      // Step 3: Process images
+      const processResponse = await fetch(`/api/jobs/${newJobId}/process`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          format: settings.format,
+          quality: settings.quality,
+          resize: settings.resizeWidth || settings.resizeHeight ? {
+            width: settings.resizeWidth,
+            height: settings.resizeHeight
+          } : undefined
+        })
+      });
+
+      const processData = await processResponse.json();
+      if (!processData.success) throw new Error(processData.error);
+
+      // Step 4: Poll for completion
+      let isComplete = false;
+      let pollCount = 0;
+      const maxPolls = 120;
+
+      while (!isComplete && pollCount < maxPolls) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        const statusResponse = await fetch(`/api/jobs/${newJobId}/status`);
+        const statusData = await statusResponse.json();
+
+        if (statusData.status === 'completed') {
+          isComplete = true;
+          setProgress(100);
+          setStats({
+            originalSize: statusData.originalSize,
+            compressedSize: statusData.compressedSize,
+            reduction: statusData.reduction
+          });
+          setCurrentView('download');
+        } else if (statusData.status === 'failed') {
+          throw new Error(statusData.error || 'Processing failed');
         } else {
-          setStatus('✗ API error');
+          const estimatedProgress = 30 + (statusData.progress * 0.7);
+          setProgress(Math.min(estimatedProgress, 99));
         }
-      })
-      .catch(() => setStatus('✗ Cannot reach API'));
-  }, []);
+
+        pollCount++;
+      }
+
+      if (!isComplete) {
+        throw new Error('Processing timeout');
+      }
+    } catch (error: any) {
+      console.error('Compression error:', error);
+      setErrorMessage(error.message || 'An error occurred during compression');
+      setCurrentView('error');
+    } finally {
+      setIsCompressing(false);
+    }
+  };
+
+  const handleDownload = async () => {
+    if (!jobId) return;
+
+    try {
+      const response = await fetch(`/api/jobs/${jobId}/download`);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `compressed-images-${jobId}.zip`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error('Download error:', error);
+      setErrorMessage('Failed to download files');
+      setCurrentView('error');
+    }
+  };
+
+  const handleReset = () => {
+    setFiles([]);
+    setJobId(null);
+    setProgress(0);
+    setSettings({
+      format: 'webp',
+      quality: 80,
+      resizeWidth: undefined,
+      resizeHeight: undefined
+    });
+    setCurrentView('upload');
+  };
+
+  const handleRetry = () => {
+    setErrorMessage('');
+    setCurrentView('settings');
+  };
+
+  const handleSubscribe = async (email: string) => {
+    if (!email) return;
+    console.log('Subscribe:', email);
+  };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
-      <main className="text-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          Bulk Image Compressor
-        </h1>
-        <p className="text-lg text-gray-600 mb-8">
-          Migración a Next.js 14 - En Construcción
-        </p>
-        <div className="bg-white rounded-lg shadow-lg p-8 max-w-md">
-          <p className="text-sm text-gray-500 mb-4">API Status:</p>
-          <p className="text-lg font-semibold text-indigo-600">{status}</p>
-          <div className="mt-6 text-left text-sm text-gray-600 space-y-2">
-            <p>✓ Services migrateados</p>
-            <p>✓ API Routes listos</p>
-            <p>⚙ Frontend en desarrollo</p>
+    <main className="min-h-screen bg-background dark:bg-bg text-text dark:text-text-dark">
+      <Navigation />
+
+      {currentView === 'upload' && (
+        <>
+          <div className="flex flex-col mb-16 mt-16 px-[120px] max-w-[1720px] mx-auto">
+            <Hero />
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start mt-12">
+              <div />
+              <ImageUploader
+                onFilesSelected={handleFilesSelected}
+                onShowSettings={handleShowSettings}
+              />
+            </div>
           </div>
-        </div>
-      </main>
-    </div>
+        </>
+      )}
+
+      {currentView === 'settings' && files.length > 0 && (
+        <>
+          <div className="py-8 px-[120px] max-w-[1720px] mx-auto mb-8">
+            <div className="space-y-3">
+              {files.map((file, index) => (
+                <div key={index} className="bg-white dark:bg-container-dark border border-gray-200 dark:border-gray-700 rounded-lg p-4 flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-3 flex-1">
+                    <img
+                      src={URL.createObjectURL(file)}
+                      alt={file.name}
+                      className="w-12 h-12 object-cover rounded"
+                    />
+                    <div>
+                      <p className="font-semibold text-text dark:text-text-dark">{file.name}</p>
+                      <p className="text-sm text-text-muted dark:text-text-muted-dark">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => {
+                      const newFiles = files.filter((_, i) => i !== index);
+                      if (newFiles.length === 0) {
+                        handleReset();
+                      } else {
+                        setFiles(newFiles);
+                      }
+                    }}
+                    className="px-4 py-2 text-sm border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 text-text dark:text-text-dark transition-colors"
+                  >
+                    Eliminar
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <CompressionSettings
+            quality={settings.quality}
+            format={settings.format}
+            resizeWidth={settings.resizeWidth}
+            resizeHeight={settings.resizeHeight}
+            onQualityChange={handleQualityChange}
+            onFormatChange={handleFormatChange}
+            onResizeChange={handleResizeChange}
+            onCompress={handleCompress}
+            isLoading={isCompressing}
+          />
+        </>
+      )}
+
+      {currentView === 'processing' && (
+        <ProcessingView progress={progress} />
+      )}
+
+      {currentView === 'download' && (
+        <DownloadView
+          stats={stats}
+          onDownload={handleDownload}
+          onReset={handleReset}
+          onSubscribe={handleSubscribe}
+        />
+      )}
+
+      {currentView === 'error' && (
+        <ErrorView
+          message={errorMessage}
+          onRetry={handleRetry}
+        />
+      )}
+
+      {currentView === 'upload' && (
+        <>
+          <FormatGuide />
+          <FAQ />
+        </>
+      )}
+
+      <Footer />
+    </main>
   );
 }
