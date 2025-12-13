@@ -36,10 +36,15 @@
     background-color: var(--bg);
     color: var(--text);
     font-family: 'Syne', sans-serif;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: "Kangge", sans-serif;
+    transition: color 0.4s ease;
+  }
+
+  * {
+    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
   }
 }
