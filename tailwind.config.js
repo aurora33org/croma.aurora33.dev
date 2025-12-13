@@ -11,17 +11,16 @@ module.exports = {
     extend: {
       colors: {
         // Light mode colors
-        background: '#F8F8F8',
-        container: '#FCF6F0',
         primary: '#F84733',
         text: '#191A1B',
-        'text-muted': '#838a8d',
+        'text-muted': '#838A8D',
+        background: '#F8F8F8',
+        container: '#FCF6F0',
         // Dark mode colors
-        'bg': '#0f1117',
-        'bg-dark': '#010409',
-        'text-dark': '#e6edf3',
-        'text-muted-dark': '#8b949e',
-        'container-dark': '#161b22',
+        'text-dark': '#F3DDCA',
+        'text-muted-dark': '#FCF5EF',
+        'bg-dark': '#191A1B',
+        'container-dark': '#3B3C3E',
       },
       fontFamily: {
         'syne': ['Syne', 'sans-serif'],

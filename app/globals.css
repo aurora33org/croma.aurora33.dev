@@ -2,18 +2,18 @@
 
 /* Dark mode as default */
 :root {
-  --bg: #0f1117;
-  --text: #e6edf3;
-  --text-muted: #8b949e;
+  --bg: #191A1B;
+  --text: #F3DDCA;
+  --text-muted: #FCF5EF;
   --primary: #F84733;
-  --container: #161b22;
+  --container: #3B3C3E;
 }
 
 /* Light mode */
 html:not(.dark) {
   --bg: #F8F8F8;
   --text: #191A1B;
-  --text-muted: #838a8d;
+  --text-muted: #838A8D;
   --primary: #F84733;
   --container: #FCF6F0;
 }

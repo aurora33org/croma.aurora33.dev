@@ -2,17 +2,17 @@ export function Hero() {
   return (
     <div className="flex flex-col mb-16 mt-16 px-[120px] max-w-[1720px] mx-auto">
       {/* Hero Title */}
-      <div className="w-full">
+      <div className="w-full mb-12">
         <h1 className="text-5xl lg:text-6xl font-bold text-text dark:text-text-dark" style={{ lineHeight: '120%' }}>
           Optimiza tus imágenes.<br />Para cualquier proyecto.
         </h1>
       </div>
 
-      {/* Main Hero Grid */}
+      {/* Main Hero Grid - Side by Side */}
       <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
         {/* Left Column: Text Content */}
-        <div className="space-y-8 pt-8">
-          <div className="pt-2">
+        <div className="space-y-8">
+          <div>
             <p className="text-base text-text-muted dark:text-text-muted-dark mb-8 leading-relaxed">
               Ya sea que diseñes, desarrolles, vendas o crees contenido—nosotros redimensionamos, comprimimos y optimizamos tus imágenes automáticamente. Una herramienta. Múltiples necesidades. Sin complicaciones.
             </p>
@@ -41,6 +41,9 @@ export function Hero() {
             </div>
           </div>
         </div>
+
+        {/* Right Column: Will be filled by ImageUploader */}
+        <div />
       </div>
     </div>
   );
