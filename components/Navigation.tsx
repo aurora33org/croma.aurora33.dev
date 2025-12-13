@@ -51,23 +51,18 @@ export function Navigation() {
         {/* Theme Toggle */}
         <button
           onClick={() => setDarkMode(!darkMode)}
-          className={`relative inline-flex items-center h-8 w-14 rounded-full transition-colors ${
+          className={`relative inline-flex items-center justify-between h-8 w-16 px-1 rounded-full transition-all duration-500 ${
             darkMode ? 'bg-contrast' : 'bg-gray-300'
           }`}
           aria-label="Toggle dark mode"
         >
+          <Sun size={16} className="flex-shrink-0 transition-colors text-black relative z-10 ml-1" />
           <span
-            className={`inline-block h-6 w-6 transform rounded-full bg-white transition-transform ${
-              darkMode ? 'translate-x-7' : 'translate-x-1'
+            className={`absolute inline-block h-6 w-6 transform rounded-full transition-all duration-500 ${
+              darkMode ? 'bg-black translate-x-8' : 'bg-white translate-x-0'
             }`}
           />
-          <div className="absolute left-2 flex items-center justify-center">
-            {darkMode ? (
-              <Moon size={16} className="text-text" />
-            ) : (
-              <Sun size={16} className="text-text" />
-            )}
-          </div>
+          <Moon size={16} className={`flex-shrink-0 transition-colors ${darkMode ? 'text-white' : 'text-white'} relative z-10 mr-1`} />
         </button>
       </div>
     </div>
