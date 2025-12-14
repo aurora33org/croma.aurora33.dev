@@ -1,43 +1,37 @@
 {
-  "name": "image-compressor",
-  "version": "1.0.0",
-  "description": "Bulk image compression microSaaS tool",
-  "main": "src/server.js",
+  "name": "nextjs-compressor",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "concurrently \"npm run watch:css\" \"nodemon src/server.js\"",
-    "watch:css": "tailwindcss -i ./public/css/input.css -o ./public/css/output.css --watch",
-    "build:css": "tailwindcss -i ./public/css/input.css -o ./public/css/output.css --minify",
-    "docker:build": "docker build -t image-compressor .",
-    "docker:run": "docker run -p 3000:3000 --env-file .env image-compressor"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
   },
-  "keywords": [
-    "image",
-    "compression",
-    "webp",
-    "sharp",
-    "bulk"
-  ],
-  "author": "",
-  "license": "MIT",
   "dependencies": {
     "archiver": "^7.0.1",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express": "^4.21.2",
-    "multer": "^1.4.5-lts.1",
-    "node-cron": "^3.0.3",
-    "sharp": "^0.33.5",
-    "uuid": "^11.0.3"
+    "autoprefixer": "^10.4.22",
+    "lucide-react": "^0.561.0",
+    "multer": "^2.0.2",
+    "next": "16.0.8",
+    "node-cron": "^4.2.1",
+    "postcss": "^8.5.6",
+    "react": "19.2.1",
+    "react-dom": "19.2.1",
+    "sharp": "^0.34.5",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.22",
-    "concurrently": "^9.2.1",
-    "nodemon": "^3.1.9",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^3.4.18"
-  },
-  "engines": {
-    "node": ">=20.0.0"
+    "@tailwindcss/postcss": "^4",
+    "@types/archiver": "^7.0.0",
+    "@types/multer": "^2.0.0",
+    "@types/node": "^20",
+    "@types/node-cron": "^3.0.11",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.0.8",
+    "tailwindcss": "^3.4.19",
+    "typescript": "^5"
   }
 }

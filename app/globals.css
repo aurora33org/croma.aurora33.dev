@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Syne:wght@400..800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Kangge";
+  src: url("/fonts/Kangge.woff2") format("woff2"),
+       url("/fonts/Kangge.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@layer base {
+  /* Light mode as DEFAULT */
+  :root {
+    --bg: #F8F8F8;
+    --text: #191A1B;
+    --text-muted: #4c5052;
+    --primary: #F84733;
+    --container: #FCF6F0;
+    color-scheme: light;
+  }
+
+  /* Dark mode - when html HAS .dark class */
+  html.dark {
+    --bg: #F8F8F8;
+    --text: #F6F6F6;
+    --text-muted: #F3DDCA;
+    --primary: #F84733;
+    --container: #221A19;
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Quicksand', sans-serif;
+    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+    text-wrap: pretty;
+  }
+
+  h1 {
+    font-family: "Kangge", sans-serif;
+    transition: color 0.4s ease;
+  }
+
+  h2, h3, h4, h5, h6 {
+    font-family: 'Syne', sans-serif;
+    transition: color 0.4s ease;
+  }
+
+  * {
+    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+  }
+
+  /* Fade animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out forwards;
+  }
+
+  .animate-fade-out {
+    animation: fadeOut 0.5s ease-in-out forwards;
+  }
+}
