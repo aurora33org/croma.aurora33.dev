@@ -52,15 +52,15 @@ export function LanguageToggle() {
       aria-label="Toggle language"
       title={language === 'es' ? 'Switch to English' : 'Cambiar a Español'}
     >
-      <span className="text-xs font-bold text-gray-800 dark:text-gray-100 z-10 transition-opacity duration-500">
+      <span className="flex items-center justify-center flex-1 text-xs font-bold text-gray-800 dark:text-gray-100 z-10 transition-opacity duration-500">
         ES
       </span>
       <span
-        className={`absolute inline-block h-6 w-6 transform rounded-full transition-all duration-500 bg-white dark:bg-gray-900 ${
+        className={`absolute inline-flex items-center justify-center h-6 w-6 transform rounded-full transition-all duration-500 bg-white dark:bg-gray-900 ${
           language === 'en' ? 'translate-x-7' : 'translate-x-0'
         }`}
       />
-      <span className="text-xs font-bold text-gray-800 dark:text-gray-100 z-10 transition-opacity duration-500">
+      <span className="flex items-center justify-center flex-1 text-xs font-bold text-gray-800 dark:text-gray-100 z-10 transition-opacity duration-500">
         EN
       </span>
     </button>
