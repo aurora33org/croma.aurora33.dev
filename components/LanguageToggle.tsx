@@ -41,28 +41,26 @@ export function LanguageToggle() {
 
   if (!mounted) {
     return (
-      <div className="inline-flex items-center justify-between h-8 w-16 px-1 rounded-full bg-gray-300 dark:bg-contrast" />
+      <div className="inline-flex items-center justify-between h-8 w-14 px-1 rounded-full bg-gray-300 dark:bg-gray-700" />
     );
   }
 
   return (
     <button
       onClick={toggleLanguage}
-      className={`relative inline-flex items-center justify-between h-8 w-14 px-1 rounded-full transition-all duration-500 ${
-        language === 'en' ? 'bg-contrast' : 'bg-gray-300'
-      }`}
+      className="relative inline-flex items-center justify-between h-8 w-14 px-1 rounded-full transition-all duration-500 bg-gray-300 dark:bg-gray-700"
       aria-label="Toggle language"
       title={language === 'es' ? 'Switch to English' : 'Cambiar a Español'}
     >
-      <span className="text-xs font-bold text-text dark:text-text-dark z-10 transition-opacity duration-500">
+      <span className="text-xs font-bold text-gray-800 dark:text-gray-100 z-10 transition-opacity duration-500">
         ES
       </span>
       <span
-        className={`absolute inline-block h-6 w-6 transform rounded-full transition-all duration-500 ${
-          language === 'en' ? 'bg-white translate-x-7' : 'bg-white translate-x-0'
+        className={`absolute inline-block h-6 w-6 transform rounded-full transition-all duration-500 bg-white dark:bg-gray-900 ${
+          language === 'en' ? 'translate-x-7' : 'translate-x-0'
         }`}
       />
-      <span className="text-xs font-bold text-text-dark dark:text-text z-10 transition-opacity duration-500">
+      <span className="text-xs font-bold text-gray-800 dark:text-gray-100 z-10 transition-opacity duration-500">
         EN
       </span>
     </button>
