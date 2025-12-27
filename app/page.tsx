@@ -257,14 +257,30 @@ export default function Home() {
       {currentView === 'settings' && files.length > 0 && (
         <>
           <div className="px-4 sm:px-8 md:px-16 lg:px-20 xl:px-[120px] max-w-[1720px] mx-auto mb-4 sm:mb-6 md:mb-8 mt-8 sm:mt-12 md:mt-16">
-            <div className="flex flex-col mb-8 sm:mb-12 md:mb-16">
+            <div className="flex flex-col">
               {/* Hero Title */}
-              <div className="w-full mb-6 sm:mb-8 md:mb-12">
+              <div className="w-full">
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-primary" style={{ lineHeight: '120%' }}>
                   {t('hero.title')}<br />{t('hero.subtitle')}
                 </h1>
               </div>
+            </div>
+          </div>
 
+          <CompressionSettings
+            quality={settings.quality}
+            format={settings.format}
+            resizeWidth={settings.resizeWidth}
+            resizeHeight={settings.resizeHeight}
+            onQualityChange={handleQualityChange}
+            onFormatChange={handleFormatChange}
+            onResizeChange={handleResizeChange}
+            onCompress={handleCompress}
+            isLoading={isCompressing}
+          />
+
+          <div className="px-4 sm:px-8 md:px-16 lg:px-20 xl:px-[120px] max-w-[1720px] mx-auto mb-4 sm:mb-6 md:mb-8">
+            <div className="flex flex-col mb-8 sm:mb-12 md:mb-16">
               {/* Main Grid - Side by Side */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12 lg:gap-20 items-start animate-fade-in">
               {/* Left Column: Selected Images List */}
@@ -313,18 +329,6 @@ export default function Home() {
             </div>
             </div>
           </div>
-
-          <CompressionSettings
-            quality={settings.quality}
-            format={settings.format}
-            resizeWidth={settings.resizeWidth}
-            resizeHeight={settings.resizeHeight}
-            onQualityChange={handleQualityChange}
-            onFormatChange={handleFormatChange}
-            onResizeChange={handleResizeChange}
-            onCompress={handleCompress}
-            isLoading={isCompressing}
-          />
         </>
       )}
 
