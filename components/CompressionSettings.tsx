@@ -27,7 +27,7 @@ export function CompressionSettings({
 }: CompressionSettingsProps) {
   const t = useTranslations('settings');
   return (
-    <div className="py-8 sm:py-12 md:py-16 px-4 sm:px-8 md:px-16 lg:px-20 xl:px-[120px] max-w-[1720px] mx-auto mb-4 sm:mb-6 md:mb-8">
+    <div className="pt-2 sm:pt-3 md:pt-4 pb-4 sm:pb-6 md:pb-8 px-4 sm:px-8 md:px-16 lg:px-20 xl:px-[120px] max-w-[1720px] mx-auto mb-4 sm:mb-6 md:mb-8">
       <div className="bg-white dark:bg-container-dark rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 sm:p-6 md:p-8 lg:p-12">
         <h2 className="text-2xl font-bold text-text dark:text-text-dark mb-6">{t('heading')}</h2>
 
