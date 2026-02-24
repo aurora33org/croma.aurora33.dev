@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 import { useTranslations } from '@/lib/i18n-context';
 import { Navigation } from '@/components/Navigation';
-import { Hero } from '@/components/Hero';
 import { ImageUploader } from '@/components/ImageUploader';
 import { CompressionSettings } from '@/components/CompressionSettings';
 import { ProcessingView } from '@/components/ProcessingView';
@@ -12,6 +12,9 @@ import { ErrorView } from '@/components/ErrorView';
 import { FormatGuide } from '@/components/FormatGuide';
 import { FAQ } from '@/components/FAQ';
 import { Footer } from '@/components/Footer';
+import { LoginPrompt } from '@/components/LoginPrompt';
+import { UsageIndicator } from '@/components/UsageIndicator';
+import { LimitExceededView } from '@/components/LimitExceededView';
 
 type ViewType = 'upload' | 'settings' | 'processing' | 'download' | 'error';
 
@@ -23,6 +26,7 @@ interface FileStats {
 
 export default function Home() {
   const t = useTranslations();
+  const { data: session, status } = useSession();
   const [currentView, setCurrentView] = useState<ViewType>('upload');
   const [files, setFiles] = useState<File[]>([]);
   const [jobId, setJobId] = useState<string | null>(null);
@@ -31,6 +35,7 @@ export default function Home() {
   const [totalFiles, setTotalFiles] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
   const [stats, setStats] = useState<FileStats | undefined>();
+  const [dailyLimitExceeded, setDailyLimitExceeded] = useState(false);
 
   const [settings, setSettings] = useState({
     format: 'webp',
@@ -40,6 +45,29 @@ export default function Home() {
   });
 
   const [isCompressing, setIsCompressing] = useState(false);
+
+  // Check daily usage before rendering
+  useEffect(() => {
+    const checkDailyLimit = async () => {
+      if (session?.user?.id) {
+        try {
+          const response = await fetch(`/api/user/usage?userId=${session.user.id}`);
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const data = await response.json() as any;
+
+          if (data.success && data.data.remaining === 0) {
+            setDailyLimitExceeded(true);
+          }
+        } catch (error) {
+          console.error('Error checking daily limit:', error);
+        }
+      }
+    };
+
+    if (currentView === 'upload' && session?.user?.id) {
+      checkDailyLimit();
+    }
+  }, [currentView, session?.user?.id]);
 
   const handleFilesSelected = (newFiles: File[]) => {
     // Si ya hay archivos, agregar los nuevos; si no, reemplazar
@@ -151,9 +179,10 @@ export default function Home() {
       if (!isComplete) {
         throw new Error('Processing timeout');
       }
-    } catch (error: any) {
-      console.error('Compression error:', error);
-      setErrorMessage(error.message || t('errors.defaultMessage', { defaultValue: 'An error occurred during compression' }));
+    } catch (error: unknown) {
+      const err = error instanceof Error ? error : new Error(String(error));
+      console.error('Compression error:', err);
+      setErrorMessage(err.message || t('errors.defaultMessage', { defaultValue: 'An error occurred during compression' }));
       setCurrentView('error');
     } finally {
       setIsCompressing(false);
@@ -206,11 +235,43 @@ export default function Home() {
     console.log('Subscribe:', email);
   };
 
+  // Show loading state while checking auth
+  if (status === 'loading') {
+    return (
+      <main className="min-h-screen bg-background dark:bg-bg-dark text-text dark:text-text-dark">
+        <Navigation />
+        <div className="px-4 sm:px-8 md:px-16 lg:px-20 xl:px-[120px] max-w-[1720px] mx-auto flex items-center justify-center min-h-[400px]">
+          <div className="text-center">
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4" />
+            <p className="text-text-muted dark:text-text-muted-dark">Loading...</p>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-background dark:bg-bg-dark text-text dark:text-text-dark">
       <Navigation />
 
-      {currentView === 'upload' && (
+      {/* If user is authenticated and daily limit exceeded, show limit view */}
+      {session?.user && dailyLimitExceeded && (
+        <LimitExceededView
+          tier={session.user.tier || 'FREE'}
+          limit={session.user.tier === 'PRO' ? 20 : 6}
+          onClose={() => setDailyLimitExceeded(false)}
+        />
+      )}
+
+      {/* If user is not authenticated, show login prompt above hero */}
+      {!session?.user && currentView === 'upload' && <LoginPrompt />}
+
+      {/* Show usage indicator if authenticated */}
+      {session?.user && !dailyLimitExceeded && (
+        <UsageIndicator userId={session.user.id} />
+      )}
+
+      {currentView === 'upload' && !dailyLimitExceeded && (
         <>
           <div className="px-4 sm:px-8 md:px-16 lg:px-20 xl:px-[120px] max-w-[1720px] mx-auto">
             <div className="flex flex-col mb-8 sm:mb-12 md:mb-16 mt-8 sm:mt-12 md:mt-16">
