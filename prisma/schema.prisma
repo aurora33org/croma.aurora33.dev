@@ -55,6 +55,7 @@ model DailyUsage {
   // Relations
   user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@unique([userId, date])
   @@index([userId])
   @@index([date])
   @@map("daily_usage")
