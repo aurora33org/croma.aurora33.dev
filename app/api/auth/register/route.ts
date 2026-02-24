@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createUser, validateEmail, validatePassword } from "@/lib/auth";
+import { logger } from "@/lib/utils/logger";
 
 export async function POST(request: NextRequest) {
   try {
@@ -57,7 +58,7 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
-    console.error("Registration error:", error);
+    logger.error("Registration error", { error });
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

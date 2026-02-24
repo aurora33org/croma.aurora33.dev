@@ -1,5 +1,6 @@
 import { hash, compare } from "bcryptjs";
 import { prisma } from "@/lib/prisma";
+import { logger } from "@/lib/utils/logger";
 
 /**
  * Validate email format using basic regex
@@ -94,7 +95,7 @@ export async function createUser(
 
     return { success: true, user };
   } catch (error) {
-    console.error("Error creating user:", error);
+    logger.error("Error creating user", { error });
     return { success: false, error: "Failed to create user" };
   }
 }
@@ -117,7 +118,7 @@ export async function findUserByEmail(email: string) {
       },
     });
   } catch (error) {
-    console.error("Error finding user:", error);
+    logger.error("Error finding user", { error });
     return null;
   }
 }

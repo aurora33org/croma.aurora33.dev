@@ -45,14 +45,15 @@ export const authOptions: NextAuthOptions = {
           id: result.user.id,
           email: result.user.email,
           tier: result.user.tier,
+          emailConsent: true,
         };
       },
     }),
   ],
   callbacks: {
     async signIn({ user }) {
-      // Check email consent is enabled (already validated in authorize)
-      if (!user.email) {
+      // Validate email consent is true
+      if (!user.email || !(user as any).emailConsent) {
         return false;
       }
       return true;
