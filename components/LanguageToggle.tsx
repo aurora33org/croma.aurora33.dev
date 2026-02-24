@@ -7,8 +7,13 @@ export function LanguageToggle() {
   const router = useRouter();
   const [language, setLanguage] = useState('es');
   const langRef = useRef<'es' | 'en'>('es');
+  const initialized = useRef(false);
 
   useEffect(() => {
+    // Only initialize once on client mount
+    if (initialized.current) return;
+    initialized.current = true;
+
     // Check localStorage and default to Spanish
     const savedLanguage = localStorage.getItem('preferred-language') as 'es' | 'en' | null;
     const cookieLanguage = document.cookie

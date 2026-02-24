@@ -9,9 +9,14 @@ import { UserProfile } from './UserProfile';
 export function Navigation() {
   const [isDark, setIsDark] = useState(false);
   const themeRef = useRef<string | null>(null);
+  const initialized = useRef(false);
   const { data: session } = useSession();
 
   useEffect(() => {
+    // Only initialize once on client mount
+    if (initialized.current) return;
+    initialized.current = true;
+
     const savedTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const isCurrentlyDark = savedTheme ? savedTheme === 'dark' : prefersDark;
