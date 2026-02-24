@@ -26,7 +26,7 @@ export default function UsersTable({ initialUsers = [] }: UsersTableProps) {
     if (initialUsers.length === 0) {
       fetchUsers();
     }
-  }, []);
+  }, [initialUsers]);
 
   const fetchUsers = async () => {
     try {
