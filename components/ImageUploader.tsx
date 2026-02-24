@@ -1,7 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { useSession } from 'next-auth/react';
 import { useTranslations } from '@/lib/i18n-context';
+import { TIER_LIMITS } from '@/lib/config';
 
 interface ImageUploaderProps {
   onFilesSelected: (files: File[]) => void;
@@ -10,8 +12,17 @@ interface ImageUploaderProps {
 
 export function ImageUploader({ onFilesSelected, onShowSettings }: ImageUploaderProps) {
   const t = useTranslations('uploader');
+  const { data: session } = useSession();
   const [dragOver, setDragOver] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const fileInputRef = useState<HTMLInputElement | null>(null)[1];
+
+  const userTier = (session?.user?.tier as 'FREE' | 'PRO') || 'FREE';
+  const limits = TIER_LIMITS[userTier];
+  const maxFileSize = limits.MAX_FILE_SIZE;
+  const maxFiles = limits.MAX_FILES;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _fileInputRef = fileInputRef;
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -36,9 +47,31 @@ export function ImageUploader({ onFilesSelected, onShowSettings }: ImageUploader
   };
 
   const handleFiles = (files: File[]) => {
+    setError(null);
+
+    // Validate file types
     const validFiles = files.filter(file =>
       ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif'].includes(file.type)
     );
+
+    if (validFiles.length === 0) {
+      setError('No valid image files selected');
+      return;
+    }
+
+    // Check file count
+    if (validFiles.length > maxFiles) {
+      setError(`Maximum ${maxFiles} files allowed for ${userTier} tier`);
+      return;
+    }
+
+    // Check file sizes
+    const oversizedFiles = validFiles.filter(file => file.size > maxFileSize);
+    if (oversizedFiles.length > 0) {
+      const maxSizeMB = (maxFileSize / (1024 * 1024)).toFixed(0);
+      setError(`File size exceeds ${maxSizeMB}MB limit for ${userTier} tier`);
+      return;
+    }
 
     if (validFiles.length > 0) {
       onFilesSelected(validFiles);
@@ -48,6 +81,13 @@ export function ImageUploader({ onFilesSelected, onShowSettings }: ImageUploader
 
   return (
     <div className="flex flex-col h-full space-y-8">
+      {/* Error Alert */}
+      {error && (
+        <div className="p-3 bg-red-100 dark:bg-red-900/30 border border-red-300 dark:border-red-700 rounded-lg text-red-700 dark:text-red-300 text-sm">
+          {error}
+        </div>
+      )}
+
       {/* Drop Zone */}
       <div
         onDragOver={handleDragOver}
@@ -85,7 +125,9 @@ export function ImageUploader({ onFilesSelected, onShowSettings }: ImageUploader
         <p className="text-text-muted dark:text-text-muted-dark text-base mb-6">{t('dropzone.subtitle')}</p>
 
         <div className="space-y-2 text-sm text-text-muted dark:text-text-muted-dark">
-          <p className="font-medium text-text-muted dark:text-text-muted-dark">{t('dropzone.fileSizeLimit')}</p>
+          <p className="font-medium text-text-muted dark:text-text-muted-dark">
+            Max {maxFiles} files • {(maxFileSize / (1024 * 1024)).toFixed(0)}MB per file
+          </p>
           <p>{t('dropzone.futureNote')}</p>
         </div>
       </div>

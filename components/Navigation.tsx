@@ -2,11 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import { Sun, Moon } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 import { LanguageToggle } from './LanguageToggle';
+import { UserProfile } from './UserProfile';
 
 export function Navigation() {
   const [darkMode, setDarkMode] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const { data: session } = useSession();
 
   useEffect(() => {
     setMounted(true);
@@ -49,6 +52,9 @@ export function Navigation() {
 
         {/* Toggles Container */}
         <div className="flex items-center gap-4">
+          {/* User Profile */}
+          {session?.user && <UserProfile />}
+
           {/* Language Toggle */}
           <LanguageToggle />
 
