@@ -1,4 +1,5 @@
 import NextAuth, { type NextAuthOptions, type DefaultSession } from "next-auth";
+import { type JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { verifyUserCredentials } from "@/lib/auth";
 
@@ -8,10 +9,14 @@ declare module "next-auth" {
     user: {
       id: string;
       tier: string;
+      emailConsent?: boolean;
     } & DefaultSession["user"];
   }
   interface User {
+    id: string;
+    email?: string;
     tier?: string;
+    emailConsent?: boolean;
   }
 }
 
@@ -50,22 +55,22 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async signIn({ user }) {
+    async signIn({ user }: { user: { id: string; email?: string; emailConsent?: boolean; tier?: string } }) {
       // Validate email consent is true
-      if (!user.email || !(user as any).emailConsent) {
+      if (!user.email || !user.emailConsent) {
         return false;
       }
       return true;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user }: { token: JWT; user?: { id: string; email?: string; tier?: string } }) {
       // Add user info to JWT token
       if (user) {
         token.id = user.id;
-        token.tier = (user as any).tier || "FREE";
+        token.tier = user.tier || "FREE";
       }
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token }: { session: any; token: JWT }) {
       // Add user info to session
       if (session.user) {
         session.user.id = (token.id as string) || "";

@@ -55,10 +55,9 @@ export default function Home() {
       if (session?.user?.id) {
         try {
           const response = await fetch(`/api/user/usage?userId=${session.user.id}`);
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const data = await response.json() as any;
+          const data = await response.json() as { success: boolean; data?: { remaining: number } };
 
-          if (data.success && data.data.remaining === 0) {
+          if (data.success && data.data && data.data.remaining === 0) {
             setDailyLimitExceeded(true);
           }
         } catch (error) {
