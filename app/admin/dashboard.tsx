@@ -6,6 +6,7 @@ import UsersTable from '@/components/admin/UsersTable';
 import HistoryTable from '@/components/admin/HistoryTable';
 import StatsCard from '@/components/admin/StatsCard';
 import { LogOut } from 'lucide-react';
+import { logger } from '@/lib/utils/logger';
 
 type TabType = 'users' | 'jobs' | 'stats';
 
@@ -25,7 +26,7 @@ export default function AdminDashboard() {
         router.push('/');
       }
     } catch (error) {
-      console.error('Logout failed:', error);
+      logger.error('Logout failed', { error });
     } finally {
       setLoggingOut(false);
     }

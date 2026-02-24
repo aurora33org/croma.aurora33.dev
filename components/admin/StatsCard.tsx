@@ -24,7 +24,7 @@ export default function StatsCard({ initialStats }: StatsCardProps) {
     if (!initialStats) {
       fetchStats();
     }
-  }, []);
+  }, [initialStats]);
 
   const fetchStats = async () => {
     try {

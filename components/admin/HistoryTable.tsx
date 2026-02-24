@@ -28,7 +28,7 @@ export default function HistoryTable({ initialJobs = [] }: HistoryTableProps) {
     if (initialJobs.length === 0) {
       fetchJobs();
     }
-  }, []);
+  }, [initialJobs]);
 
   const fetchJobs = async (start?: string, end?: string) => {
     try {

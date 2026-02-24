@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import AdminDashboard from './dashboard';
+import { AppError } from '@/lib/utils/errors';
 
 const ADMIN_EMAIL = 'admin@example.com';
 
@@ -20,7 +21,7 @@ export default async function AdminPage() {
 
   // Check admin status
   if (session.user.email !== ADMIN_EMAIL) {
-    redirect('/');
+    throw new AppError('Forbidden - Admin access required', 403);
   }
 
   return <AdminDashboard />;
