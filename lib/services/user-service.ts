@@ -2,17 +2,7 @@ import { prisma } from '@/lib/prisma';
 import { logger } from '@/lib/utils/logger';
 import { NotFoundError } from '@/lib/utils/errors';
 import { getDailyUsageRecord } from './rate-limiter';
-
-type UserTier = 'FREE' | 'PRO';
-
-const TIER_LIMITS = {
-  FREE: {
-    MAX_DAILY_USAGE: 6,
-  },
-  PRO: {
-    MAX_DAILY_USAGE: 20,
-  },
-};
+import { TIER_LIMITS, type Tier } from '@/lib/config';
 
 /**
  * Get user's current tier from database
@@ -20,7 +10,7 @@ const TIER_LIMITS = {
  * @param userId - User ID
  * @returns User's tier (FREE or PRO)
  */
-export async function getUserTier(userId: string): Promise<UserTier> {
+export async function getUserTier(userId: string): Promise<Tier> {
   try {
     const user = await prisma.user.findUnique({
       where: { id: userId },
@@ -31,7 +21,12 @@ export async function getUserTier(userId: string): Promise<UserTier> {
       throw new NotFoundError('User');
     }
 
-    return user.tier as UserTier;
+    const tier = user.tier as string;
+    if (!['FREE', 'PRO'].includes(tier)) {
+      logger.warn(`Invalid tier in database for user ${userId}: ${tier}, defaulting to FREE`);
+      return 'FREE' as Tier;
+    }
+    return tier as Tier;
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     logger.error('Error getting user tier:', errorMessage);
@@ -84,7 +79,7 @@ export async function getUserDailyUsage(
  * @param userId - User ID to update
  * @param tier - New tier (FREE or PRO)
  */
-export async function updateUserTier(userId: string, tier: UserTier): Promise<void> {
+export async function updateUserTier(userId: string, tier: Tier): Promise<void> {
   try {
     // Validate tier
     if (!['FREE', 'PRO'].includes(tier)) {

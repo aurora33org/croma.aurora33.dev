@@ -36,6 +36,14 @@ export async function POST(
       throw new NotFoundError('Job');
     }
 
+    // CRITICAL: Verify user owns this job
+    if (job.userId !== session.user.id) {
+      return NextResponse.json(
+        { success: false, error: 'Forbidden: Job belongs to another user' },
+        { status: 403 }
+      );
+    }
+
     if (job.status !== 'created') {
       throw new BadRequestError(`Cannot upload to job in status: ${job.status}`);
     }

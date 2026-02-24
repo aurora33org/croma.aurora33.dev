@@ -1,7 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import { logger } from '@/lib/utils/logger';
-
-type UserTier = 'FREE' | 'PRO';
+import type { Tier } from '@/lib/config';
 
 /**
  * Get UTC midnight date for today
@@ -21,7 +20,7 @@ function getUtcMidnight(): Date {
  * @param tier - User's tier (FREE or PRO)
  * @returns true if user can compress, false if limit exceeded
  */
-export async function checkDailyUsage(userId: string, tier: UserTier): Promise<boolean> {
+export async function checkDailyUsage(userId: string, tier: Tier): Promise<boolean> {
   try {
     const today = getUtcMidnight();
 
@@ -55,9 +54,9 @@ export async function checkDailyUsage(userId: string, tier: UserTier): Promise<b
     return canCompress;
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    logger.error('Error checking daily usage:', errorMessage);
-    // If there's an error, allow the compression to be safe
-    return true;
+    logger.error('Critical: Database error checking daily usage, denying request:', errorMessage);
+    // Fail secure: deny on error
+    return false;
   }
 }
 
