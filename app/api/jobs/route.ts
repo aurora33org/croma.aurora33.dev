@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth/next';
 import { jobManager, storageService } from '@/lib/services';
 import { logger } from '@/lib/utils/logger';
 
@@ -8,7 +9,16 @@ import { logger } from '@/lib/utils/logger';
  */
 export async function POST() {
   try {
-    const job = jobManager.createJob();
+    // Get session and authenticate
+    const session = await getServerSession();
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        { success: false, error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
+    const job = jobManager.createJob(session.user.id);
     await storageService.createJobDirectories(job.id);
 
     logger.success(`Created job: ${job.id}`);
@@ -18,10 +28,11 @@ export async function POST() {
       jobId: job.id,
       message: 'Job created successfully'
     }, { status: 201 });
-  } catch (error: any) {
-    logger.error('Failed to create job:', error.message);
+  } catch (error: unknown) {
+    const err = error instanceof Error ? error : new Error(String(error));
+    logger.error('Failed to create job:', err.message);
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, error: err.message },
       { status: 500 }
     );
   }
@@ -38,9 +49,10 @@ export async function GET() {
       success: true,
       jobs
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const err = error instanceof Error ? error : new Error(String(error));
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, error: err.message },
       { status: 500 }
     );
   }

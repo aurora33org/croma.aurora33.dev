@@ -1,20 +1,34 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth/next';
 import { promises as fs } from 'fs';
 import path from 'path';
 import { jobManager, storageService } from '@/lib/services';
 import { parseMultipartForm } from '@/lib/middleware/multer-handler';
 import { NotFoundError, BadRequestError } from '@/lib/utils/errors';
 import { logger } from '@/lib/utils/logger';
+import { TIER_LIMITS } from '@/lib/config';
+import { getUserTier } from '@/lib/services/user-service';
+import { checkDailyUsage } from '@/lib/services/rate-limiter';
 
 /**
  * POST /api/jobs/:jobId/upload
  * Upload image files for a compression job
+ * Enforces tier-based limits on file size and daily usage
  */
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ jobId: string }> }
 ) {
   try {
+    // Authenticate user
+    const session = await getServerSession();
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        { success: false, error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
     const { jobId } = await params;
     const job = jobManager.getJob(jobId);
 
@@ -24,6 +38,22 @@ export async function POST(
 
     if (job.status !== 'created') {
       throw new BadRequestError(`Cannot upload to job in status: ${job.status}`);
+    }
+
+    // Get user tier
+    const userTier = await getUserTier(session.user.id);
+    const tierLimits = TIER_LIMITS[userTier];
+
+    // Check daily usage before allowing upload
+    const canUpload = await checkDailyUsage(session.user.id, userTier);
+    if (!canUpload) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: `Daily compression limit exceeded for ${userTier} tier (${tierLimits.MAX_DAILY_USAGE} per day)`
+        },
+        { status: 429 }
+      );
     }
 
     const uploadDir = storageService.getUploadDir(jobId);
@@ -43,9 +73,24 @@ export async function POST(
       throw new BadRequestError('No files were uploaded');
     }
 
+    // Validate file count and sizes against tier limits
+    if (files.length > tierLimits.MAX_FILES) {
+      throw new BadRequestError(
+        `Too many files. Maximum ${tierLimits.MAX_FILES} files per request for ${userTier} tier`
+      );
+    }
+
+    for (const file of files) {
+      if (file.size > tierLimits.MAX_FILE_SIZE) {
+        throw new BadRequestError(
+          `File "${file.name}" exceeds maximum size of ${Math.round(tierLimits.MAX_FILE_SIZE / (1024 * 1024))}MB for ${userTier} tier`
+        );
+      }
+    }
+
     // Save uploaded files to disk
     let totalSize = 0;
-    const uploadedFiles: any[] = [];
+    const uploadedFiles: Array<{ filename: string; size: number; mimetype: string }> = [];
 
     for (const file of files) {
       const buffer = await file.arrayBuffer();
@@ -73,7 +118,7 @@ export async function POST(
       totalSize
     });
 
-    logger.success(`Uploaded ${files.length} files for job ${jobId}`);
+    logger.success(`Uploaded ${files.length} files for job ${jobId} (user: ${session.user.id})`);
 
     return NextResponse.json({
       success: true,
@@ -81,11 +126,12 @@ export async function POST(
       totalSize,
       files: uploadedFiles
     });
-  } catch (error: any) {
-    const statusCode = error.statusCode || 500;
-    logger.error('Upload error:', error.message);
+  } catch (error: unknown) {
+    const err = error instanceof Error ? error : new Error(String(error));
+    const statusCode = 'statusCode' in err ? (err.statusCode as number) : 500;
+    logger.error('Upload error:', err.message);
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, error: err.message },
       { status: statusCode }
     );
   }
