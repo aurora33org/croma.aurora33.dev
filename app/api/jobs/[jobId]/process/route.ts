@@ -46,6 +46,14 @@ export async function POST(
       throw new NotFoundError('Job');
     }
 
+    // CRITICAL: Verify user owns this job
+    if (job.userId !== session.user.id) {
+      return NextResponse.json(
+        { success: false, error: 'Forbidden: Job belongs to another user' },
+        { status: 403 }
+      );
+    }
+
     if (job.status !== 'uploaded') {
       throw new BadRequestError(`Cannot process job in status: ${job.status}`);
     }
@@ -121,9 +129,10 @@ export async function POST(
         const zipPath = path.join(storageService.getJobDir(jobId), 'processed.zip');
         await zipService.createZip(processedDir, zipPath);
 
-        // Increment daily usage with original file sizes
+        // Increment daily usage BEFORE marking complete
         await incrementDailyUsage(session.user.id, totalOriginalSize);
 
+        // Only mark complete after successful increment
         jobManager.setJobStatus(jobId, 'completed');
         logger.success(
           `Job ${jobId} completed: ${successCount}/${result.results.length} files processed (user: ${session.user.id})`
