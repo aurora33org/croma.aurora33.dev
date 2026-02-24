@@ -3,6 +3,22 @@ import { prisma } from "@/lib/prisma";
 import { logger } from "@/lib/utils/logger";
 
 /**
+ * Type definitions for authentication
+ */
+export interface AuthUser {
+  id: string;
+  email: string;
+  tier: string;
+  emailConsent: boolean;
+}
+
+export interface CreateUserResponse {
+  success: boolean;
+  user?: AuthUser;
+  error?: string;
+}
+
+/**
  * Validate email format using basic regex
  */
 export function validateEmail(email: string): boolean {
@@ -47,7 +63,7 @@ export async function createUser(
   email: string,
   password: string,
   emailConsent: boolean
-): Promise<{ success: boolean; user?: any; error?: string }> {
+): Promise<CreateUserResponse> {
   // Validate email consent
   if (!emailConsent) {
     return { success: false, error: "Email consent is required" };
@@ -89,6 +105,7 @@ export async function createUser(
         id: true,
         email: true,
         tier: true,
+        emailConsent: true,
         createdAt: true,
       },
     });
@@ -101,9 +118,11 @@ export async function createUser(
 }
 
 /**
- * Find user by email
+ * Find user by email (internal use - includes passwordHash)
  */
-export async function findUserByEmail(email: string) {
+export async function findUserByEmail(
+  email: string
+): Promise<(AuthUser & { passwordHash: string; createdAt: Date; updatedAt: Date }) | null> {
   try {
     return await prisma.user.findUnique({
       where: { email },
@@ -129,7 +148,7 @@ export async function findUserByEmail(email: string) {
 export async function verifyUserCredentials(
   email: string,
   password: string
-): Promise<{ success: boolean; user?: any; error?: string }> {
+): Promise<{ success: boolean; user?: Omit<AuthUser, 'emailConsent'>; error?: string }> {
   const user = await findUserByEmail(email);
 
   if (!user) {
