@@ -31,9 +31,8 @@ export default function LoginForm() {
 
       // Redirect to dashboard on success
       router.push("/dashboard");
-    } catch (err) {
+    } catch {
       setError("An error occurred. Please try again.");
-      console.error("Login error:", err);
     } finally {
       setIsLoading(false);
     }

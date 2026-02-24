@@ -1,0 +1,17 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/api/auth/[...nextauth]/route": "/api/auth/[...nextauth]",
+  "/api/auth/register/route": "/api/auth/register",
+  "/api/health/route": "/api/health",
+  "/api/jobs/[jobId]/download/route": "/api/jobs/[jobId]/download",
+  "/api/jobs/[jobId]/process/route": "/api/jobs/[jobId]/process",
+  "/api/jobs/[jobId]/status/route": "/api/jobs/[jobId]/status",
+  "/api/jobs/[jobId]/upload/route": "/api/jobs/[jobId]/upload",
+  "/api/jobs/route": "/api/jobs",
+  "/auth/login/page": "/auth/login",
+  "/auth/register/page": "/auth/register",
+  "/favicon.ico/route": "/favicon.ico",
+  "/page": "/",
+  "/sitemap.xml/route": "/sitemap.xml"
+}

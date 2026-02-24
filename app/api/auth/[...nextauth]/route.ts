@@ -37,7 +37,7 @@ export const authOptions: NextAuthOptions = {
 
         const result = await verifyUserCredentials(credentials.email, credentials.password);
 
-        if (!result.success) {
+        if (!result.success || !result.user) {
           throw new Error(result.error || "Invalid credentials");
         }
 
@@ -45,7 +45,6 @@ export const authOptions: NextAuthOptions = {
           id: result.user.id,
           email: result.user.email,
           tier: result.user.tier,
-          emailConsent: true,
         };
       },
     }),

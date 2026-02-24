@@ -70,9 +70,8 @@ export default function RegisterForm() {
 
       // Redirect to login page on success
       router.push("/auth/login?registered=true");
-    } catch (err) {
+    } catch {
       setError("An error occurred. Please try again.");
-      console.error("Registration error:", err);
     } finally {
       setIsLoading(false);
     }
