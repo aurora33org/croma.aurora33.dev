@@ -4,6 +4,9 @@ import { ReactNode } from "react";
 import { cookies } from "next/headers";
 import { locales, defaultLocale, type Locale } from "@/i18n/config";
 import { LocaleProvider } from "@/lib/i18n-context";
+import { SessionProvider } from "next-auth/react";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -60,6 +63,7 @@ export default async function RootLayout({
 }>) {
   const locale = await getLocale();
   const messages = (await import(`@/i18n/locales/${locale}`)).default as any;
+  const session = await getServerSession(authOptions);
 
   return (
     <html lang={locale}>
@@ -76,9 +80,11 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <LocaleProvider locale={locale} messages={messages}>
-          {children}
-        </LocaleProvider>
+        <SessionProvider session={session}>
+          <LocaleProvider locale={locale} messages={messages}>
+            {children}
+          </LocaleProvider>
+        </SessionProvider>
       </body>
     </html>
   );
