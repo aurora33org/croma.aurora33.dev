@@ -15,6 +15,9 @@ import { Footer } from '@/components/Footer';
 import { LoginPrompt } from '@/components/LoginPrompt';
 import { UsageIndicator } from '@/components/UsageIndicator';
 import { LimitExceededView } from '@/components/LimitExceededView';
+import { TierBadge } from '@/components/TierBadge';
+import { TIER_LIMITS } from '@/lib/config';
+import { logger } from '@/lib/utils/logger';
 
 type ViewType = 'upload' | 'settings' | 'processing' | 'download' | 'error';
 
@@ -59,7 +62,8 @@ export default function Home() {
             setDailyLimitExceeded(true);
           }
         } catch (error) {
-          console.error('Error checking daily limit:', error);
+          const errorMessage = error instanceof Error ? error.message : String(error);
+          logger.error('Error checking daily limit', { error: errorMessage });
         }
       }
     };
@@ -181,8 +185,9 @@ export default function Home() {
       }
     } catch (error: unknown) {
       const err = error instanceof Error ? error : new Error(String(error));
-      console.error('Compression error:', err);
-      setErrorMessage(err.message || t('errors.defaultMessage', { defaultValue: 'An error occurred during compression' }));
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      logger.error('Compression error', { error: errorMessage });
+      setErrorMessage(errorMessage || t('errors.defaultMessage', { defaultValue: 'An error occurred during compression' }));
       setCurrentView('error');
     } finally {
       setIsCompressing(false);
@@ -204,7 +209,8 @@ export default function Home() {
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
     } catch (error) {
-      console.error('Download error:', error);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      logger.error('Download error', { error: errorMessage });
       setErrorMessage(t('errors.downloadFailed', { defaultValue: 'Failed to download files' }));
       setCurrentView('error');
     }
@@ -232,7 +238,7 @@ export default function Home() {
 
   const handleSubscribe = async (email: string) => {
     if (!email) return;
-    console.log('Subscribe:', email);
+    logger.debug('Subscribe', { email });
   };
 
   // Show loading state while checking auth
@@ -258,13 +264,20 @@ export default function Home() {
       {session?.user && dailyLimitExceeded && (
         <LimitExceededView
           tier={session.user.tier || 'FREE'}
-          limit={session.user.tier === 'PRO' ? 20 : 6}
+          limit={TIER_LIMITS[(session.user.tier as 'FREE' | 'PRO') || 'FREE'].MAX_DAILY_USAGE}
           onClose={() => setDailyLimitExceeded(false)}
         />
       )}
 
       {/* If user is not authenticated, show login prompt above hero */}
       {!session?.user && currentView === 'upload' && <LoginPrompt />}
+
+      {/* Show tier badge and usage indicator if authenticated */}
+      {session?.user && !dailyLimitExceeded && (
+        <div className="mb-4">
+          <TierBadge tier={(session.user.tier as 'FREE' | 'PRO') || 'FREE'} size="md" />
+        </div>
+      )}
 
       {/* Show usage indicator if authenticated */}
       {session?.user && !dailyLimitExceeded && (

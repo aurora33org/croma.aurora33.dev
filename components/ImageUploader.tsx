@@ -15,14 +15,11 @@ export function ImageUploader({ onFilesSelected, onShowSettings }: ImageUploader
   const { data: session } = useSession();
   const [dragOver, setDragOver] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const fileInputRef = useState<HTMLInputElement | null>(null)[1];
 
   const userTier = (session?.user?.tier as 'FREE' | 'PRO') || 'FREE';
   const limits = TIER_LIMITS[userTier];
   const maxFileSize = limits.MAX_FILE_SIZE;
   const maxFiles = limits.MAX_FILES;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const _fileInputRef = fileInputRef;
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
