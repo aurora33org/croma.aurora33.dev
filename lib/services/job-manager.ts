@@ -15,6 +15,7 @@ interface ProcessedFile {
 
 interface Job {
   id: string;
+  userId: string;
   status: 'created' | 'uploading' | 'uploaded' | 'processing' | 'completed' | 'failed';
   uploadedFiles: JobFile[];
   processedFiles: ProcessedFile[];
@@ -32,10 +33,11 @@ interface Job {
 class JobManager {
   private jobs: Map<string, Job> = new Map();
 
-  createJob(): Job {
+  createJob(userId: string): Job {
     const jobId = uuidv4();
     const job: Job = {
       id: jobId,
+      userId,
       status: 'created',
       uploadedFiles: [],
       processedFiles: [],
@@ -51,7 +53,7 @@ class JobManager {
     };
 
     this.jobs.set(jobId, job);
-    logger.info(`Created new job: ${jobId}`);
+    logger.info(`Created new job: ${jobId} for user ${userId}`);
     return job;
   }
 

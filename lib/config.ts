@@ -34,3 +34,25 @@ export const config = {
   supportedFormats: ['jpeg', 'jpg', 'png', 'webp', 'gif'],
   outputFormats: ['webp', 'jpeg', 'png']
 };
+
+/**
+ * Tier-based limits for image compression
+ */
+export const TIER_LIMITS = {
+  FREE: {
+    MAX_FILES: 5,                          // Max files per request
+    MAX_FILE_SIZE: 7 * 1024 * 1024,       // 7MB per file
+    MAX_DAILY_USAGE: 6,                   // Max compressions per day
+  },
+  PRO: {
+    MAX_FILES: 15,                         // Max files per request
+    MAX_FILE_SIZE: 12 * 1024 * 1024,      // 12MB per file
+    MAX_DAILY_USAGE: 20,                  // Max compressions per day
+  },
+} as const;
+
+/**
+ * Available tier names
+ */
+export const TIER_NAMES = ['FREE', 'PRO'] as const;
+export type Tier = typeof TIER_NAMES[number];
