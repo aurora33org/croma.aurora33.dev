@@ -8,7 +8,7 @@ export const config = {
   upload: {
     maxFileSize: parseInt(process.env.MAX_FILE_SIZE || '10485760', 10), // 10MB
     maxFiles: parseInt(process.env.MAX_FILES || '20', 10),
-    allowedMimeTypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
+    allowedMimeTypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/avif']
   },
 
   // Cleanup configuration
@@ -32,7 +32,7 @@ export const config = {
 
   // Supported formats
   supportedFormats: ['jpeg', 'jpg', 'png', 'webp', 'gif'],
-  outputFormats: ['webp', 'jpeg', 'png']
+  outputFormats: ['webp', 'jpeg', 'png', 'avif']
 };
 
 /**

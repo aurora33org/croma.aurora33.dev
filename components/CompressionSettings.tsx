@@ -44,7 +44,7 @@ export function CompressionSettings({
               </span>
             </label>
             <div className="space-y-2">
-              {['webp', 'jpeg', 'png'].map(fmt => (
+              {['webp', 'jpeg', 'png', 'avif'].map(fmt => (
                 <label key={fmt} className="flex items-center gap-2 cursor-pointer">
                   <input
                     type="radio"
