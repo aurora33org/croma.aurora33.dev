@@ -4,6 +4,7 @@ import { FormEvent, useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from '@/lib/i18n-context';
+import { clearSessionData } from '@/lib/utils/session-tracker';
 
 interface RegisterModalProps {
   isOpen: boolean;
@@ -90,6 +91,9 @@ export default function RegisterModal({
         setError(data.error || t('common.registration_failed'));
         return;
       }
+
+      // Clear anonymous session before signing in
+      clearSessionData();
 
       // Sign in with credentials
       const signInResult = await signIn('credentials', {
