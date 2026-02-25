@@ -26,6 +26,7 @@ declare module "next-auth/jwt" {
   interface JWT {
     id?: string;
     tier?: string;
+    emailConsent?: boolean;
     isAdmin?: boolean;
   }
 }
@@ -53,6 +54,7 @@ export const authOptions: NextAuthOptions = {
           id: result.user.id,
           email: result.user.email,
           tier: result.user.tier,
+          emailConsent: result.user.emailConsent,
           isAdmin: result.user.isAdmin,
         };
       },
@@ -66,11 +68,12 @@ export const authOptions: NextAuthOptions = {
       }
       return true;
     },
-    async jwt({ token, user }: { token: JWT; user?: { id: string; email?: string; tier?: string; isAdmin?: boolean } }) {
+    async jwt({ token, user }: { token: JWT; user?: { id: string; email?: string; tier?: string; emailConsent?: boolean; isAdmin?: boolean } }) {
       // Add user info to JWT token
       if (user) {
         token.id = user.id;
         token.tier = user.tier || "FREE";
+        token.emailConsent = user.emailConsent || false;
         token.isAdmin = user.isAdmin || false;
       }
       return token;

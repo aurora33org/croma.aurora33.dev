@@ -160,7 +160,7 @@ export async function findUserByEmail(
 export async function verifyUserCredentials(
   email: string,
   password: string
-): Promise<{ success: boolean; user?: Omit<AuthUser, 'emailConsent'>; error?: string }> {
+): Promise<{ success: boolean; user?: AuthUser; error?: string }> {
   const user = await findUserByEmail(email);
 
   if (!user) {
@@ -183,6 +183,7 @@ export async function verifyUserCredentials(
       id: user.id,
       email: user.email,
       tier: user.tier,
+      emailConsent: user.emailConsent,
       isAdmin: user.isAdmin,
     },
   };
