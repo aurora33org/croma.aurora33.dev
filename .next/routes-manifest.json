@@ -22,6 +22,14 @@
   },
   "dynamicRoutes": [
     {
+      "page": "/api/admin/users/[id]/tier",
+      "regex": "^/api/admin/users/([^/]+?)/tier(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/admin/users/(?<nxtPid>[^/]+?)/tier(?:/)?$"
+    },
+    {
       "page": "/api/auth/[...nextauth]",
       "regex": "^/api/auth/(.+?)(?:/)?$",
       "routeKeys": {
@@ -82,6 +90,48 @@
       "namedRegex": "^/_not\\-found(?:/)?$"
     },
     {
+      "page": "/admin",
+      "regex": "^/admin(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin(?:/)?$"
+    },
+    {
+      "page": "/api/admin/export/jobs",
+      "regex": "^/api/admin/export/jobs(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/admin/export/jobs(?:/)?$"
+    },
+    {
+      "page": "/api/admin/export/stats",
+      "regex": "^/api/admin/export/stats(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/admin/export/stats(?:/)?$"
+    },
+    {
+      "page": "/api/admin/export/users",
+      "regex": "^/api/admin/export/users(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/admin/export/users(?:/)?$"
+    },
+    {
+      "page": "/api/admin/jobs",
+      "regex": "^/api/admin/jobs(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/admin/jobs(?:/)?$"
+    },
+    {
+      "page": "/api/admin/stats",
+      "regex": "^/api/admin/stats(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/admin/stats(?:/)?$"
+    },
+    {
+      "page": "/api/admin/users",
+      "regex": "^/api/admin/users(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/admin/users(?:/)?$"
+    },
+    {
       "page": "/api/auth/register",
       "regex": "^/api/auth/register(?:/)?$",
       "routeKeys": {},
@@ -98,6 +148,12 @@
       "regex": "^/api/jobs(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/api/jobs(?:/)?$"
+    },
+    {
+      "page": "/api/user/usage",
+      "regex": "^/api/user/usage(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/user/usage(?:/)?$"
     },
     {
       "page": "/auth/login",
