@@ -1,3 +1,3 @@
-module.exports=[14397,a=>{a.v({navigation:{tagline:"croma.aurora33",themeToggleAriaLabel:"Toggle dark mode"},footer:{madeWith:"Hecho con ❤️ y con IA, por",needCustomSolutions:"¿Necesitas soluciones personalizadas para tu negocio?",links:{webDevelopment:"Desarrollo Web",consulting:"Consultoría",contact:"Contacto"},copyrightText:"Todos los derechos reservados"}})}];
+module.exports=[14397,a=>{a.v({navigation:{tagline:"croma.aurora33",themeToggleAriaLabel:"Toggle dark mode",tool:"Herramienta",pricing:"Precios"},footer:{madeWith:"Hecho con ❤️ y con IA, por",needCustomSolutions:"¿Necesitas soluciones personalizadas para tu negocio?",links:{webDevelopment:"Desarrollo Web",consulting:"Consultoría",contact:"Contacto"},copyrightText:"Todos los derechos reservados"}})}];
 
 //# sourceMappingURL=_worktrees_pro-version_i18n_locales_es_common_json_0f1b72e5._.js.map

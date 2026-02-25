@@ -1,3 +1,3 @@
-module.exports=[19174,a=>{a.v({navigation:{tagline:"croma.aurora33",themeToggleAriaLabel:"Toggle dark mode"},footer:{madeWith:"Made with ❤️ and AI, by",needCustomSolutions:"Need custom solutions for your business?",links:{webDevelopment:"Web Development",consulting:"Consulting",contact:"Contact"},copyrightText:"All rights reserved"}})}];
+module.exports=[19174,a=>{a.v({navigation:{tagline:"croma.aurora33",themeToggleAriaLabel:"Toggle dark mode",tool:"Tool",pricing:"Pricing"},footer:{madeWith:"Made with ❤️ and AI, by",needCustomSolutions:"Need custom solutions for your business?",links:{webDevelopment:"Web Development",consulting:"Consulting",contact:"Contact"},copyrightText:"All rights reserved"}})}];
 
 //# sourceMappingURL=_worktrees_pro-version_i18n_locales_en_common_json_5ae9b450._.js.map
