@@ -10,6 +10,7 @@ declare module "next-auth" {
       id: string;
       tier: string;
       emailConsent?: boolean;
+      isAdmin?: boolean;
     } & DefaultSession["user"];
   }
   interface User {
@@ -17,6 +18,7 @@ declare module "next-auth" {
     email?: string;
     tier?: string;
     emailConsent?: boolean;
+    isAdmin?: boolean;
   }
 }
 
@@ -24,6 +26,7 @@ declare module "next-auth/jwt" {
   interface JWT {
     id?: string;
     tier?: string;
+    isAdmin?: boolean;
   }
 }
 
@@ -50,6 +53,7 @@ export const authOptions: NextAuthOptions = {
           id: result.user.id,
           email: result.user.email,
           tier: result.user.tier,
+          isAdmin: result.user.isAdmin,
         };
       },
     }),
@@ -62,11 +66,12 @@ export const authOptions: NextAuthOptions = {
       }
       return true;
     },
-    async jwt({ token, user }: { token: JWT; user?: { id: string; email?: string; tier?: string } }) {
+    async jwt({ token, user }: { token: JWT; user?: { id: string; email?: string; tier?: string; isAdmin?: boolean } }) {
       // Add user info to JWT token
       if (user) {
         token.id = user.id;
         token.tier = user.tier || "FREE";
+        token.isAdmin = user.isAdmin || false;
       }
       return token;
     },
@@ -75,6 +80,7 @@ export const authOptions: NextAuthOptions = {
       if (session.user) {
         session.user.id = (token.id as string) || "";
         session.user.tier = (token.tier as string) || "FREE";
+        session.user.isAdmin = (token.isAdmin as boolean) || false;
       }
       return session;
     },
