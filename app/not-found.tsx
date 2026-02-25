@@ -1,10 +1,22 @@
 'use client';
 
 import Link from 'next/link';
-import { useTranslations } from '@/lib/i18n-context';
+import { useContext } from 'react';
+import { LocaleContext } from '@/lib/i18n-context';
+
+const fallback = {
+  heading: '¡Píxel perdido!',
+  description: 'En la escala de compresión, esta página llegó al 0%. Vuelve al inicio y comprime tus imágenes.',
+  button: 'Volver al inicio',
+};
 
 export default function NotFound() {
-  const t = useTranslations('errors');
+  const ctx = useContext(LocaleContext);
+  const errors = ctx?.messages?.errors?.notFound;
+
+  const heading = errors?.heading ?? fallback.heading;
+  const description = errors?.description ?? fallback.description;
+  const button = errors?.button ?? fallback.button;
 
   return (
     <main className="min-h-screen bg-background dark:bg-bg-dark flex flex-col items-center justify-center px-4 text-center">
@@ -17,14 +29,15 @@ export default function NotFound() {
         404
       </p>
 
-      {/* Heading */}
+      {/* Heading — sr-only span announces error code to screen readers */}
       <h1 className="font-syne font-bold text-2xl sm:text-3xl md:text-4xl text-text dark:text-text-dark mb-4">
-        {t('notFound.heading')}
+        <span className="sr-only">404 — </span>
+        {heading}
       </h1>
 
       {/* Description */}
       <p className="text-text-muted dark:text-text-muted-dark text-base max-w-sm leading-relaxed mb-10">
-        {t('notFound.description')}
+        {description}
       </p>
 
       {/* Home button */}
@@ -41,7 +54,7 @@ export default function NotFound() {
         >
           <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
         </svg>
-        {t('notFound.button')}
+        {button}
       </Link>
     </main>
   );
