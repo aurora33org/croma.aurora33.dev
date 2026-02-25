@@ -16,7 +16,7 @@ interface LocaleContextType {
   tParams: (key: string, params: Record<string, any>, defaultValue?: string) => string;
 }
 
-const LocaleContext = createContext<LocaleContextType | undefined>(undefined);
+export const LocaleContext = createContext<LocaleContextType | undefined>(undefined);
 
 export function LocaleProvider({
   locale,
