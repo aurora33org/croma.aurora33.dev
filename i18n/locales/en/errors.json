@@ -1,4 +1,9 @@
 {
   "title": "Error",
-  "retryButton": "Try Again"
+  "retryButton": "Try Again",
+  "notFound": {
+    "heading": "Lost pixel!",
+    "description": "In the compression scale, this page hit 0%. Head back home and compress your images.",
+    "button": "Back to home"
+  }
 }
