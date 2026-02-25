@@ -33,7 +33,7 @@ model User {
 model UserUsage {
   id           String   @id @default(cuid())
   userId       String
-  date         DateTime @default(now()) @db.Date
+  date         DateTime @db.Date
   sessionCount Int      @default(0)
   imageCount   Int      @default(0)
   dailyReset   DateTime
