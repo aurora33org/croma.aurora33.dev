@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Press_Start_2P } from "next/font/google";
 import { ReactNode } from "react";
 import { cookies } from "next/headers";
 import { locales, defaultLocale, type Locale } from "@/i18n/config";
@@ -14,6 +14,13 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const pixelFont = Press_Start_2P({
+  weight: "400",
+  variable: "--font-pixel",
+  subsets: ["latin"],
+  display: "swap",
 });
 
 async function getLocale(): Promise<Locale> {
@@ -74,7 +81,7 @@ export default async function RootLayout({
         ))}
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${pixelFont.variable} antialiased`}
       >
         <LocaleProvider locale={locale} messages={messages}>
           {children}
