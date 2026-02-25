@@ -2,7 +2,8 @@
   "navigation": {
     "tagline": "croma.aurora33",
     "themeToggleAriaLabel": "Toggle dark mode",
-    "tool": "Tool"
+    "tool": "Tool",
+    "pricing": "Pricing"
   },
   "footer": {
     "madeWith": "Made with ❤️ and AI, by",
