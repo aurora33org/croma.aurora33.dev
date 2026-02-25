@@ -24,8 +24,24 @@ model User {
   // Relations
   jobs          Job[]
   dailyUsage    DailyUsage[]
+  usage         UserUsage[]
 
   @@map("users")
+}
+
+// UserUsage model for tracking session and image usage
+model UserUsage {
+  id           String   @id @default(cuid())
+  userId       String
+  date         DateTime @default(now()) @db.Date
+  sessionCount Int      @default(0)
+  imageCount   Int      @default(0)
+  dailyReset   DateTime
+
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+  @@index([userId])
 }
 
 // Job model for tracking compression jobs
