@@ -104,7 +104,7 @@ export async function createUser(
         email,
         passwordHash,
         emailConsent: true,
-        tier: "FREE", // All new users start as FREE tier
+        tier: "PRO", // All registered users are automatically PRO tier
         isAdmin: isFirstUser, // First user is admin
       },
       select: {
