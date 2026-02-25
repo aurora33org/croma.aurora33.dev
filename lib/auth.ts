@@ -10,6 +10,7 @@ export interface AuthUser {
   email: string;
   tier: string;
   emailConsent: boolean;
+  isAdmin?: boolean;
 }
 
 export interface CreateUserResponse {
@@ -90,6 +91,10 @@ export async function createUser(
       return { success: false, error: "Email already registered" };
     }
 
+    // Check if this is the first user (will be admin)
+    const userCount = await prisma.user.count();
+    const isFirstUser = userCount === 0;
+
     // Hash password
     const passwordHash = await hashPassword(password);
 
@@ -100,15 +105,21 @@ export async function createUser(
         passwordHash,
         emailConsent: true,
         tier: "FREE", // All new users start as FREE tier
+        isAdmin: isFirstUser, // First user is admin
       },
       select: {
         id: true,
         email: true,
         tier: true,
         emailConsent: true,
+        isAdmin: true,
         createdAt: true,
       },
     });
+
+    if (isFirstUser) {
+      logger.success(`First user created as admin: ${email}`);
+    }
 
     return { success: true, user };
   } catch (error) {
@@ -132,6 +143,7 @@ export async function findUserByEmail(
         passwordHash: true,
         tier: true,
         emailConsent: true,
+        isAdmin: true,
         createdAt: true,
         updatedAt: true,
       },
@@ -171,6 +183,7 @@ export async function verifyUserCredentials(
       id: user.id,
       email: user.email,
       tier: user.tier,
+      isAdmin: user.isAdmin,
     },
   };
 }
