@@ -31,6 +31,7 @@ module.exports = {
         syne: ['Syne', 'sans-serif'],
         kangge: ['Kangge', 'sans-serif'],
         quicksand: ['Quicksand', 'sans-serif'],
+        pixel: ['var(--font-pixel)', 'monospace'],
       },
     },
   },
