@@ -1,0 +1,95 @@
+{
+  "title": "Planes de Precios",
+  "subtitle": "Elige el plan perfecto para tus necesidades",
+  "description": "Acceso ilimitado a herramientas de compresión de imágenes. Sin límites de almacenamiento. Sin anuncios.",
+  "tiers": {
+    "free": {
+      "name": "Gratis",
+      "price": "0",
+      "priceLabel": "Siempre gratis",
+      "description": "Perfecto para principiantes",
+      "features": [
+        "Hasta 5 lotes por día",
+        "Hasta 5 imágenes por lote",
+        "Tamaño máximo: 10 MB por imagen",
+        "Formatos: WebP, JPEG, PNG",
+        "Redimensionamiento básico",
+        "Descarga ZIP"
+      ],
+      "cta": "Comenzar gratis",
+      "highlight": false
+    },
+    "pro": {
+      "name": "Pro",
+      "price": "4.99",
+      "priceLabel": "por mes",
+      "description": "Para profesionales y agencias",
+      "features": [
+        "Hasta 15 lotes por día",
+        "Hasta 15 imágenes por lote",
+        "Tamaño máximo: 30 MB por imagen",
+        "Formatos: WebP, JPEG, PNG",
+        "Redimensionamiento avanzado",
+        "Conversión por lotes",
+        "Soporte prioritario",
+        "Descarga ZIP sin restricciones"
+      ],
+      "cta": "Obtener Pro",
+      "highlight": true
+    }
+  },
+  "comparison": {
+    "title": "Comparación de planes",
+    "column": {
+      "feature": "Característica",
+      "free": "Gratis",
+      "pro": "Pro"
+    }
+  },
+  "faq": {
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Puedo cambiar de plan en cualquier momento?",
+        "answer": "Sí, puedes actualizar o cambiar de plan en cualquier momento. Los cambios entrarán en vigor inmediatamente."
+      },
+      {
+        "question": "¿Hay un período de prueba gratuita para Pro?",
+        "answer": "Ofrecemos una prueba gratuita de 7 días con acceso completo a todas las características de Pro."
+      },
+      {
+        "question": "¿Mis imágenes se almacenan en el servidor?",
+        "answer": "No, procesamos tus imágenes en tiempo real y se eliminan automáticamente después de su descarga."
+      },
+      {
+        "question": "¿Qué métodos de pago aceptas?",
+        "answer": "Aceptamos todas las tarjetas de crédito principales (Visa, Mastercard, Amex) a través de Stripe."
+      },
+      {
+        "question": "¿Incluye soporte al cliente?",
+        "answer": "El plan Gratis incluye soporte por correo electrónico. Pro incluye soporte prioritario."
+      }
+    ]
+  },
+  "benefits": {
+    "title": "¿Por qué elegir Croma Aurora?",
+    "items": [
+      {
+        "title": "Rápido y eficiente",
+        "description": "Procesa imágenes en segundos sin sacrificar la calidad"
+      },
+      {
+        "title": "Privado y seguro",
+        "description": "Tus imágenes nunca se almacenan. Todo se procesa en tu navegador"
+      },
+      {
+        "title": "Sin límites de formato",
+        "description": "Convierte entre WebP, JPEG y PNG sin restricciones"
+      },
+      {
+        "title": "Fácil de usar",
+        "description": "Interfaz intuitiva que no requiere habilidades técnicas"
+      }
+    ]
+  }
+}

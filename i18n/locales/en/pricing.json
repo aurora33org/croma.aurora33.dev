@@ -1,0 +1,95 @@
+{
+  "title": "Pricing Plans",
+  "subtitle": "Choose the perfect plan for your needs",
+  "description": "Unlimited access to image compression tools. No storage limits. No ads.",
+  "tiers": {
+    "free": {
+      "name": "Free",
+      "price": "0",
+      "priceLabel": "Always free",
+      "description": "Perfect for getting started",
+      "features": [
+        "Up to 5 batches per day",
+        "Up to 5 images per batch",
+        "Max file size: 10 MB per image",
+        "Formats: WebP, JPEG, PNG",
+        "Basic resizing",
+        "ZIP download"
+      ],
+      "cta": "Get Started Free",
+      "highlight": false
+    },
+    "pro": {
+      "name": "Pro",
+      "price": "4.99",
+      "priceLabel": "per month",
+      "description": "For professionals and agencies",
+      "features": [
+        "Up to 15 batches per day",
+        "Up to 15 images per batch",
+        "Max file size: 30 MB per image",
+        "Formats: WebP, JPEG, PNG",
+        "Advanced resizing",
+        "Batch conversion",
+        "Priority support",
+        "Unlimited ZIP downloads"
+      ],
+      "cta": "Get Pro",
+      "highlight": true
+    }
+  },
+  "comparison": {
+    "title": "Plan Comparison",
+    "column": {
+      "feature": "Feature",
+      "free": "Free",
+      "pro": "Pro"
+    }
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "items": [
+      {
+        "question": "Can I change plans at any time?",
+        "answer": "Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately."
+      },
+      {
+        "question": "Is there a free trial for Pro?",
+        "answer": "We offer a 7-day free trial with full access to all Pro features."
+      },
+      {
+        "question": "Are my images stored on your servers?",
+        "answer": "No, we process your images in real-time and automatically delete them after download."
+      },
+      {
+        "question": "What payment methods do you accept?",
+        "answer": "We accept all major credit cards (Visa, Mastercard, Amex) through Stripe."
+      },
+      {
+        "question": "Does it include customer support?",
+        "answer": "Free plan includes email support. Pro includes priority support."
+      }
+    ]
+  },
+  "benefits": {
+    "title": "Why Choose Croma Aurora?",
+    "items": [
+      {
+        "title": "Fast and Efficient",
+        "description": "Process images in seconds without sacrificing quality"
+      },
+      {
+        "title": "Private and Secure",
+        "description": "Your images are never stored. Everything processes in your browser"
+      },
+      {
+        "title": "No Format Limits",
+        "description": "Convert between WebP, JPEG, and PNG without restrictions"
+      },
+      {
+        "title": "Easy to Use",
+        "description": "Intuitive interface that requires zero technical skills"
+      }
+    ]
+  }
+}
