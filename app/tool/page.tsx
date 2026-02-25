@@ -16,8 +16,10 @@ import { LoginPrompt } from '@/components/LoginPrompt';
 import { UsageIndicator } from '@/components/UsageIndicator';
 import { LimitExceededView } from '@/components/LimitExceededView';
 import { TierBadge } from '@/components/TierBadge';
+import RegisterModal from '@/components/RegisterModal';
 import { TIER_LIMITS } from '@/lib/config';
 import { logger } from '@/lib/utils/logger';
+import { getSessionLimits, incrementSessionCount, incrementImageCount, clearSessionData } from '@/lib/utils/session-tracker';
 
 type ViewType = 'upload' | 'settings' | 'processing' | 'download' | 'error';
 
@@ -48,6 +50,9 @@ export default function Home() {
   });
 
   const [isCompressing, setIsCompressing] = useState(false);
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
+  const [registerModalContext, setRegisterModalContext] = useState<'image_limit' | 'session_limit' | undefined>();
+  const [sessionLimits, setSessionLimits] = useState<ReturnType<typeof getSessionLimits> | null>(null);
 
   // Check daily usage before rendering
   useEffect(() => {
@@ -72,8 +77,36 @@ export default function Home() {
     }
   }, [currentView, session?.user?.id]);
 
+  // Load session limits for anonymous users on mount
+  useEffect(() => {
+    if (!session?.user?.id) {
+      // Anonymous user - check localStorage limits
+      const limits = getSessionLimits();
+      setSessionLimits(limits);
+    }
+  }, [session?.user?.id]);
+
   const handleFilesSelected = (newFiles: File[]) => {
-    // Si ya hay archivos, agregar los nuevos; si no, reemplazar
+    // Check if user is authenticated
+    if (!session?.user?.id) {
+      // Anonymous user - check limits
+      const limits = getSessionLimits();
+      const totalImages = (files.length || 0) + newFiles.length;
+
+      if (totalImages > limits.imagesPerBatchLimit) {
+        setRegisterModalContext('image_limit');
+        setShowRegisterModal(true);
+        return;
+      }
+
+      if (limits.batchesUsed >= limits.batchesLimit) {
+        setRegisterModalContext('session_limit');
+        setShowRegisterModal(true);
+        return;
+      }
+    }
+
+    // Original logic - Si ya hay archivos, agregar los nuevos; si no, reemplazar
     if (files.length > 0) {
       setFiles([...files, ...newFiles]);
     } else {
@@ -431,6 +464,15 @@ export default function Home() {
           <FAQ />
         </>
       )}
+
+      <RegisterModal
+        isOpen={showRegisterModal}
+        onClose={() => {
+          setShowRegisterModal(false);
+          setRegisterModalContext(undefined);
+        }}
+        context={registerModalContext}
+      />
 
       <Footer />
     </main>
