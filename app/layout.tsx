@@ -6,6 +6,7 @@ import { locales, defaultLocale, type Locale } from "@/i18n/config";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { Providers } from "@/app/providers";
+import { Header } from "@/components/Header";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -84,6 +85,7 @@ export default async function RootLayout({
           locale={locale}
           messages={messages}
         >
+          <Header />
           {children}
         </Providers>
       </body>
