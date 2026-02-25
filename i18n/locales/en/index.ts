@@ -7,6 +7,7 @@ import download from './download.json';
 import errors from './errors.json';
 import faq from './faq.json';
 import formats from './formats.json';
+import pricing from './pricing.json';
 
 export default {
   common,
@@ -18,4 +19,5 @@ export default {
   errors,
   faq,
   formats,
+  pricing,
 };
