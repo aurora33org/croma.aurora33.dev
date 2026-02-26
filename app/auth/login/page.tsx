@@ -21,7 +21,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-background dark:bg-bg-dark flex flex-col items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link href="/" className="text-2xl font-bold text-orange-500 hover:text-orange-600 transition-colors">
