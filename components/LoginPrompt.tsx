@@ -5,7 +5,7 @@ import Link from "next/link";
 export function LoginPrompt() {
   return (
     <div className="px-4 sm:px-8 md:px-16 lg:px-20 xl:px-[120px] max-w-[1720px] mx-auto mb-12 sm:mb-16 md:mb-20">
-      <div className="bg-container dark:bg-container-dark border border-primary/30 rounded-2xl p-6 sm:p-8 md:p-10">
+      <div className="bg-container dark:bg-primary/10 border border-primary/30 rounded-2xl p-6 sm:p-8 md:p-10">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
           <div>
             <h2 className="text-2xl sm:text-3xl font-bold text-text dark:text-text-dark mb-2">
