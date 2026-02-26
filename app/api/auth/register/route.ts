@@ -5,7 +5,7 @@ import { logger } from "@/lib/utils/logger";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { email, password, emailConsent } = body;
+    const { email, password, marketingConsent } = body;
 
     // Validate required fields
     if (!email || !password) {
@@ -32,8 +32,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validate email consent
-    if (!emailConsent) {
+    // Validate marketing consent
+    if (!marketingConsent) {
       return NextResponse.json(
         { error: "Email consent is required" },
         { status: 400 }
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create user
-    const result = await createUser(email, password, emailConsent);
+    const result = await createUser(email, password, marketingConsent);
 
     if (!result.success) {
       return NextResponse.json(
