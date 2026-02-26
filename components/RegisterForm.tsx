@@ -57,7 +57,7 @@ export default function RegisterForm() {
         body: JSON.stringify({
           email,
           password,
-          emailConsent: true,
+          marketingConsent: true,
         }),
       });
 

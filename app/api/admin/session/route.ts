@@ -1,4 +1,5 @@
 import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
 /**
  * GET /api/admin/session
@@ -7,7 +8,7 @@ import { getServerSession } from 'next-auth';
  */
 export async function GET() {
   try {
-    const session = await getServerSession();
+    const session = await getServerSession(authOptions);
 
     const debugInfo = {
       hasSession: !!session,
