@@ -21,30 +21,32 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col items-center justify-center px-4 py-12">
+    <div className="min-h-[60vh] bg-background dark:bg-bg-dark flex flex-col items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <Link href="/" className="text-2xl font-bold text-orange-500 hover:text-orange-600 transition-colors">
-            Croma
+          <Link href="/tool">
+            <h2 className="font-bold hover:opacity-80 transition-opacity inline-block" style={{ fontFamily: '"Kangge", sans-serif', fontSize: 'calc(2.25rem * 0.8)' }}>
+              <span className="text-primary">croma.</span><span className="text-text dark:text-text-dark">aurora<sup>33</sup></span>
+            </h2>
           </Link>
-          <h1 className="mt-4 text-3xl font-bold text-gray-900 dark:text-white">
+          <h1 className="mt-6 text-2xl font-bold text-text dark:text-text-dark">
             Create Account
           </h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
-            Get started with Croma Image Compressor for free
+          <p className="mt-2 text-text-muted dark:text-text-muted-dark">
+            Get started for free
           </p>
         </div>
 
         <RegisterForm />
 
-        <div className="mt-8 text-center text-xs text-gray-500 dark:text-gray-400">
+        <div className="mt-6 text-center text-xs text-text-muted dark:text-text-muted-dark">
           <p>
             By creating an account, you agree to our{" "}
-            <Link href="/terms" className="text-orange-500 hover:text-orange-600">
+            <Link href="/terms" className="text-primary hover:opacity-80 transition-opacity">
               Terms of Service
             </Link>{" "}
             and{" "}
-            <Link href="/privacy" className="text-orange-500 hover:text-orange-600">
+            <Link href="/privacy" className="text-primary hover:opacity-80 transition-opacity">
               Privacy Policy
             </Link>
           </p>
