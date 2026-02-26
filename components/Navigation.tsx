@@ -65,7 +65,7 @@ export function Navigation() {
   };
 
   return (
-    <div className="py-4 sm:py-6 md:py-8 px-4 sm:px-8 md:px-16 lg:px-20 xl:px-[120px] max-w-[1720px] mx-auto mb-4 sm:mb-6 md:mb-8 border-b border-gray-200 dark:border-gray-700">
+    <div className="py-4 sm:py-6 md:py-8 px-4 sm:px-8 md:px-16 lg:px-20 xl:px-[120px] max-w-[1720px] mx-auto mb-4 sm:mb-6 md:mb-8 border-b border-gray-200 dark:border-gray-700 bg-background dark:bg-bg-dark">
       <div className="flex items-center justify-between">
         {/* Logo and Brand */}
         <a href="https://croma.aurora33.dev" target="_blank" rel="noopener noreferrer">
