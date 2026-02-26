@@ -8,7 +8,7 @@ export function LoginPrompt() {
       <div className="bg-container dark:bg-primary/10 border border-primary/30 rounded-2xl p-6 sm:p-8 md:p-10">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-text dark:text-text-dark mb-2">
+            <h2 className="text-xl sm:text-2xl font-bold text-text dark:text-text-dark mb-2">
               Unlock More Features
             </h2>
             <p className="text-text-muted dark:text-text-muted-dark max-w-md">
