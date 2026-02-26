@@ -22,9 +22,9 @@ export function PricingCards({ onSelectPro }: PricingCardsProps) {
     <div className="w-full px-4 sm:px-8 md:px-16 lg:px-20 xl:px-[120px] max-w-[1720px] mx-auto py-8 sm:py-12 md:py-16">
       {/* Header */}
       <div className="mb-12 sm:mb-16 md:mb-20">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-text dark:text-text-dark mb-4">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-text dark:text-text-dark mb-4">
           {t('title')}
-        </h2>
+        </h1>
         <p className="text-base sm:text-lg text-text-muted dark:text-text-muted-dark">
           {t('subtitle')}
         </p>
@@ -87,6 +87,7 @@ export function PricingCards({ onSelectPro }: PricingCardsProps) {
             <h3 className="text-2xl sm:text-3xl font-bold text-text dark:text-text-dark mb-2">
               {t('pro.name')}
             </h3>
+            <p className="text-4xl sm:text-5xl font-bold text-primary mb-2">$0</p>
             <p className="text-sm sm:text-base text-text-muted dark:text-text-muted-dark">
               {t('pro.description')}
             </p>
