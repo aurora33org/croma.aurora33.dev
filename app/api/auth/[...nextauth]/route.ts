@@ -75,6 +75,17 @@ export const authOptions: NextAuthOptions = {
         token.tier = user.tier || "FREE";
         token.emailConsent = user.emailConsent || false;
         token.isAdmin = user.isAdmin || false;
+        console.log("[JWT] Updating token with user data:", {
+          email: user.email,
+          tier: token.tier,
+          isAdmin: token.isAdmin
+        });
+      } else {
+        console.log("[JWT] Token refresh (no user data), current token:", {
+          email: (token.email as string),
+          tier: (token.tier as string),
+          isAdmin: (token.isAdmin as boolean),
+        });
       }
       return token;
     },
@@ -84,6 +95,14 @@ export const authOptions: NextAuthOptions = {
         session.user.id = (token.id as string) || "";
         session.user.tier = (token.tier as string) || "FREE";
         session.user.isAdmin = (token.isAdmin as boolean) || false;
+        console.log("[SESSION] Updated session:", {
+          email: session.user.email,
+          tier: session.user.tier,
+          isAdmin: session.user.isAdmin,
+          tokenId: token.id,
+          tokenTier: token.tier,
+          tokenIsAdmin: token.isAdmin,
+        });
       }
       return session;
     },
