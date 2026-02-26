@@ -30,6 +30,11 @@ export const config = {
     baseDir: '/tmp/jobs'
   },
 
+  // Admin configuration
+  admin: {
+    email: process.env.ADMIN_EMAIL || 'admin@example.com',
+  },
+
   // Supported formats
   supportedFormats: ['jpeg', 'jpg', 'png', 'webp', 'gif'],
   outputFormats: ['webp', 'jpeg', 'png', 'avif']

@@ -1,6 +1,7 @@
 import { hash, compare } from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 import { logger } from "@/lib/utils/logger";
+import { config } from "@/lib/config";
 
 /**
  * Type definitions for authentication
@@ -91,12 +92,11 @@ export async function createUser(
       return { success: false, error: "Email already registered" };
     }
 
-    // Check if this is the first user (will be admin)
-    const userCount = await prisma.user.count();
-    const isFirstUser = userCount === 0;
-
     // Hash password
     const passwordHash = await hashPassword(password);
+
+    // Check if this email is the configured admin email
+    const isAdmin = email === config.admin.email;
 
     // Create user
     const user = await prisma.user.create({
@@ -105,7 +105,7 @@ export async function createUser(
         passwordHash,
         emailConsent: true,
         tier: "PRO", // All registered users are automatically PRO tier
-        isAdmin: isFirstUser, // First user is admin
+        isAdmin, // Admin if email matches ADMIN_EMAIL from config
       },
       select: {
         id: true,
@@ -117,8 +117,8 @@ export async function createUser(
       },
     });
 
-    if (isFirstUser) {
-      logger.success(`First user created as admin: ${email}`);
+    if (isAdmin) {
+      logger.success(`Admin user created: ${email}`);
     }
 
     return { success: true, user };
