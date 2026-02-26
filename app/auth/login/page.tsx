@@ -39,14 +39,6 @@ export default function LoginPage() {
 
         <LoginForm />
 
-        <div className="mt-6 text-center">
-          <p className="text-sm text-text-muted dark:text-text-muted-dark">
-            New to croma?{" "}
-            <Link href="/auth/register" className="text-primary hover:opacity-80 font-medium transition-opacity">
-              Create an account
-            </Link>
-          </p>
-        </div>
       </div>
     </div>
   );
