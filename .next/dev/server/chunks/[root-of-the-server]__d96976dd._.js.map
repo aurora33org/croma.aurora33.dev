@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 46, "column": 0}, "map": {"version":3,"sources":["file:///home/strykerux/aurora33.dev/croma/.worktrees/pro-version/app/api/health/route.ts"],"sourcesContent":["import { NextResponse } from 'next/server';\n\n/**\n * GET /api/health\n * Health check endpoint\n */\nexport async function GET() {\n  return NextResponse.json({\n    success: true,\n    status: 'healthy',\n    timestamp: new Date().toISOString()\n  });\n}\n"],"names":[],"mappings":";;;;AAAA;;AAMO,eAAe;IACpB,OAAO,iLAAY,CAAC,IAAI,CAAC;QACvB,SAAS;QACT,QAAQ;QACR,WAAW,IAAI,OAAO,WAAW;IACnC;AACF"}}]
+}

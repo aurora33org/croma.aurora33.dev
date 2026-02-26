@@ -150,6 +150,12 @@
       "namedRegex": "^/api/jobs(?:/)?$"
     },
     {
+      "page": "/api/user/limits",
+      "regex": "^/api/user/limits(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/user/limits(?:/)?$"
+    },
+    {
       "page": "/api/user/usage",
       "regex": "^/api/user/usage(?:/)?$",
       "routeKeys": {},
@@ -174,10 +180,22 @@
       "namedRegex": "^/favicon\\.ico(?:/)?$"
     },
     {
+      "page": "/pricing",
+      "regex": "^/pricing(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/pricing(?:/)?$"
+    },
+    {
       "page": "/sitemap.xml",
       "regex": "^/sitemap\\.xml(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/sitemap\\.xml(?:/)?$"
+    },
+    {
+      "page": "/tool",
+      "regex": "^/tool(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/tool(?:/)?$"
     }
   ],
   "dataRoutes": [],

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 3, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/.worktrees/pro-version/i18n/locales/en/pricing.json"],"sourcesContent":["{\"title\":\"Pricing Plans\",\"subtitle\":\"Choose the perfect plan for you\",\"free\":{\"name\":\"Free\",\"description\":\"For casual users\",\"batches_per_day\":\"5 batches per day\",\"images_per_batch\":\"5 images per batch\",\"max_batches\":\"6 batches max per day\",\"max_file_size\":\"7 MB per image\",\"formats\":\"Formats: WebP, JPEG, PNG\",\"compression_time\":\"~5-7 seconds per batch\",\"button\":\"Already using\",\"button_alt\":\"Use Free\"},\"pro\":{\"name\":\"Pro\",\"description\":\"For advanced users\",\"batches_per_day\":\"15 batches per day\",\"images_per_batch\":\"15 images per batch\",\"max_batches\":\"15 batches max per day\",\"max_file_size\":\"12 MB per image\",\"formats\":\"Formats: WebP, JPEG, PNG\",\"compression_time\":\"~5-7 seconds per batch\",\"button\":\"Sign Up Free\"},\"limit_reached\":{\"images_title\":\"Image limit reached\",\"images_message\":\"Upgrade to Pro to compress up to 15 images per batch.\",\"sessions_title\":\"Daily limit reached\",\"sessions_message\":\"You've reached your limit of 6 batches today. Come back in 23 hours or upgrade to Pro.\"}}"],"names":[],"mappings":"AAAA"}},
+    {"offset": {"line": 3, "column": 1020}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}
