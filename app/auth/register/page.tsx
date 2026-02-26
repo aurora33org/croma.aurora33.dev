@@ -12,7 +12,7 @@ export default function RegisterPage() {
 
   useEffect(() => {
     if (session) {
-      router.push("/dashboard");
+      router.push("/tool");
     }
   }, [session, router]);
 

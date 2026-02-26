@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { promises as fs } from 'fs';
 import path from 'path';
 import { jobManager, storageService } from '@/lib/services';
@@ -13,21 +14,16 @@ import { checkDailyUsage } from '@/lib/services/rate-limiter';
 /**
  * POST /api/jobs/:jobId/upload
  * Upload image files for a compression job
- * Enforces tier-based limits on file size and daily usage
+ * Anonymous users allowed with FREE tier limits; authenticated users use their tier
  */
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ jobId: string }> }
 ) {
   try {
-    // Authenticate user
-    const session = await getServerSession();
-    if (!session?.user?.id) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
+    const session = await getServerSession(authOptions);
+    const userId = (session?.user as any)?.id || null;
+    const isAnonymous = !userId;
 
     const { jobId } = await params;
     const job = jobManager.getJob(jobId);
@@ -36,8 +32,9 @@ export async function POST(
       throw new NotFoundError('Job');
     }
 
-    // CRITICAL: Verify user owns this job
-    if (job.userId !== session.user.id) {
+    // Verify ownership: authenticated users must own the job;
+    // anonymous jobs (userId 'anon') are accessible by anyone with the jobId (UUID is secret enough)
+    if (!isAnonymous && job.userId !== userId) {
       return NextResponse.json(
         { success: false, error: 'Forbidden: Job belongs to another user' },
         { status: 403 }
@@ -48,20 +45,22 @@ export async function POST(
       throw new BadRequestError(`Cannot upload to job in status: ${job.status}`);
     }
 
-    // Get user tier
-    const userTier = await getUserTier(session.user.id);
+    // Get tier limits: authenticated users get their DB tier, anonymous always FREE
+    const userTier = isAnonymous ? 'FREE' : await getUserTier(userId);
     const tierLimits = TIER_LIMITS[userTier];
 
-    // Check daily usage before allowing upload
-    const canUpload = await checkDailyUsage(session.user.id, userTier);
-    if (!canUpload) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: `Daily compression limit exceeded for ${userTier} tier (${tierLimits.MAX_DAILY_USAGE} per day)`
-        },
-        { status: 429 }
-      );
+    // Daily usage check only applies to authenticated users (anonymous tracking is client-side)
+    if (!isAnonymous) {
+      const canUpload = await checkDailyUsage(userId, userTier);
+      if (!canUpload) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: `Daily compression limit exceeded for ${userTier} tier (${tierLimits.MAX_DAILY_USAGE} per day)`
+          },
+          { status: 429 }
+        );
+      }
     }
 
     const uploadDir = storageService.getUploadDir(jobId);
@@ -126,7 +125,7 @@ export async function POST(
       totalSize
     });
 
-    logger.success(`Uploaded ${files.length} files for job ${jobId} (user: ${session.user.id})`);
+    logger.success(`Uploaded ${files.length} files for job ${jobId} (user: ${userId || 'anon'})`);
 
     return NextResponse.json({
       success: true,
