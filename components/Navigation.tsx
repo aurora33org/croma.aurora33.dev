@@ -83,7 +83,7 @@ export function Navigation() {
             {t('navigation.pricing') || 'Pricing'}
           </Link>
           <Link href="/auth/login" className={navLinkClass(isActive('/auth/login'))} aria-current={isActive('/auth/login') ? 'page' : undefined}>
-            {t('navigation.login') || 'Login'}
+            Login
           </Link>
         </nav>
 
