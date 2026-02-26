@@ -1,6 +1,7 @@
 import { getServerSession } from 'next-auth';
 import { prisma } from '@/lib/prisma';
 import { logger } from '@/lib/utils/logger';
+import { isUserAdmin } from '@/lib/utils/admin-check';
 
 /**
  * GET /api/admin/users
@@ -12,14 +13,16 @@ export async function GET() {
     const session = await getServerSession();
 
     if (!session?.user?.email) {
+      logger.warn('Admin users endpoint: No session/email');
       return new Response(JSON.stringify({ error: 'Unauthorized' }), {
         status: 401,
         headers: { 'Content-Type': 'application/json' },
       });
     }
 
-    // Check if user is admin using isAdmin flag from session
-    if (!session.user.isAdmin) {
+    // Check if user is admin
+    if (!isUserAdmin(session)) {
+      logger.warn(`Admin users endpoint: Access denied for ${session.user.email}. isAdmin=${(session.user as any)?.isAdmin}`);
       return new Response(JSON.stringify({ error: 'Forbidden' }), {
         status: 403,
         headers: { 'Content-Type': 'application/json' },
