@@ -2,15 +2,7 @@ import { getServerSession } from 'next-auth';
 import { prisma } from '@/lib/prisma';
 import { logger } from '@/lib/utils/logger';
 import { exportStats } from '@/lib/csv-exporter';
-
-const ADMIN_EMAIL = 'admin@example.com';
-
-/**
- * Check if user is admin
- */
-function isAdmin(email?: string): boolean {
-  return email === ADMIN_EMAIL;
-}
+import { isUserAdmin } from '@/lib/utils/admin-check';
 
 /**
  * POST /api/admin/export/stats
@@ -28,7 +20,7 @@ export async function POST() {
       });
     }
 
-    if (!isAdmin(session.user.email)) {
+    if (!isUserAdmin(session)) {
       return new Response(JSON.stringify({ error: 'Forbidden' }), {
         status: 403,
         headers: { 'Content-Type': 'application/json' },

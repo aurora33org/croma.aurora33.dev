@@ -2,15 +2,6 @@ import { getServerSession } from 'next-auth';
 import { prisma } from '@/lib/prisma';
 import { logger } from '@/lib/utils/logger';
 
-const ADMIN_EMAIL = 'admin@example.com';
-
-/**
- * Check if user is admin
- */
-function isAdmin(email?: string): boolean {
-  return email === ADMIN_EMAIL;
-}
-
 /**
  * GET /api/admin/users
  * Returns list of all users
@@ -27,7 +18,8 @@ export async function GET() {
       });
     }
 
-    if (!isAdmin(session.user.email)) {
+    // Check if user is admin using isAdmin flag from session
+    if (!session.user.isAdmin) {
       return new Response(JSON.stringify({ error: 'Forbidden' }), {
         status: 403,
         headers: { 'Content-Type': 'application/json' },
