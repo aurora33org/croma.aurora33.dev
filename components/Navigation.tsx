@@ -68,11 +68,11 @@ export function Navigation() {
     <div className="py-4 sm:py-6 md:py-8 px-4 sm:px-8 md:px-16 lg:px-20 xl:px-[120px] max-w-[1720px] mx-auto mb-4 sm:mb-6 md:mb-8 border-b border-gray-200 dark:border-gray-700 bg-background dark:bg-bg-dark">
       <div className="flex items-center justify-between">
         {/* Logo and Brand */}
-        <a href="https://croma.aurora33.dev" target="_blank" rel="noopener noreferrer">
+        <Link href="/tool">
           <h2 className="font-bold hover:opacity-80 transition-opacity" style={{ fontFamily: '"Kangge", sans-serif', fontSize: 'calc(2.25rem * 0.8)', marginBottom: '-0.5rem' }}>
             <span className="text-primary">croma.</span><span className="text-text dark:text-text-dark">aurora<sup>33</sup></span>
           </h2>
-        </a>
+        </Link>
 
         {/* Navigation links (Center) */}
         <nav className="hidden md:flex items-center gap-8">
