@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import path from 'path';
 import { jobManager, storageService } from '@/lib/services';
 import { imageProcessor } from '@/lib/services/image-processor';
@@ -30,14 +31,9 @@ export async function POST(
   { params }: { params: Promise<{ jobId: string }> }
 ) {
   try {
-    // Authenticate user
-    const session = await getServerSession();
-    if (!session?.user?.id) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
+    const session = await getServerSession(authOptions);
+    const userId = (session?.user as any)?.id || null;
+    const isAnonymous = !userId;
 
     const { jobId } = await params;
     const job = jobManager.getJob(jobId);
@@ -46,8 +42,8 @@ export async function POST(
       throw new NotFoundError('Job');
     }
 
-    // CRITICAL: Verify user owns this job
-    if (job.userId !== session.user.id) {
+    // Verify ownership: authenticated users must own the job
+    if (!isAnonymous && job.userId !== userId) {
       return NextResponse.json(
         { success: false, error: 'Forbidden: Job belongs to another user' },
         { status: 403 }
@@ -67,15 +63,16 @@ export async function POST(
       );
     }
 
-    // Check daily usage limit before processing
-    const userTier = await getUserTier(session.user.id);
-    const canProcess = await checkDailyUsage(session.user.id, userTier);
-
-    if (!canProcess) {
-      return NextResponse.json(
-        { success: false, error: 'Daily compression limit exceeded' },
-        { status: 429 }
-      );
+    // Daily usage check only for authenticated users
+    const userTier = isAnonymous ? 'FREE' : await getUserTier(userId);
+    if (!isAnonymous) {
+      const canProcess = await checkDailyUsage(userId, userTier);
+      if (!canProcess) {
+        return NextResponse.json(
+          { success: false, error: 'Daily compression limit exceeded' },
+          { status: 429 }
+        );
+      }
     }
 
     // Set job settings and status
@@ -129,13 +126,14 @@ export async function POST(
         const zipPath = path.join(storageService.getJobDir(jobId), 'processed.zip');
         await zipService.createZip(processedDir, zipPath);
 
-        // Increment daily usage BEFORE marking complete
-        await incrementDailyUsage(session.user.id, totalOriginalSize);
+        // Increment daily usage only for authenticated users
+        if (!isAnonymous && userId) {
+          await incrementDailyUsage(userId, totalOriginalSize);
+        }
 
-        // Only mark complete after successful increment
         jobManager.setJobStatus(jobId, 'completed');
         logger.success(
-          `Job ${jobId} completed: ${successCount}/${result.results.length} files processed (user: ${session.user.id})`
+          `Job ${jobId} completed: ${successCount}/${result.results.length} files processed (user: ${userId || 'anon'})`
         );
       } catch (error: unknown) {
         const err = error instanceof Error ? error : new Error(String(error));

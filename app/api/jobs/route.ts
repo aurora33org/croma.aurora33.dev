@@ -1,24 +1,21 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { jobManager, storageService } from '@/lib/services';
 import { logger } from '@/lib/utils/logger';
 
 /**
  * POST /api/jobs
  * Create a new compression job
+ * Anonymous users are allowed (FREE tier limits enforced at upload)
  */
 export async function POST() {
   try {
-    // Get session and authenticate
-    const session = await getServerSession();
-    if (!session?.user?.id) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
+    const session = await getServerSession(authOptions);
+    // Anonymous users get userId 'anon'; authenticated users use their real id
+    const userId = (session?.user as any)?.id || 'anon';
 
-    const job = jobManager.createJob(session.user.id);
+    const job = jobManager.createJob(userId);
     await storageService.createJobDirectories(job.id);
 
     logger.success(`Created job: ${job.id}`);
