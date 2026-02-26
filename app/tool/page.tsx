@@ -13,7 +13,6 @@ import { FAQ } from '@/components/FAQ';
 import { Footer } from '@/components/Footer';
 import { LoginPrompt } from '@/components/LoginPrompt';
 import { LimitExceededView } from '@/components/LimitExceededView';
-import { TierBadge } from '@/components/TierBadge';
 import RegisterModal from '@/components/RegisterModal';
 import { TIER_LIMITS } from '@/lib/config';
 import { logger } from '@/lib/utils/logger';
@@ -297,12 +296,6 @@ export default function Home() {
       )}
 
 
-      {/* Show tier badge and usage indicator if authenticated */}
-      {session?.user && !dailyLimitExceeded && (
-        <div className="mb-4">
-          <TierBadge tier={(session.user.tier as 'FREE' | 'PRO') || 'FREE'} size="md" />
-        </div>
-      )}
 
 
       {currentView === 'upload' && !dailyLimitExceeded && (
