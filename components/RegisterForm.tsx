@@ -78,7 +78,7 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto p-6 bg-white dark:bg-gray-900 rounded-lg shadow-lg border border-gray-200 dark:border-gray-800">
+    <div className="w-full max-w-md mx-auto p-6 bg-container dark:bg-container-dark rounded-xl border border-primary/20">
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
           <div className="p-3 bg-red-100 dark:bg-red-900 border border-red-400 dark:border-red-700 rounded text-red-700 dark:text-red-200 text-sm">
@@ -87,7 +87,7 @@ export default function RegisterForm() {
         )}
 
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label htmlFor="email" className="block text-sm font-medium text-text dark:text-text-dark mb-1">
             Email
           </label>
           <input
@@ -96,13 +96,13 @@ export default function RegisterForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 dark:focus:ring-orange-600"
+            className="w-full px-4 py-2 border border-primary/20 rounded-lg bg-background dark:bg-bg-dark text-text dark:text-text-dark placeholder-text-muted dark:placeholder-text-muted-dark focus:outline-none focus:ring-2 focus:ring-primary/50"
             placeholder="you@example.com"
           />
         </div>
 
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label htmlFor="password" className="block text-sm font-medium text-text dark:text-text-dark mb-1">
             Password
           </label>
           <input
@@ -111,23 +111,23 @@ export default function RegisterForm() {
             value={password}
             onChange={(e) => handlePasswordChange(e.target.value)}
             required
-            className={`w-full px-4 py-2 border rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 ${
+            className={`w-full px-4 py-2 border rounded-lg bg-background dark:bg-bg-dark text-text dark:text-text-dark placeholder-text-muted dark:placeholder-text-muted-dark focus:outline-none focus:ring-2 ${
               passwordError
                 ? "border-red-400 dark:border-red-600 focus:ring-red-500"
-                : "border-gray-300 dark:border-gray-600 focus:ring-orange-500 dark:focus:ring-orange-600"
+                : "border-primary/20 focus:ring-primary/50"
             }`}
             placeholder="••••••••"
           />
           {passwordError && (
             <p className="mt-1 text-sm text-red-600 dark:text-red-400">{passwordError}</p>
           )}
-          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-xs text-text-muted dark:text-text-muted-dark">
             Minimum 8 characters
           </p>
         </div>
 
         <div>
-          <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label htmlFor="confirmPassword" className="block text-sm font-medium text-text dark:text-text-dark mb-1">
             Confirm Password
           </label>
           <input
@@ -136,7 +136,7 @@ export default function RegisterForm() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
-            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 dark:focus:ring-orange-600"
+            className="w-full px-4 py-2 border border-primary/20 rounded-lg bg-background dark:bg-bg-dark text-text dark:text-text-dark placeholder-text-muted dark:placeholder-text-muted-dark focus:outline-none focus:ring-2 focus:ring-primary/50"
             placeholder="••••••••"
           />
         </div>
@@ -147,9 +147,9 @@ export default function RegisterForm() {
             type="checkbox"
             checked={emailConsent}
             onChange={(e) => setEmailConsent(e.target.checked)}
-            className="h-4 w-4 rounded border-gray-300 dark:border-gray-600 text-orange-500 focus:ring-orange-500 dark:focus:ring-orange-600 cursor-pointer"
+            className="h-4 w-4 rounded border-primary/20 text-primary focus:ring-primary/50 cursor-pointer"
           />
-          <label htmlFor="emailConsent" className="ml-2 text-sm text-gray-700 dark:text-gray-300 cursor-pointer">
+          <label htmlFor="emailConsent" className="ml-2 text-sm text-text dark:text-text-dark cursor-pointer">
             I agree to receive emails about product updates and news
           </label>
         </div>
@@ -157,16 +157,16 @@ export default function RegisterForm() {
         <button
           type="submit"
           disabled={isLoading || !emailConsent}
-          className="w-full py-2 px-4 bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 text-white font-medium rounded-lg transition-colors duration-200"
+          className="w-full py-2 px-4 bg-primary hover:opacity-90 disabled:opacity-50 text-white font-medium rounded-lg transition-opacity duration-200"
         >
           {isLoading ? "Creating account..." : "Create Account"}
         </button>
       </form>
 
       <div className="mt-4 text-center">
-        <p className="text-gray-600 dark:text-gray-400 text-sm">
+        <p className="text-text-muted dark:text-text-muted-dark text-sm">
           Already have an account?{" "}
-          <Link href="/auth/login" className="text-orange-500 hover:text-orange-600 font-medium">
+          <Link href="/auth/login" className="text-primary hover:opacity-80 font-medium transition-opacity">
             Sign in here
           </Link>
         </p>
