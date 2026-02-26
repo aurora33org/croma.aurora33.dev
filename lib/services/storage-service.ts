@@ -120,7 +120,7 @@ class StorageService {
             await this.deleteJob(jobId);
             cleaned++;
           }
-        } catch (error) {
+        } catch {
           // If metadata doesn't exist, delete the job anyway
           await this.deleteJob(jobId);
           cleaned++;

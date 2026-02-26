@@ -1,0 +1,3 @@
+module.exports=[58128,a=>{a.v({dropzone:{title:"Drag and drop images here",subtitle:"or click to browse your files",fileSizeLimit:"For now we only accept files up to 8 MB",futureNote:"In the future we will allow larger files"},badges:{free:"No Installation",secure:"Secure Processing",fast:"Fast Compression"},selectedImages:"Selected images",addMoreImages:"Add more images",removeButton:"Remove"})}];
+
+//# sourceMappingURL=_worktrees_pro-version_i18n_locales_en_uploader_json_972c0b06._.js.map

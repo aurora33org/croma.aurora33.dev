@@ -1,5 +1,4 @@
 import multer from 'multer';
-import path from 'path';
 import { config } from '../config';
 import { logger } from '../utils/logger';
 
@@ -8,10 +7,10 @@ import { logger } from '../utils/logger';
  */
 export function createUploadMiddleware(uploadDir: string) {
   const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
+    destination: (_req, _file, cb) => {
       cb(null, uploadDir);
     },
-    filename: (req, file, cb) => {
+    filename: (_req, file, cb) => {
       const uniqueName = `${Date.now()}-${file.originalname}`;
       cb(null, uniqueName);
     }
@@ -39,7 +38,7 @@ export function createUploadMiddleware(uploadDir: string) {
  */
 export async function parseMultipartForm(
   request: Request,
-  uploadDir: string
+  _uploadDir: string
 ): Promise<{ files: File[]; error?: string }> {
   try {
     const formData = await request.formData();

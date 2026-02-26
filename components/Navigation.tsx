@@ -1,41 +1,53 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Sun, Moon } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 import { LanguageToggle } from './LanguageToggle';
+import { UserProfile } from './UserProfile';
 
 export function Navigation() {
-  const [darkMode, setDarkMode] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const [isDark, setIsDark] = useState(false);
+  const themeRef = useRef<string | null>(null);
+  const initialized = useRef(false);
+  const { data: session } = useSession();
 
   useEffect(() => {
-    setMounted(true);
-    // Check localStorage and system preference
+    // Only initialize once on client mount
+    if (initialized.current) return;
+    initialized.current = true;
+
     const savedTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isCurrentlyDark = savedTheme ? savedTheme === 'dark' : prefersDark;
 
-    const isDark = savedTheme ? savedTheme === 'dark' : prefersDark;
-    setDarkMode(isDark);
+    // Store initial theme
+    themeRef.current = isCurrentlyDark ? 'dark' : 'light';
 
-    if (isDark) {
+    // Apply theme class to HTML element
+    if (isCurrentlyDark) {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
+
+    setIsDark(isCurrentlyDark);
   }, []);
 
-  useEffect(() => {
-    if (!mounted) return;
+  const handleThemeToggle = () => {
+    const newIsDark = !isDark;
+    setIsDark(newIsDark);
+    themeRef.current = newIsDark ? 'dark' : 'light';
 
     // Apply theme class to HTML element and save to localStorage
-    if (darkMode) {
+    if (newIsDark) {
       document.documentElement.classList.add('dark');
       localStorage.setItem('theme', 'dark');
     } else {
       document.documentElement.classList.remove('dark');
       localStorage.setItem('theme', 'light');
     }
-  }, [darkMode, mounted]);
+  };
 
   return (
     <div className="py-4 sm:py-6 md:py-8 px-4 sm:px-8 md:px-16 lg:px-20 xl:px-[120px] max-w-[1720px] mx-auto mb-4 sm:mb-6 md:mb-8 border-b border-gray-200 dark:border-gray-700">
@@ -49,24 +61,27 @@ export function Navigation() {
 
         {/* Toggles Container */}
         <div className="flex items-center gap-4">
+          {/* User Profile */}
+          {session?.user && <UserProfile />}
+
           {/* Language Toggle */}
           <LanguageToggle />
 
           {/* Theme Toggle */}
           <button
-            onClick={() => setDarkMode(!darkMode)}
+            onClick={handleThemeToggle}
             className={`relative inline-flex items-center justify-between h-8 w-16 px-1 rounded-full transition-all duration-500 ${
-              darkMode ? 'bg-contrast' : 'bg-gray-300'
+              isDark ? 'bg-contrast' : 'bg-gray-300'
             }`}
             aria-label="Toggle dark mode"
           >
             <Sun size={16} className="flex-shrink-0 transition-colors text-black relative z-10 ml-1" />
             <span
               className={`absolute inline-block h-6 w-6 transform rounded-full transition-all duration-500 ${
-                darkMode ? 'bg-black translate-x-8' : 'bg-white translate-x-0'
+                isDark ? 'bg-black translate-x-8' : 'bg-white translate-x-0'
               }`}
             />
-            <Moon size={16} className={`flex-shrink-0 transition-colors ${darkMode ? 'text-white' : 'text-white'} relative z-10 mr-1`} />
+            <Moon size={16} className={`flex-shrink-0 transition-colors ${isDark ? 'text-white' : 'text-white'} relative z-10 mr-1`} />
           </button>
         </div>
       </div>

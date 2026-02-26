@@ -1,7 +1,9 @@
 {
   "navigation": {
     "tagline": "croma.aurora33",
-    "themeToggleAriaLabel": "Toggle dark mode"
+    "themeToggleAriaLabel": "Toggle dark mode",
+    "tool": "Herramienta",
+    "pricing": "Precios"
   },
   "footer": {
     "madeWith": "Hecho con ❤️ y con IA, por",
@@ -12,5 +14,21 @@
       "contact": "Contacto"
     },
     "copyrightText": "Todos los derechos reservados"
-  }
+  },
+  "create_account": "Crear Cuenta",
+  "email": "Email",
+  "password": "Contraseña",
+  "confirm_password": "Confirmar Contraseña",
+  "register": "REGISTRARSE",
+  "registering": "Registrando...",
+  "cancel": "CANCELAR",
+  "password_min_length": "La contraseña debe tener al menos 8 caracteres",
+  "invalid_email": "Por favor ingresa un email válido",
+  "passwords_dont_match": "Las contraseñas no coinciden",
+  "must_accept_terms": "Debes aceptar los términos y condiciones",
+  "registration_failed": "Error en el registro",
+  "signin_failed": "Error al iniciar sesión",
+  "error_occurred": "Ocurrió un error. Por favor intenta de nuevo.",
+  "password_requirements": "Mínimo 8 caracteres",
+  "accept_terms_and_marketing": "Acepto los términos y condiciones y deseo recibir emails de marketing"
 }
