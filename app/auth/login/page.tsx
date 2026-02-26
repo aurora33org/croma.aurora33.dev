@@ -21,7 +21,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background dark:bg-bg-dark flex flex-col items-center justify-center px-4 py-12">
+    <div className="min-h-[60vh] bg-background dark:bg-bg-dark flex flex-col items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link href="/tool">
