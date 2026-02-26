@@ -33,7 +33,7 @@ export function PricingCards({ onSelectPro }: PricingCardsProps) {
       {/* Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-12">
         {/* Free Card */}
-        <div className="relative rounded-lg border border-container dark:border-container-dark bg-background dark:bg-bg-dark p-6 sm:p-8 md:p-10 shadow-sm">
+        <div className="relative rounded-lg border border-container dark:border-container-dark bg-background dark:bg-bg-dark p-6 sm:p-8 md:p-10 shadow-sm flex flex-col">
           <div className="mb-6">
             <h3 className="text-2xl sm:text-3xl font-bold text-text dark:text-text-dark mb-2">
               {t('free.name')}
@@ -68,14 +68,14 @@ export function PricingCards({ onSelectPro }: PricingCardsProps) {
           {/* Button */}
           <button
             disabled
-            className="w-full py-3 px-4 rounded-lg bg-contrast-v2 dark:bg-container-dark text-text-muted dark:text-text-muted-dark font-medium cursor-not-allowed opacity-60"
+            className="mt-auto w-full py-3 px-4 rounded-lg bg-contrast-v2 dark:bg-container-dark text-text-muted dark:text-text-muted-dark font-medium cursor-not-allowed opacity-60"
           >
             {t('free.button')}
           </button>
         </div>
 
         {/* Pro Card */}
-        <div className="relative rounded-lg border-2 border-primary bg-background dark:bg-bg-dark p-6 sm:p-8 md:p-10 shadow-md">
+        <div className="relative rounded-lg border-2 border-primary bg-background dark:bg-bg-dark p-6 sm:p-8 md:p-10 shadow-md flex flex-col">
           {/* Badge */}
           <div className="absolute -top-4 left-6">
             <span className="inline-block bg-primary text-white px-4 py-1 rounded-full text-xs sm:text-sm font-bold">
@@ -118,7 +118,7 @@ export function PricingCards({ onSelectPro }: PricingCardsProps) {
           {/* Button */}
           <button
             onClick={onSelectPro}
-            className="w-full py-3 px-4 rounded-lg bg-primary text-white font-medium hover:opacity-90 transition-opacity"
+            className="mt-auto w-full py-3 px-4 rounded-lg bg-primary text-white font-medium hover:opacity-90 transition-opacity"
           >
             {t('pro.button')}
           </button>
