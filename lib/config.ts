@@ -30,9 +30,10 @@ export const config = {
     baseDir: '/tmp/jobs'
   },
 
-  // Admin configuration
+  // Admin configuration (password must be set in .env for auto-initialization)
   admin: {
     email: process.env.ADMIN_EMAIL || 'admin@example.com',
+    // Password is read directly from ADMIN_PASSWORD env var in admin-init.ts
   },
 
   // Supported formats

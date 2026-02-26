@@ -7,6 +7,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { Providers } from "@/app/providers";
 import { Header } from "@/components/Header";
+import { initializeAdmin } from "@/lib/admin-init";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -61,6 +62,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
+  // Initialize admin user on startup
+  await initializeAdmin();
+
   const locale = await getLocale();
   const messages = (await import(`@/i18n/locales/${locale}`)).default as any;
   const session = await getServerSession(authOptions);
