@@ -26,7 +26,8 @@ export default function UsersTable({ initialUsers = [] }: UsersTableProps) {
     if (initialUsers.length === 0) {
       fetchUsers();
     }
-  }, [initialUsers]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const fetchUsers = async () => {
     try {

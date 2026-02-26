@@ -28,7 +28,8 @@ export default function HistoryTable({ initialJobs = [] }: HistoryTableProps) {
     if (initialJobs.length === 0) {
       fetchJobs();
     }
-  }, [initialJobs]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const fetchJobs = async (start?: string, end?: string) => {
     try {
