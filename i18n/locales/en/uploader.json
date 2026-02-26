@@ -12,5 +12,10 @@
   },
   "selectedImages": "Selected images",
   "addMoreImages": "Add more images",
-  "removeButton": "Remove"
+  "removeButton": "Remove",
+  "errors": {
+    "no_valid_files": "No valid image files selected",
+    "max_files": "Maximum {maxFiles} files allowed for {tier} tier",
+    "file_size": "File size exceeds {maxSizeMB}MB limit for {tier} tier"
+  }
 }

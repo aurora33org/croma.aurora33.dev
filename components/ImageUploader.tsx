@@ -52,13 +52,13 @@ export function ImageUploader({ onFilesSelected, onShowSettings }: ImageUploader
     );
 
     if (validFiles.length === 0) {
-      setError('No valid image files selected');
+      setError(t('errors.no_valid_files'));
       return;
     }
 
     // Check file count
     if (validFiles.length > maxFiles) {
-      setError(`Maximum ${maxFiles} files allowed for ${userTier} tier`);
+      setError(t('errors.max_files', { maxFiles, tier: userTier }));
       return;
     }
 
@@ -66,7 +66,7 @@ export function ImageUploader({ onFilesSelected, onShowSettings }: ImageUploader
     const oversizedFiles = validFiles.filter(file => file.size > maxFileSize);
     if (oversizedFiles.length > 0) {
       const maxSizeMB = (maxFileSize / (1024 * 1024)).toFixed(0);
-      setError(`File size exceeds ${maxSizeMB}MB limit for ${userTier} tier`);
+      setError(t('errors.file_size', { maxSizeMB, tier: userTier }));
       return;
     }
 
