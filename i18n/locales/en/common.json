@@ -13,7 +13,9 @@
       "consulting": "Consulting",
       "contact": "Contact"
     },
-    "copyrightText": "All rights reserved"
+    "copyrightText": "All rights reserved",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy"
   },
   "create_account": "Create Account",
   "email": "Email",
