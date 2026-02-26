@@ -6,6 +6,7 @@
   "/api/admin/export/stats/route": "app/api/admin/export/stats/route.js",
   "/api/admin/export/users/route": "app/api/admin/export/users/route.js",
   "/api/admin/jobs/route": "app/api/admin/jobs/route.js",
+  "/api/admin/session/route": "app/api/admin/session/route.js",
   "/api/admin/stats/route": "app/api/admin/stats/route.js",
   "/api/admin/users/[id]/tier/route": "app/api/admin/users/[id]/tier/route.js",
   "/api/admin/users/route": "app/api/admin/users/route.js",

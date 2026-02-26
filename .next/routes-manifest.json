@@ -120,6 +120,12 @@
       "namedRegex": "^/api/admin/jobs(?:/)?$"
     },
     {
+      "page": "/api/admin/session",
+      "regex": "^/api/admin/session(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/admin/session(?:/)?$"
+    },
+    {
       "page": "/api/admin/stats",
       "regex": "^/api/admin/stats(?:/)?$",
       "routeKeys": {},

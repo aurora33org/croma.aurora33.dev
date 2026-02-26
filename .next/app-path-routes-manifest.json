@@ -6,6 +6,7 @@
   "/api/admin/export/stats/route": "/api/admin/export/stats",
   "/api/admin/export/users/route": "/api/admin/export/users",
   "/api/admin/jobs/route": "/api/admin/jobs",
+  "/api/admin/session/route": "/api/admin/session",
   "/api/admin/stats/route": "/api/admin/stats",
   "/api/admin/users/[id]/tier/route": "/api/admin/users/[id]/tier",
   "/api/admin/users/route": "/api/admin/users",
