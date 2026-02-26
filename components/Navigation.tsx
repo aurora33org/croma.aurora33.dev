@@ -49,11 +49,12 @@ export function Navigation() {
   }, []);
 
   const handleThemeToggle = () => {
-    const newIsDark = !isDark;
+    // Read current state from DOM (source of truth), not JS state
+    const isCurrentlyDark = document.documentElement.classList.contains('dark');
+    const newIsDark = !isCurrentlyDark;
     setIsDark(newIsDark);
     themeRef.current = newIsDark ? 'dark' : 'light';
 
-    // Apply theme class to HTML element and save to localStorage
     if (newIsDark) {
       document.documentElement.classList.add('dark');
       localStorage.setItem('theme', 'dark');
@@ -94,18 +95,14 @@ export function Navigation() {
           {/* Theme Toggle */}
           <button
             onClick={handleThemeToggle}
-            className={`relative inline-flex items-center justify-between h-8 w-16 px-1 rounded-full transition-all duration-500 ${
-              isDark ? 'bg-contrast' : 'bg-gray-300'
-            }`}
+            className="relative inline-flex items-center justify-between h-8 w-16 px-1 rounded-full transition-all duration-500 bg-gray-300 dark:bg-contrast"
             aria-label="Toggle dark mode"
           >
             <Sun size={16} className="flex-shrink-0 transition-colors text-black relative z-10 ml-1" />
             <span
-              className={`absolute inline-block h-6 w-6 transform rounded-full transition-all duration-500 ${
-                isDark ? 'bg-black translate-x-8' : 'bg-white translate-x-0'
-              }`}
+              className="absolute inline-block h-6 w-6 transform rounded-full transition-all duration-500 bg-white translate-x-0 dark:bg-black dark:translate-x-8"
             />
-            <Moon size={16} className={`flex-shrink-0 transition-colors ${isDark ? 'text-white' : 'text-white'} relative z-10 mr-1`} />
+            <Moon size={16} className="flex-shrink-0 transition-colors text-white relative z-10 mr-1" />
           </button>
         </div>
       </div>
