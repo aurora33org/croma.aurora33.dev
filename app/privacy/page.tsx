@@ -115,13 +115,8 @@ export default function PrivacyPage() {
 
           <section>
             <h2 className="text-xl font-bold text-text dark:text-text-dark mb-3">{s('s11.title')}</h2>
-            <p className="text-text-muted dark:text-text-muted-dark leading-relaxed">{s('s11.body')}</p>
-          </section>
-
-          <section>
-            <h2 className="text-xl font-bold text-text dark:text-text-dark mb-3">{s('s12.title')}</h2>
             <p className="text-text-muted dark:text-text-muted-dark leading-relaxed">
-              {s('s12.body')}{' '}
+              {s('s11.body')}{' '}
               <a href="mailto:hello@aurora33.dev" className="text-primary hover:opacity-80 transition-opacity">
                 hello@aurora33.dev
               </a>.

@@ -76,15 +76,11 @@
       "body": "Implementamos medidas de seguridad est\u00e1ndar del sector, incluyendo contrase\u00f1as cifradas (bcrypt), transporte HTTPS y acceso restringido al servidor. Sin embargo, ning\u00fan sistema es completamente seguro. Te recomendamos usar una contrase\u00f1a fuerte y \u00fanica para tu cuenta."
     },
     "s10": {
-      "title": "10. Privacidad de Menores",
-      "body": "El Servicio no est\u00e1 dirigido a menores de 16 a\u00f1os. No recopilamos conscientemente datos personales de menores. Si crees que un menor nos ha proporcionado datos personales, cont\u00e1ctanos y los eliminaremos de inmediato."
+      "title": "10. Cambios en esta Pol\u00edtica",
+      "body": "Podemos actualizar esta Pol\u00edtica de Privacidad peri\u00f3dicamente. Actualizaremos la fecha de \u00daltima actualizaci\u00f3n en la parte superior de esta p\u00e1gina. El uso continuado del Servicio tras los cambios implica tu aceptaci\u00f3n de la Pol\u00edtica revisada."
     },
     "s11": {
-      "title": "11. Cambios en esta Pol\u00edtica",
-      "body": "Podemos actualizar esta Pol\u00edtica de Privacidad peri\u00f3dicamente. Notificaremos a los usuarios registrados sobre cambios significativos por correo electr\u00f3nico y actualizaremos la fecha de \u00daltima actualizaci\u00f3n en la parte superior. El uso continuado del Servicio tras los cambios implica tu aceptaci\u00f3n de la Pol\u00edtica revisada."
-    },
-    "s12": {
-      "title": "12. Contacto",
+      "title": "11. Contacto",
       "body": "Para preguntas sobre privacidad o para ejercer tus derechos, contacta a Aurora33 en"
     }
   },
