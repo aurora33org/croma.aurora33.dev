@@ -24,7 +24,8 @@ export default function StatsCard({ initialStats }: StatsCardProps) {
     if (!initialStats) {
       fetchStats();
     }
-  }, [initialStats]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const fetchStats = async () => {
     try {
