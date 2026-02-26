@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useTranslations } from '@/lib/i18n-context';
-import { Navigation } from '@/components/Navigation';
 import { ImageUploader } from '@/components/ImageUploader';
 import { CompressionSettings } from '@/components/CompressionSettings';
 import { ProcessingView } from '@/components/ProcessingView';
@@ -277,7 +276,6 @@ export default function Home() {
   if (status === 'loading') {
     return (
       <main className="min-h-screen bg-background dark:bg-bg-dark text-text dark:text-text-dark">
-        <Navigation />
         <div className="px-4 sm:px-8 md:px-16 lg:px-20 xl:px-[120px] max-w-[1720px] mx-auto flex items-center justify-center min-h-[400px]">
           <div className="text-center">
             <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4" />
@@ -290,8 +288,6 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-background dark:bg-bg-dark text-text dark:text-text-dark">
-      <Navigation />
-
       {/* If user is authenticated and daily limit exceeded, show limit view */}
       {session?.user && dailyLimitExceeded && (
         <LimitExceededView

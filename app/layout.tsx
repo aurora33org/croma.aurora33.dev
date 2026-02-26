@@ -6,7 +6,7 @@ import { locales, defaultLocale, type Locale } from "@/i18n/config";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { Providers } from "@/app/providers";
-import { Header } from "@/components/Header";
+import { Navigation } from "@/components/Navigation";
 import { initializeAdmin } from "@/lib/admin-init";
 import "./globals.css";
 
@@ -89,7 +89,7 @@ export default async function RootLayout({
           locale={locale}
           messages={messages}
         >
-          <Header />
+          <Navigation />
           {children}
         </Providers>
       </body>

@@ -3,14 +3,28 @@
 import { useState, useEffect, useRef } from 'react';
 import { Sun, Moon } from 'lucide-react';
 import { useSession } from 'next-auth/react';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 import { LanguageToggle } from './LanguageToggle';
 import { UserProfile } from './UserProfile';
+import { useTranslations } from '@/lib/i18n-context';
 
 export function Navigation() {
   const [isDark, setIsDark] = useState(false);
   const themeRef = useRef<string | null>(null);
   const initialized = useRef(false);
   const { data: session } = useSession();
+  const pathname = usePathname();
+  const t = useTranslations('common');
+
+  const isActive = (path: string) => pathname === path || pathname.startsWith(path + '/');
+
+  const navLinkClass = (active: boolean) =>
+    `text-sm font-medium transition-colors ${
+      active
+        ? 'text-primary dark:text-primary'
+        : 'text-text-muted dark:text-text-muted-dark hover:text-text dark:hover:text-text-dark'
+    }`;
 
   useEffect(() => {
     // Only initialize once on client mount
@@ -58,6 +72,16 @@ export function Navigation() {
             <span className="text-primary">croma.</span><span className="text-text dark:text-text-dark">aurora<sup>33</sup></span>
           </h2>
         </a>
+
+        {/* Navigation links (Center) */}
+        <nav className="hidden md:flex items-center gap-8">
+          <Link href="/tool" className={navLinkClass(isActive('/tool'))} aria-current={isActive('/tool') ? 'page' : undefined}>
+            {t('navigation.tool')}
+          </Link>
+          <Link href="/pricing" className={navLinkClass(isActive('/pricing'))} aria-current={isActive('/pricing') ? 'page' : undefined}>
+            {t('navigation.pricing') || 'Pricing'}
+          </Link>
+        </nav>
 
         {/* Toggles Container */}
         <div className="flex items-center gap-4">
