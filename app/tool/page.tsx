@@ -12,7 +12,6 @@ import { FormatGuide } from '@/components/FormatGuide';
 import { FAQ } from '@/components/FAQ';
 import { Footer } from '@/components/Footer';
 import { LoginPrompt } from '@/components/LoginPrompt';
-import { UsageIndicator } from '@/components/UsageIndicator';
 import { LimitExceededView } from '@/components/LimitExceededView';
 import { TierBadge } from '@/components/TierBadge';
 import RegisterModal from '@/components/RegisterModal';
@@ -305,10 +304,6 @@ export default function Home() {
         </div>
       )}
 
-      {/* Show usage indicator if authenticated */}
-      {session?.user && !dailyLimitExceeded && (
-        <UsageIndicator userId={session.user.id} />
-      )}
 
       {currentView === 'upload' && !dailyLimitExceeded && (
         <>
