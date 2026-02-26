@@ -76,15 +76,11 @@
       "body": "We implement industry-standard security measures including encrypted passwords (bcrypt), HTTPS transport, and restricted server access. However, no system is completely secure. We encourage you to use a strong, unique password for your account."
     },
     "s10": {
-      "title": "10. Children's Privacy",
-      "body": "The Service is not directed to children under the age of 16. We do not knowingly collect personal data from minors. If you believe a minor has provided us with personal data, please contact us and we will delete it promptly."
+      "title": "10. Changes to This Policy",
+      "body": "We may update this Privacy Policy from time to time. We will update the Last updated date at the top of this page. Continued use of the Service after changes constitutes your acceptance of the revised Policy."
     },
     "s11": {
-      "title": "11. Changes to This Policy",
-      "body": "We may update this Privacy Policy from time to time. We will notify registered users of significant changes by email and update the Last updated date at the top. Continued use of the Service after changes constitutes your acceptance of the revised Policy."
-    },
-    "s12": {
-      "title": "12. Contact",
+      "title": "11. Contact",
       "body": "For privacy-related questions or to exercise your rights, contact Aurora33 at"
     }
   },
