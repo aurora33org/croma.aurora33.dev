@@ -40,7 +40,7 @@ export default function PrivacyPage() {
             <h2 className="text-xl font-bold text-text dark:text-text-dark mb-3">{s('s2.title')}</h2>
             <p className="text-text-muted dark:text-text-muted-dark leading-relaxed mb-3">{s('s2.intro')}</p>
             <ul className="list-disc list-inside space-y-2 text-text-muted dark:text-text-muted-dark">
-              {(t('sections.s2.items') as unknown as LabeledItem[]).map((item, i) => (
+              {(t.raw('sections.s2.items') as LabeledItem[]).map((item, i) => (
                 <li key={i}><strong className="text-text dark:text-text-dark">{item.label}</strong> {item.text}</li>
               ))}
             </ul>
@@ -50,7 +50,7 @@ export default function PrivacyPage() {
             <h2 className="text-xl font-bold text-text dark:text-text-dark mb-3">{s('s3.title')}</h2>
             <p className="text-text-muted dark:text-text-muted-dark leading-relaxed mb-3">{s('s3.intro')}</p>
             <ul className="list-disc list-inside space-y-2 text-text-muted dark:text-text-muted-dark mb-3">
-              {(t('sections.s3.items') as unknown as LabeledItem[]).map((item, i) => (
+              {(t.raw('sections.s3.items') as LabeledItem[]).map((item, i) => (
                 <li key={i}><strong className="text-text dark:text-text-dark">{item.label}</strong> {item.text}</li>
               ))}
             </ul>
@@ -61,7 +61,7 @@ export default function PrivacyPage() {
             <h2 className="text-xl font-bold text-text dark:text-text-dark mb-3">{s('s4.title')}</h2>
             <p className="text-text-muted dark:text-text-muted-dark leading-relaxed mb-3">{s('s4.intro')}</p>
             <ul className="list-disc list-inside space-y-2 text-text-muted dark:text-text-muted-dark">
-              {(t('sections.s4.items') as unknown as LabeledItem[]).map((item, i) => (
+              {(t.raw('sections.s4.items') as LabeledItem[]).map((item, i) => (
                 <li key={i}><strong className="text-text dark:text-text-dark">{item.label}</strong> {item.text}</li>
               ))}
             </ul>
@@ -71,7 +71,7 @@ export default function PrivacyPage() {
             <h2 className="text-xl font-bold text-text dark:text-text-dark mb-3">{s('s5.title')}</h2>
             <p className="text-text-muted dark:text-text-muted-dark leading-relaxed mb-3">{s('s5.intro')}</p>
             <ul className="list-disc list-inside space-y-2 text-text-muted dark:text-text-muted-dark">
-              {(t('sections.s5.items') as unknown as LabeledItem[]).map((item, i) => (
+              {(t.raw('sections.s5.items') as LabeledItem[]).map((item, i) => (
                 <li key={i}><strong className="text-text dark:text-text-dark">{item.label}</strong> {item.text}</li>
               ))}
             </ul>
@@ -86,7 +86,7 @@ export default function PrivacyPage() {
             <h2 className="text-xl font-bold text-text dark:text-text-dark mb-3">{s('s7.title')}</h2>
             <p className="text-text-muted dark:text-text-muted-dark leading-relaxed mb-3">{s('s7.intro')}</p>
             <ul className="list-disc list-inside space-y-2 text-text-muted dark:text-text-muted-dark mb-3">
-              {(t('sections.s7.items') as unknown as LabeledItem[]).map((item, i) => (
+              {(t.raw('sections.s7.items') as LabeledItem[]).map((item, i) => (
                 <li key={i}><strong className="text-text dark:text-text-dark">{item.label}</strong> {item.text}</li>
               ))}
             </ul>

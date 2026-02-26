@@ -46,7 +46,7 @@ export default function TermsPage() {
             <h2 className="text-xl font-bold text-text dark:text-text-dark mb-3">{s('s4.title')}</h2>
             <p className="text-text-muted dark:text-text-muted-dark leading-relaxed mb-3">{s('s4.intro')}</p>
             <ul className="list-disc list-inside space-y-2 text-text-muted dark:text-text-muted-dark mb-3">
-              {(t('sections.s4.items') as unknown as string[]).map((item, i) => (
+              {(t.raw('sections.s4.items') as string[]).map((item, i) => (
                 <li key={i}>{item}</li>
               ))}
             </ul>
