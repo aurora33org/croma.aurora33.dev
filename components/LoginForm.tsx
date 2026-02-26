@@ -39,7 +39,7 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto p-6 bg-white dark:bg-gray-900 rounded-lg shadow-lg border border-gray-200 dark:border-gray-800">
+    <div className="w-full max-w-md mx-auto p-6 bg-container dark:bg-container-dark rounded-xl border border-primary/20">
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
           <div className="p-3 bg-red-100 dark:bg-red-900 border border-red-400 dark:border-red-700 rounded text-red-700 dark:text-red-200 text-sm">
@@ -48,7 +48,7 @@ export default function LoginForm() {
         )}
 
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label htmlFor="email" className="block text-sm font-medium text-text dark:text-text-dark mb-1">
             Email
           </label>
           <input
@@ -57,13 +57,13 @@ export default function LoginForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 dark:focus:ring-orange-600"
+            className="w-full px-4 py-2 border border-primary/20 rounded-lg bg-background dark:bg-bg-dark text-text dark:text-text-dark placeholder-text-muted dark:placeholder-text-muted-dark focus:outline-none focus:ring-2 focus:ring-primary/50"
             placeholder="you@example.com"
           />
         </div>
 
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label htmlFor="password" className="block text-sm font-medium text-text dark:text-text-dark mb-1">
             Password
           </label>
           <input
@@ -72,7 +72,7 @@ export default function LoginForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 dark:focus:ring-orange-600"
+            className="w-full px-4 py-2 border border-primary/20 rounded-lg bg-background dark:bg-bg-dark text-text dark:text-text-dark placeholder-text-muted dark:placeholder-text-muted-dark focus:outline-none focus:ring-2 focus:ring-primary/50"
             placeholder="••••••••"
           />
         </div>
@@ -80,16 +80,16 @@ export default function LoginForm() {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full py-2 px-4 bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 text-white font-medium rounded-lg transition-colors duration-200"
+          className="w-full py-2 px-4 bg-primary hover:opacity-90 disabled:opacity-50 text-white font-medium rounded-lg transition-opacity duration-200"
         >
           {isLoading ? "Signing in..." : "Sign In"}
         </button>
       </form>
 
       <div className="mt-4 text-center">
-        <p className="text-gray-600 dark:text-gray-400 text-sm">
+        <p className="text-text-muted dark:text-text-muted-dark text-sm">
           Don&apos;t have an account?{" "}
-          <Link href="/auth/register" className="text-orange-500 hover:text-orange-600 font-medium">
+          <Link href="/auth/register" className="text-primary hover:opacity-80 font-medium transition-opacity">
             Register here
           </Link>
         </p>
