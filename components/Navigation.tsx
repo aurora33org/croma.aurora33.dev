@@ -82,6 +82,9 @@ export function Navigation() {
           <Link href="/pricing" className={navLinkClass(isActive('/pricing'))} aria-current={isActive('/pricing') ? 'page' : undefined}>
             {t('navigation.pricing') || 'Pricing'}
           </Link>
+          <Link href="/auth/login" className={navLinkClass(isActive('/auth/login'))} aria-current={isActive('/auth/login') ? 'page' : undefined}>
+            {t('navigation.login') || 'Login'}
+          </Link>
         </nav>
 
         {/* Toggles Container */}
