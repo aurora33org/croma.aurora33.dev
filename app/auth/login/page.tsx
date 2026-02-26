@@ -24,23 +24,25 @@ export default function LoginPage() {
     <div className="min-h-screen bg-background dark:bg-bg-dark flex flex-col items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <Link href="/" className="text-2xl font-bold text-orange-500 hover:text-orange-600 transition-colors">
-            Croma
+          <Link href="/tool">
+            <h2 className="font-bold hover:opacity-80 transition-opacity inline-block" style={{ fontFamily: '"Kangge", sans-serif', fontSize: 'calc(2.25rem * 0.8)' }}>
+              <span className="text-primary">croma.</span><span className="text-text dark:text-text-dark">aurora<sup>33</sup></span>
+            </h2>
           </Link>
-          <h1 className="mt-4 text-3xl font-bold text-gray-900 dark:text-white">
+          <h1 className="mt-6 text-2xl font-bold text-text dark:text-text-dark">
             Sign In
           </h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
-            Welcome back to Croma Image Compressor
+          <p className="mt-2 text-text-muted dark:text-text-muted-dark">
+            Welcome back
           </p>
         </div>
 
         <LoginForm />
 
-        <div className="mt-8 text-center">
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            New to Croma?{" "}
-            <Link href="/auth/register" className="text-orange-500 hover:text-orange-600 font-medium">
+        <div className="mt-6 text-center">
+          <p className="text-sm text-text-muted dark:text-text-muted-dark">
+            New to croma?{" "}
+            <Link href="/auth/register" className="text-primary hover:opacity-80 font-medium transition-opacity">
               Create an account
             </Link>
           </p>
