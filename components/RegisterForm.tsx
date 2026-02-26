@@ -3,9 +3,11 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useTranslations } from "@/lib/i18n-context";
 
 export default function RegisterForm() {
   const router = useRouter();
+  const t = useTranslations('common');
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -18,7 +20,7 @@ export default function RegisterForm() {
   const handlePasswordChange = (value: string) => {
     setPassword(value);
     if (value.length > 0 && value.length < 8) {
-      setPasswordError("Password must be at least 8 characters");
+      setPasswordError(t('password_min_length'));
     } else {
       setPasswordError(null);
     }
@@ -30,19 +32,19 @@ export default function RegisterForm() {
 
     // Validate email consent
     if (!emailConsent) {
-      setError("You must consent to emails to register");
+      setError(t('must_consent_emails'));
       return;
     }
 
     // Validate password match
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
+      setError(t('passwords_dont_match'));
       return;
     }
 
     // Validate password length
     if (password.length < 8) {
-      setError("Password must be at least 8 characters");
+      setError(t('password_min_length'));
       return;
     }
 
@@ -64,14 +66,14 @@ export default function RegisterForm() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || "Failed to register");
+        setError(data.error || t('registration_failed'));
         return;
       }
 
       // Redirect to login page on success
       router.push("/auth/login?registered=true");
     } catch {
-      setError("An error occurred. Please try again.");
+      setError(t('error_occurred'));
     } finally {
       setIsLoading(false);
     }
@@ -88,7 +90,7 @@ export default function RegisterForm() {
 
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-text dark:text-text-dark mb-1">
-            Email
+            {t('email')}
           </label>
           <input
             id="email"
@@ -103,7 +105,7 @@ export default function RegisterForm() {
 
         <div>
           <label htmlFor="password" className="block text-sm font-medium text-text dark:text-text-dark mb-1">
-            Password
+            {t('password')}
           </label>
           <input
             id="password"
@@ -122,13 +124,13 @@ export default function RegisterForm() {
             <p className="mt-1 text-sm text-red-600 dark:text-red-400">{passwordError}</p>
           )}
           <p className="mt-1 text-xs text-text-muted dark:text-text-muted-dark">
-            Minimum 8 characters
+            {t('password_requirements')}
           </p>
         </div>
 
         <div>
           <label htmlFor="confirmPassword" className="block text-sm font-medium text-text dark:text-text-dark mb-1">
-            Confirm Password
+            {t('confirm_password')}
           </label>
           <input
             id="confirmPassword"
@@ -150,7 +152,7 @@ export default function RegisterForm() {
             className="h-4 w-4 rounded border-primary/20 text-primary focus:ring-primary/50 cursor-pointer"
           />
           <label htmlFor="emailConsent" className="ml-2 text-sm text-text dark:text-text-dark cursor-pointer">
-            I agree to receive emails about product updates and news
+            {t('email_consent')}
           </label>
         </div>
 
@@ -159,15 +161,15 @@ export default function RegisterForm() {
           disabled={isLoading || !emailConsent}
           className="w-full py-2 px-4 bg-primary hover:opacity-90 disabled:opacity-50 text-white font-medium rounded-lg transition-opacity duration-200"
         >
-          {isLoading ? "Creating account..." : "Create Account"}
+          {isLoading ? t('creating_account') : t('create_account')}
         </button>
       </form>
 
       <div className="mt-4 text-center">
         <p className="text-text-muted dark:text-text-muted-dark text-sm">
-          Already have an account?{" "}
+          {t('already_have_account')}{" "}
           <Link href="/auth/login" className="text-primary hover:opacity-80 font-medium transition-opacity">
-            Sign in here
+            {t('sign_in_here')}
           </Link>
         </p>
       </div>
