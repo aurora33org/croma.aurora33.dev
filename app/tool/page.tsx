@@ -297,8 +297,6 @@ export default function Home() {
         />
       )}
 
-      {/* If user is not authenticated, show login prompt above hero */}
-      {!session?.user && currentView === 'upload' && <LoginPrompt />}
 
       {/* Show tier badge and usage indicator if authenticated */}
       {session?.user && !dailyLimitExceeded && (
@@ -456,6 +454,7 @@ export default function Home() {
 
       {currentView === 'upload' && (
         <>
+          {!session?.user && <LoginPrompt />}
           <FormatGuide />
           <FAQ />
         </>
