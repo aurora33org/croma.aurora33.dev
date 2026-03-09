@@ -18,5 +18,11 @@
     "heightPlaceholder": "Height (px)"
   },
   "compressButton": "Compress Images",
-  "compressingButton": "Compressing..."
+  "compressingButton": "Compressing...",
+  "formatWarning": {
+    "title": "Inefficient conversion detected",
+    "description": "Some of your files are in a more efficient format than the selected output format. This may result in larger files or unnecessary quality loss.",
+    "cancel": "Cancel",
+    "continue": "Continue anyway"
+  }
 }
