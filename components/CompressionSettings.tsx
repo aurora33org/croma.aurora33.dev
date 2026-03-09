@@ -112,7 +112,7 @@ export function CompressionSettings({
         </div>
 
         <button
-          onClick={onCompress}
+          onClick={() => onCompress()}
           disabled={isLoading}
           className="w-full bg-primary hover:bg-primary/90 disabled:bg-gray-400 dark:disabled:bg-gray-600 text-white font-semibold py-4 px-8 rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98]"
         >

@@ -137,7 +137,7 @@ export default function Home() {
       'image/jpeg': ['png'],
     };
     return files.some(file => {
-      const inefficientTargets = inefficientMap[file.type];
+const inefficientTargets = inefficientMap[file.type];
       return inefficientTargets?.includes(settings.format) ?? false;
     });
   };
