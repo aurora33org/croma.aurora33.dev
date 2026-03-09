@@ -475,6 +475,45 @@ export default function Home() {
         context={registerModalContext}
       />
 
+      {showFormatWarning && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
+          <div className="bg-white dark:bg-container-dark rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-6 sm:p-8 max-w-md w-full">
+            <div className="flex items-start gap-4 mb-4">
+              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center">
+                <svg className="w-5 h-5 text-yellow-600 dark:text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-text dark:text-text-dark mb-1">
+                  {t('settings.formatWarning.title')}
+                </h3>
+                <p className="text-sm text-text-muted dark:text-text-muted-dark">
+                  {t('settings.formatWarning.description')}
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={() => setShowFormatWarning(false)}
+                className="px-4 py-2 text-sm font-medium border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 text-text dark:text-text-dark transition-colors"
+              >
+                {t('settings.formatWarning.cancel')}
+              </button>
+              <button
+                onClick={() => {
+                  setShowFormatWarning(false);
+                  handleCompress(true);
+                }}
+                className="px-4 py-2 text-sm font-medium bg-primary hover:bg-primary/90 text-white rounded-lg transition-colors"
+              >
+                {t('settings.formatWarning.continue')}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <Footer />
     </main>
   );
