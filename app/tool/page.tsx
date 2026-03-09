@@ -48,6 +48,7 @@ export default function Home() {
 
   const [isCompressing, setIsCompressing] = useState(false);
   const [showFormatWarning, setShowFormatWarning] = useState(false);
+  const [showAvifWarning, setShowAvifWarning] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [registerModalContext, setRegisterModalContext] = useState<'image_limit' | 'session_limit' | undefined>();
   const [sessionLimits, setSessionLimits] = useState<ReturnType<typeof getSessionLimits> | null>(null);
@@ -142,9 +143,13 @@ const inefficientTargets = inefficientMap[file.type];
     });
   };
 
-  const handleCompress = async (skipWarning = false) => {
-    if (!skipWarning && hasInefficientConversion()) {
+  const handleCompress = async (skipInefficiencyWarning = false, skipAvifWarning = false) => {
+    if (!skipInefficiencyWarning && hasInefficientConversion()) {
       setShowFormatWarning(true);
+      return;
+    }
+    if (!skipAvifWarning && settings.format === 'avif') {
+      setShowAvifWarning(true);
       return;
     }
     try {
@@ -199,7 +204,8 @@ const inefficientTargets = inefficientMap[file.type];
       // Step 4: Poll for completion
       let isComplete = false;
       let pollCount = 0;
-      const maxPolls = 120;
+      const tier = session?.user?.tier || 'FREE';
+      const maxPolls = settings.format === 'avif' ? (tier === 'PRO' ? 240 : 180) : 120;
 
       while (!isComplete && pollCount < maxPolls) {
         await new Promise(resolve => setTimeout(resolve, 1000));
@@ -515,11 +521,64 @@ const inefficientTargets = inefficientMap[file.type];
               <button
                 onClick={() => {
                   setShowFormatWarning(false);
-                  handleCompress(true);
+                  handleCompress(true, false);
                 }}
                 className="px-4 py-2 text-sm font-medium bg-primary hover:bg-primary/90 text-white rounded-lg transition-colors"
               >
                 {t('settings.formatWarning.continue')}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showAvifWarning && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center px-4"
+          onClick={() => setShowAvifWarning(false)}
+        >
+          <div
+            className="bg-black bg-opacity-50 absolute inset-0"
+            aria-hidden="true"
+          />
+          <div
+            className="bg-white dark:bg-container-dark rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-6 sm:p-8 max-w-md w-full relative"
+            role="dialog"
+            aria-modal="true"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-start gap-4 mb-4">
+              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+                <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-text dark:text-text-dark mb-1">
+                  {t('settings.avifWarning.title')}
+                </h3>
+                <p className="text-sm text-text-muted dark:text-text-muted-dark">
+                  {session?.user?.tier === 'PRO'
+                    ? t('settings.avifWarning.descriptionPro')
+                    : t('settings.avifWarning.descriptionFree')}
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={() => setShowAvifWarning(false)}
+                className="px-4 py-2 text-sm font-medium border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 text-text dark:text-text-dark transition-colors"
+              >
+                {t('settings.avifWarning.cancel')}
+              </button>
+              <button
+                onClick={() => {
+                  setShowAvifWarning(false);
+                  handleCompress(true, true);
+                }}
+                className="px-4 py-2 text-sm font-medium bg-primary hover:bg-primary/90 text-white rounded-lg transition-colors"
+              >
+                {t('settings.avifWarning.continue')}
               </button>
             </div>
           </div>
