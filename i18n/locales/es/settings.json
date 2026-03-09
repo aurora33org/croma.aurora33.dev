@@ -18,5 +18,11 @@
     "heightPlaceholder": "Alto (px)"
   },
   "compressButton": "Comprimir Imágenes",
-  "compressingButton": "Comprimiendo..."
+  "compressingButton": "Comprimiendo...",
+  "formatWarning": {
+    "title": "Conversión ineficiente detectada",
+    "description": "Algunos de tus archivos están en un formato más eficiente que el formato de salida seleccionado. Esto puede resultar en archivos más grandes o pérdida de calidad innecesaria.",
+    "cancel": "Cancelar",
+    "continue": "Continuar de todas formas"
+  }
 }
