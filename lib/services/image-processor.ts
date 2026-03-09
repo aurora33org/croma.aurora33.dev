@@ -46,7 +46,7 @@ class ImageProcessor {
     },
     avif: {
       quality: 80,
-      effort: 4
+      effort: 2
     }
   };
 
