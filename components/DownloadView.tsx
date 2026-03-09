@@ -17,7 +17,7 @@ interface DownloadViewProps {
 }
 
 function formatFileSize(bytes: number, locale: string) {
-  if (bytes === 0) return '0 Bytes';
+  if (bytes <= 0) return '0 Bytes';
   const k = 1024;
   const sizes = ['Bytes', 'KB', 'MB'];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
@@ -33,7 +33,7 @@ export function DownloadView({ stats, onDownload, onReset, onSubscribe }: Downlo
 
   const originalSize = stats?.originalSize || 0;
   const compressedSize = stats?.compressedSize || 0;
-  const savedSize = originalSize - compressedSize;
+  const savedSize = Math.max(0, originalSize - compressedSize);
   const savingsPercent = stats?.reduction || 0;
 
   return (
