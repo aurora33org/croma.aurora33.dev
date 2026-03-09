@@ -138,7 +138,7 @@ export default function Home() {
       'image/jpeg': ['png'],
     };
     return files.some(file => {
-const inefficientTargets = inefficientMap[file.type];
+      const inefficientTargets = inefficientMap[file.type];
       return inefficientTargets?.includes(settings.format) ?? false;
     });
   };
@@ -387,7 +387,7 @@ const inefficientTargets = inefficientMap[file.type];
             onQualityChange={handleQualityChange}
             onFormatChange={handleFormatChange}
             onResizeChange={handleResizeChange}
-            onCompress={handleCompress}
+            onCompress={() => handleCompress()}
             isLoading={isCompressing}
           />
 
