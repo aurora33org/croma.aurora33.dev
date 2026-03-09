@@ -51,5 +51,11 @@
     "images_per_batch": "15 im\u00e1genes / lote",
     "file_size": "12 MB por archivo",
     "batches_per_day": "15 lotes / d\u00eda"
+  },
+  "loginPrompt": {
+    "title": "Desbloquea M\u00e1s Funciones",
+    "description": "Crea una cuenta gratuita para rastrear tu historial de compresiones, obtener l\u00edmites m\u00e1s altos y disfrutar de soporte prioritario.",
+    "login": "Iniciar Sesi\u00f3n",
+    "signUp": "Registrarse Gratis"
   }
 }
