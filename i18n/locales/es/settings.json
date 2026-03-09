@@ -24,5 +24,12 @@
     "description": "Algunos de tus archivos están en un formato más eficiente que el formato de salida seleccionado. Esto puede resultar en archivos más grandes o pérdida de calidad innecesaria.",
     "cancel": "Cancelar",
     "continue": "Continuar de todas formas"
+  },
+  "avifWarning": {
+    "title": "AVIF puede tardar más de lo normal",
+    "descriptionFree": "La conversión a AVIF es más lenta que otros formatos. El proceso puede tardar hasta 3 minutos. Por favor, no cierres la pestaña.",
+    "descriptionPro": "La conversión a AVIF es más lenta que otros formatos. El proceso puede tardar hasta 4 minutos. Por favor, no cierres la pestaña.",
+    "cancel": "Cancelar",
+    "continue": "Entendido, continuar"
   }
 }
