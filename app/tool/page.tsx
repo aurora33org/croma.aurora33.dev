@@ -47,6 +47,7 @@ export default function Home() {
   });
 
   const [isCompressing, setIsCompressing] = useState(false);
+  const [showFormatWarning, setShowFormatWarning] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [registerModalContext, setRegisterModalContext] = useState<'image_limit' | 'session_limit' | undefined>();
   const [sessionLimits, setSessionLimits] = useState<ReturnType<typeof getSessionLimits> | null>(null);
@@ -128,7 +129,24 @@ export default function Home() {
     setSettings({ ...settings, resizeWidth: width, resizeHeight: height });
   };
 
-  const handleCompress = async () => {
+  const hasInefficientConversion = (): boolean => {
+    const inefficientMap: Record<string, string[]> = {
+      'image/webp': ['jpeg', 'png'],
+      'image/avif': ['jpeg', 'png'],
+      'image/png': ['jpeg'],
+      'image/jpeg': ['png'],
+    };
+    return files.some(file => {
+      const inefficientTargets = inefficientMap[file.type];
+      return inefficientTargets?.includes(settings.format) ?? false;
+    });
+  };
+
+  const handleCompress = async (skipWarning = false) => {
+    if (!skipWarning && hasInefficientConversion()) {
+      setShowFormatWarning(true);
+      return;
+    }
     try {
       setIsCompressing(true);
       setCurrentView('processing');
