@@ -24,7 +24,7 @@
 
   /* Dark mode - when html HAS .dark class */
   html.dark {
-    --bg: #F8F8F8;
+    --bg: #191A1B;
     --text: #F6F6F6;
     --text-muted: #F3DDCA;
     --primary: #F84733;

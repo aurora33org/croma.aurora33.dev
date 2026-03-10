@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useTranslations, useLocale } from '@/lib/i18n-context';
+import { useTranslations } from '@/lib/i18n-context';
 
 interface ProcessingViewProps {
   progress: number;
@@ -20,7 +20,7 @@ export function ProcessingView({ progress, processedCount = 0, totalFiles = 0 }:
       setCurrentTip((prev) => (prev + 1) % tips.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [tips]);
 
   return (
     <>

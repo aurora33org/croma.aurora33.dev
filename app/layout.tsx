@@ -3,7 +3,11 @@ import { Geist, Geist_Mono, Press_Start_2P } from "next/font/google";
 import { ReactNode } from "react";
 import { cookies } from "next/headers";
 import { locales, defaultLocale, type Locale } from "@/i18n/config";
-import { LocaleProvider } from "@/lib/i18n-context";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { Providers } from "@/app/providers";
+import { Navigation } from "@/components/Navigation";
+import { initializeAdmin } from "@/lib/admin-init";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -65,8 +69,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
+  // Initialize admin user on startup
+  await initializeAdmin();
+
   const locale = await getLocale();
   const messages = (await import(`@/i18n/locales/${locale}`)).default as any;
+  const session = await getServerSession(authOptions);
 
   return (
     <html lang={locale}>
@@ -79,13 +87,24 @@ export default async function RootLayout({
             href={`https://croma.aurora33.dev?lang=${l}`}
           />
         ))}
+        {/* Inline script to apply dark mode before hydration — prevents flash */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');var d=window.matchMedia('(prefers-color-scheme: dark)').matches;if(t==='dark'||(t===null&&d)){document.documentElement.classList.add('dark');}else{document.documentElement.classList.remove('dark');}}catch(e){}})();`,
+          }}
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${pixelFont.variable} antialiased`}
       >
-        <LocaleProvider locale={locale} messages={messages}>
+        <Providers
+          session={session}
+          locale={locale}
+          messages={messages}
+        >
+          <Navigation />
           {children}
-        </LocaleProvider>
+        </Providers>
       </body>
     </html>
   );

@@ -1,0 +1,90 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model for authentication and tier management
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  passwordHash  String
+  tier          String    @default("FREE") // "FREE" or "PRO"
+  emailConsent  Boolean   @default(false)
+  isAdmin       Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  jobs          Job[]
+  dailyUsage    DailyUsage[]
+  usage         UserUsage[]
+
+  @@map("users")
+}
+
+// UserUsage model for tracking session and image usage
+model UserUsage {
+  id           String   @id @default(cuid())
+  userId       String
+  date         DateTime @db.Date
+  sessionCount Int      @default(0)
+  imageCount   Int      @default(0)
+  dailyReset   DateTime
+
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+  @@index([userId])
+}
+
+// Job model for tracking compression jobs
+model Job {
+  id              String    @id @default(cuid())
+  userId          String
+  fileCount       Int
+  originalSize    BigInt
+  compressedSize  BigInt
+  format          String    // "webp", "jpeg", "png", "avif"
+  createdAt       DateTime  @default(now())
+
+  // Relations
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("jobs")
+}
+
+// DailyUsage model for tracking daily compression usage per user
+model DailyUsage {
+  id              String    @id @default(cuid())
+  userId          String
+  date            DateTime  @default(now())
+  usageCount      Int       @default(0)
+  totalSize       BigInt    @default(0)
+
+  // Relations
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+  @@index([userId])
+  @@index([date])
+  @@map("daily_usage")
+}
+
+// AdminLog model for tracking admin actions
+model AdminLog {
+  id              String    @id @default(cuid())
+  action          String
+  details         String?
+  createdAt       DateTime  @default(now())
+
+  @@index([createdAt])
+  @@map("admin_logs")
+}

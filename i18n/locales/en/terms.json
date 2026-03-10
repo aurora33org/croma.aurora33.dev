@@ -1,0 +1,65 @@
+{
+  "heading": "Terms of Service",
+  "lastUpdated": "Last updated: February 26, 2026",
+  "back": "\u2190 Back to Croma",
+  "sections": {
+    "s1": {
+      "title": "1. Acceptance of Terms",
+      "body": "By accessing or using Croma (the Service), operated by Aurora33 (we, us, our), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the Service. These terms apply to all visitors, users, and registered accounts."
+    },
+    "s2": {
+      "title": "2. Description of Service",
+      "body": "Croma is a web-based image compression and format conversion tool. It allows users to compress, convert, and resize images in bulk. The Service is provided free of charge for the Free tier and under a paid or promotional plan for the Pro tier. Aurora33 reserves the right to modify, suspend, or discontinue any part of the Service at any time."
+    },
+    "s3": {
+      "title": "3. User Accounts",
+      "body1": "To access Pro features, you must create an account by providing a valid email address and password. You are responsible for maintaining the confidentiality of your credentials and for all activity that occurs under your account.",
+      "body2": "You must be at least 16 years old to create an account. By registering, you confirm that the information you provide is accurate and up to date."
+    },
+    "s4": {
+      "title": "4. Acceptable Use",
+      "intro": "You agree not to:",
+      "items": [
+        "Upload content that is illegal, harmful, or infringes third-party rights",
+        "Attempt to reverse-engineer, hack, or disrupt the Service",
+        "Use automated scripts to abuse the Service beyond normal usage",
+        "Resell or sublicense access to the Service without written permission",
+        "Upload malware or any malicious files"
+      ],
+      "outro": "Aurora33 reserves the right to suspend or terminate accounts that violate these rules."
+    },
+    "s5": {
+      "title": "5. Uploaded Content",
+      "body": "You retain full ownership of any images you upload. Uploaded files are processed temporarily and deleted automatically after one hour. Aurora33 does not access, review, or store your images beyond what is strictly necessary to perform the compression service."
+    },
+    "s6": {
+      "title": "6. Intellectual Property",
+      "body": "All elements of the Service \u2014 including its design, source code, branding, and content \u2014 are the exclusive property of Aurora33 and are protected by applicable intellectual property laws. You may not copy, reproduce, or distribute any part of the Service without prior written consent."
+    },
+    "s7": {
+      "title": "7. Disclaimers and Limitation of Liability",
+      "body1": "The Service is provided as-is without warranties of any kind. Aurora33 does not guarantee uninterrupted or error-free operation.",
+      "body2": "To the maximum extent permitted by law, Aurora33 shall not be liable for any indirect, incidental, special, or consequential damages arising out of your use or inability to use the Service, including loss of data."
+    },
+    "s8": {
+      "title": "8. Termination",
+      "body": "You may delete your account at any time by contacting us. Aurora33 may terminate or suspend your account at its discretion if you violate these Terms. Upon termination, your right to use the Service ceases immediately."
+    },
+    "s9": {
+      "title": "9. Changes to These Terms",
+      "body": "We may update these Terms at any time. When we do, we will revise the Last updated date at the top of this page. Continued use of the Service after changes constitutes your acceptance of the revised Terms."
+    },
+    "s10": {
+      "title": "10. Governing Law",
+      "body": "These Terms are governed by the laws applicable to Aurora33's jurisdiction. Any disputes arising from these Terms shall be resolved through good-faith negotiation, and if necessary, through the competent courts of that jurisdiction."
+    },
+    "s11": {
+      "title": "11. Contact",
+      "body": "For any questions regarding these Terms, please contact us at"
+    }
+  },
+  "footer": {
+    "privacy": "Privacy Policy",
+    "backToApp": "Back to Croma"
+  }
+}

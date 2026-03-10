@@ -43,6 +43,10 @@ class ImageProcessor {
     png: {
       compressionLevel: 9,
       quality: 80
+    },
+    avif: {
+      quality: 80,
+      effort: 2
     }
   };
 

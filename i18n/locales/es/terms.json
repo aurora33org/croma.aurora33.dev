@@ -1,0 +1,65 @@
+{
+  "heading": "T\u00e9rminos de Servicio",
+  "lastUpdated": "\u00daltima actualizaci\u00f3n: 26 de febrero de 2026",
+  "back": "\u2190 Volver a Croma",
+  "sections": {
+    "s1": {
+      "title": "1. Aceptaci\u00f3n de los T\u00e9rminos",
+      "body": "Al acceder o utilizar Croma (el Servicio), operado por Aurora33 (nosotros, nos, nuestro), aceptas estar sujeto a estos T\u00e9rminos de Servicio. Si no est\u00e1s de acuerdo, por favor no uses el Servicio. Estos t\u00e9rminos aplican a todos los visitantes, usuarios y cuentas registradas."
+    },
+    "s2": {
+      "title": "2. Descripci\u00f3n del Servicio",
+      "body": "Croma es una herramienta web de compresi\u00f3n y conversi\u00f3n de im\u00e1genes en lotes. El Servicio se ofrece de forma gratuita en el plan Free y bajo un plan de pago o promocional en el plan Pro. Aurora33 se reserva el derecho de modificar, suspender o discontinuar cualquier parte del Servicio en cualquier momento."
+    },
+    "s3": {
+      "title": "3. Cuentas de Usuario",
+      "body1": "Para acceder a las funciones Pro, debes crear una cuenta con una direcci\u00f3n de correo electr\u00f3nico v\u00e1lida y una contrase\u00f1a. Eres responsable de mantener la confidencialidad de tus credenciales y de toda la actividad que ocurra bajo tu cuenta.",
+      "body2": "Debes tener al menos 16 a\u00f1os para crear una cuenta. Al registrarte, confirmas que la informaci\u00f3n que proporcionas es veraz y est\u00e1 actualizada."
+    },
+    "s4": {
+      "title": "4. Uso Aceptable",
+      "intro": "Aceptas no:",
+      "items": [
+        "Subir contenido ilegal, da\u00f1ino o que infrinja derechos de terceros",
+        "Intentar hacer ingenier\u00eda inversa, hackear o interrumpir el Servicio",
+        "Usar scripts automatizados para abusar del Servicio m\u00e1s all\u00e1 del uso normal",
+        "Revender o sublicenciar el acceso al Servicio sin permiso escrito",
+        "Subir malware o archivos maliciosos"
+      ],
+      "outro": "Aurora33 se reserva el derecho de suspender o cancelar cuentas que violen estas reglas."
+    },
+    "s5": {
+      "title": "5. Contenido Subido",
+      "body": "Conservas la propiedad total de las im\u00e1genes que subes. Los archivos subidos se procesan temporalmente y se eliminan autom\u00e1ticamente despu\u00e9s de una hora. Aurora33 no accede, revisa ni almacena tus im\u00e1genes m\u00e1s all\u00e1 de lo estrictamente necesario para prestar el servicio."
+    },
+    "s6": {
+      "title": "6. Propiedad Intelectual",
+      "body": "Todos los elementos del Servicio \u2014 incluyendo dise\u00f1o, c\u00f3digo fuente, marca y contenido \u2014 son propiedad exclusiva de Aurora33 y est\u00e1n protegidos por las leyes de propiedad intelectual aplicables. No puedes copiar, reproducir ni distribuir ninguna parte del Servicio sin consentimiento previo por escrito."
+    },
+    "s7": {
+      "title": "7. Exenciones de Responsabilidad y Limitaci\u00f3n de Liability",
+      "body1": "El Servicio se proporciona tal cual, sin garant\u00edas de ning\u00fan tipo. Aurora33 no garantiza un funcionamiento ininterrumpido ni libre de errores.",
+      "body2": "En la m\u00e1xima medida permitida por la ley, Aurora33 no ser\u00e1 responsable de ning\u00fan da\u00f1o indirecto, incidental, especial o consecuente derivado del uso o la imposibilidad de usar el Servicio, incluyendo la p\u00e9rdida de datos."
+    },
+    "s8": {
+      "title": "8. Cancelaci\u00f3n",
+      "body": "Puedes eliminar tu cuenta en cualquier momento contact\u00e1ndonos. Aurora33 puede cancelar o suspender tu cuenta si incumples estos T\u00e9rminos. Tras la cancelaci\u00f3n, tu derecho a usar el Servicio cesa de inmediato."
+    },
+    "s9": {
+      "title": "9. Cambios en estos T\u00e9rminos",
+      "body": "Podemos actualizar estos T\u00e9rminos en cualquier momento. Cuando lo hagamos, actualizaremos la fecha de \u00daltima actualizaci\u00f3n en la parte superior. El uso continuado del Servicio tras los cambios implica tu aceptaci\u00f3n de los T\u00e9rminos revisados."
+    },
+    "s10": {
+      "title": "10. Ley Aplicable",
+      "body": "Estos T\u00e9rminos se rigen por las leyes aplicables a la jurisdicci\u00f3n de Aurora33. Cualquier disputa se resolver\u00e1 mediante negociaci\u00f3n de buena fe y, si fuera necesario, a trav\u00e9s de los tribunales competentes de dicha jurisdicci\u00f3n."
+    },
+    "s11": {
+      "title": "11. Contacto",
+      "body": "Para cualquier pregunta sobre estos T\u00e9rminos, cont\u00e1ctanos en"
+    }
+  },
+  "footer": {
+    "privacy": "Pol\u00edtica de Privacidad",
+    "backToApp": "Volver a Croma"
+  }
+}

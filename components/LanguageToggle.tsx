@@ -1,15 +1,19 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 
 export function LanguageToggle() {
   const router = useRouter();
-  const [language, setLanguage] = useState<'es' | 'en'>('es');
-  const [mounted, setMounted] = useState(false);
+  const [language, setLanguage] = useState('es');
+  const langRef = useRef<'es' | 'en'>('es');
+  const initialized = useRef(false);
 
   useEffect(() => {
-    setMounted(true);
+    // Only initialize once on client mount
+    if (initialized.current) return;
+    initialized.current = true;
+
     // Check localStorage and default to Spanish
     const savedLanguage = localStorage.getItem('preferred-language') as 'es' | 'en' | null;
     const cookieLanguage = document.cookie
@@ -18,11 +22,13 @@ export function LanguageToggle() {
       ?.split('=')[1] as 'es' | 'en' | undefined;
 
     const currentLanguage = savedLanguage || cookieLanguage || 'es';
+    langRef.current = currentLanguage;
     setLanguage(currentLanguage);
   }, []);
 
   const toggleLanguage = () => {
     const newLanguage = language === 'es' ? 'en' : 'es';
+    langRef.current = newLanguage;
 
     // Update localStorage
     localStorage.setItem('preferred-language', newLanguage);
@@ -38,12 +44,6 @@ export function LanguageToggle() {
     // Refresh the page to apply new language (using router.refresh instead of reload)
     router.refresh();
   };
-
-  if (!mounted) {
-    return (
-      <div className="inline-flex items-center justify-between h-8 w-14 px-1 rounded-full bg-gray-300 dark:bg-gray-700" />
-    );
-  }
 
   return (
     <button
