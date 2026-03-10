@@ -1,14 +1,21 @@
 import { NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { jobManager, storageService } from '@/lib/services';
 import { logger } from '@/lib/utils/logger';
 
 /**
  * POST /api/jobs
  * Create a new compression job
+ * Anonymous users are allowed (FREE tier limits enforced at upload)
  */
 export async function POST() {
   try {
-    const job = jobManager.createJob();
+    const session = await getServerSession(authOptions);
+    // Anonymous users get userId 'anon'; authenticated users use their real id
+    const userId = (session?.user as any)?.id || 'anon';
+
+    const job = jobManager.createJob(userId);
     await storageService.createJobDirectories(job.id);
 
     logger.success(`Created job: ${job.id}`);
@@ -18,10 +25,11 @@ export async function POST() {
       jobId: job.id,
       message: 'Job created successfully'
     }, { status: 201 });
-  } catch (error: any) {
-    logger.error('Failed to create job:', error.message);
+  } catch (error: unknown) {
+    const err = error instanceof Error ? error : new Error(String(error));
+    logger.error('Failed to create job:', err.message);
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, error: err.message },
       { status: 500 }
     );
   }
@@ -38,9 +46,10 @@ export async function GET() {
       success: true,
       jobs
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const err = error instanceof Error ? error : new Error(String(error));
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, error: err.message },
       { status: 500 }
     );
   }

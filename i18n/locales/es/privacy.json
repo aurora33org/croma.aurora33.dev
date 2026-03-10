@@ -1,0 +1,91 @@
+{
+  "heading": "Pol\u00edtica de Privacidad",
+  "lastUpdated": "\u00daltima actualizaci\u00f3n: 26 de febrero de 2026",
+  "back": "\u2190 Volver a Croma",
+  "sections": {
+    "s1": {
+      "title": "1. Qui\u00e9nes Somos",
+      "body": "Croma es un producto de Aurora33 (nosotros, nos, nuestro). Operamos la herramienta de compresi\u00f3n de im\u00e1genes disponible en croma.aurora33.dev. Esta Pol\u00edtica de Privacidad explica c\u00f3mo recopilamos, usamos y protegemos tus datos personales cuando usas nuestro Servicio."
+    },
+    "s2": {
+      "title": "2. Datos que Recopilamos",
+      "intro": "Recopilamos las siguientes categor\u00edas de datos personales:",
+      "items": [
+        { "label": "Datos de cuenta:", "text": "direcci\u00f3n de correo electr\u00f3nico y contrase\u00f1a cifrada al registrarte" },
+        { "label": "Datos de uso:", "text": "n\u00famero de trabajos de compresi\u00f3n, conteo de archivos y m\u00e9tricas de uso asociadas a tu cuenta" },
+        { "label": "Datos t\u00e9cnicos:", "text": "direcci\u00f3n IP, tipo de navegador y datos de sesi\u00f3n recopilados autom\u00e1ticamente mediante registros del servidor" },
+        { "label": "Archivos subidos:", "text": "las im\u00e1genes se procesan en memoria y se eliminan autom\u00e1ticamente despu\u00e9s de una hora \u2014 no almacenamos ni inspeccionamos su contenido" }
+      ]
+    },
+    "s3": {
+      "title": "3. C\u00f3mo Usamos tus Datos",
+      "intro": "Usamos tus datos personales para los siguientes fines:",
+      "items": [
+        { "label": "Prestaci\u00f3n del Servicio:", "text": "para operar tu cuenta, aplicar l\u00edmites de uso y proporcionar las funciones de compresi\u00f3n" },
+        { "label": "Comunicaciones sobre el producto:", "text": "para enviarte actualizaciones, nuevas funciones y mejoras relacionadas con Croma" },
+        { "label": "Marketing de Aurora33:", "text": "para informarte sobre otros productos, herramientas y servicios desarrollados u ofrecidos por Aurora33" },
+        { "label": "Ofertas promocionales:", "text": "para enviarte campa\u00f1as promocionales, descuentos y ofertas especiales de productos Aurora33 y colaboraciones seleccionadas con terceros" },
+        { "label": "Newsletter:", "text": "si diste tu consentimiento al registrarte, para enviarte nuestro bolet\u00edn peri\u00f3dico con noticias del producto, consejos y actualizaciones" },
+        { "label": "Anal\u00edtica:", "text": "para entender c\u00f3mo se utiliza el Servicio y mejorarlo" },
+        { "label": "Cumplimiento legal:", "text": "para cumplir con las obligaciones legales aplicables" }
+      ],
+      "outro": "Los correos de marketing y el newsletter solo se env\u00edan a usuarios que dieron su consentimiento expl\u00edcito en el momento del registro. Puedes retirar este consentimiento en cualquier momento (ver Secci\u00f3n 7)."
+    },
+    "s4": {
+      "title": "4. Base Legal del Tratamiento",
+      "intro": "Tratamos tus datos personales bajo las siguientes bases legales:",
+      "items": [
+        { "label": "Ejecuci\u00f3n del contrato:", "text": "para prestar el Servicio al que te registraste" },
+        { "label": "Consentimiento:", "text": "para correos de marketing, newsletters y comunicaciones promocionales \u2014 diste tu consentimiento expl\u00edcito al registrarte" },
+        { "label": "Inter\u00e9s leg\u00edtimo:", "text": "para anal\u00edtica del producto y mejoras del Servicio" },
+        { "label": "Obligaci\u00f3n legal:", "text": "cuando lo exija la ley aplicable" }
+      ]
+    },
+    "s5": {
+      "title": "5. Compartici\u00f3n de Datos",
+      "intro": "No vendemos tus datos personales. Podemos compartirlos con:",
+      "items": [
+        { "label": "Proveedores de servicios:", "text": "terceros de confianza (hosting, base de datos, env\u00edo de correos) que tratan datos en nuestro nombre bajo acuerdos de tratamiento de datos" },
+        { "label": "Grupo Aurora33:", "text": "otros productos o proyectos operados bajo la marca Aurora33, exclusivamente para los fines descritos en la Secci\u00f3n 3" },
+        { "label": "Autoridades legales:", "text": "cuando lo exija la ley o para proteger los derechos y la seguridad de Aurora33 o sus usuarios" }
+      ]
+    },
+    "s6": {
+      "title": "6. Retenci\u00f3n de Datos",
+      "body": "Conservamos tus datos de cuenta mientras tu cuenta est\u00e9 activa. Los archivos de imagen subidos se eliminan autom\u00e1ticamente despu\u00e9s de una hora de inactividad. Si eliminas tu cuenta, borraremos tus datos personales en un plazo de 30 d\u00edas, salvo que la ley exija conservarlos."
+    },
+    "s7": {
+      "title": "7. Tus Derechos",
+      "intro": "Dependiendo de tu jurisdicci\u00f3n, puedes tener los siguientes derechos sobre tus datos personales:",
+      "items": [
+        { "label": "Acceso:", "text": "solicitar una copia de los datos que tenemos sobre ti" },
+        { "label": "Rectificaci\u00f3n:", "text": "corregir datos inexactos o incompletos" },
+        { "label": "Supresi\u00f3n:", "text": "solicitar la eliminaci\u00f3n de tus datos (derecho al olvido)" },
+        { "label": "Oposici\u00f3n:", "text": "oponerte al tratamiento de datos basado en inter\u00e9s leg\u00edtimo" },
+        { "label": "Retirar el consentimiento:", "text": "darte de baja de correos de marketing o del newsletter en cualquier momento haciendo clic en el enlace de baja o contact\u00e1ndonos directamente" },
+        { "label": "Portabilidad:", "text": "solicitar tus datos en un formato estructurado y legible por m\u00e1quina" }
+      ],
+      "outro": "Para ejercer cualquiera de estos derechos, cont\u00e1ctanos en"
+    },
+    "s8": {
+      "title": "8. Cookies",
+      "body": "Usamos cookies esenciales para mantener tu sesi\u00f3n y preferencias de idioma. No usamos cookies publicitarias de terceros. Puedes desactivar las cookies en la configuraci\u00f3n de tu navegador, aunque esto puede afectar la funcionalidad del Servicio."
+    },
+    "s9": {
+      "title": "9. Seguridad",
+      "body": "Implementamos medidas de seguridad est\u00e1ndar del sector, incluyendo contrase\u00f1as cifradas (bcrypt), transporte HTTPS y acceso restringido al servidor. Sin embargo, ning\u00fan sistema es completamente seguro. Te recomendamos usar una contrase\u00f1a fuerte y \u00fanica para tu cuenta."
+    },
+    "s10": {
+      "title": "10. Cambios en esta Pol\u00edtica",
+      "body": "Podemos actualizar esta Pol\u00edtica de Privacidad peri\u00f3dicamente. Actualizaremos la fecha de \u00daltima actualizaci\u00f3n en la parte superior de esta p\u00e1gina. El uso continuado del Servicio tras los cambios implica tu aceptaci\u00f3n de la Pol\u00edtica revisada."
+    },
+    "s11": {
+      "title": "11. Contacto",
+      "body": "Para preguntas sobre privacidad o para ejercer tus derechos, contacta a Aurora33 en"
+    }
+  },
+  "footer": {
+    "terms": "T\u00e9rminos de Servicio",
+    "backToApp": "Volver a Croma"
+  }
+}

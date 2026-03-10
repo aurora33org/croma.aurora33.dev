@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useTranslations } from '@/lib/i18n-context';
 
 export function Footer() {
@@ -14,7 +15,13 @@ export function Footer() {
           </a>
         </p>
 
-        <p className="text-base text-text-muted dark:text-text-muted-dark">© {currentYear} Aurora33 · {t('footer.copyrightText')}</p>
+        <p className="text-base text-text-muted dark:text-text-muted-dark mb-3">© {currentYear} Aurora33 · {t('footer.copyrightText')}</p>
+
+        <div className="flex items-center justify-center gap-4 text-sm text-text-muted dark:text-text-muted-dark">
+          <Link href="/terms" className="hover:text-primary transition-colors">{t('footer.terms')}</Link>
+          <span>·</span>
+          <Link href="/privacy" className="hover:text-primary transition-colors">{t('footer.privacy')}</Link>
+        </div>
       </div>
     </footer>
   );

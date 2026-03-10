@@ -1,0 +1,7 @@
+module.exports = [
+"[project]/.worktrees/pro-version/i18n/locales/en/faq.json (json)", ((__turbopack_context__) => {
+
+__turbopack_context__.v({"heading":"Frequently Asked Questions","questions":[{"question":"Is it safe to upload my images?","answer":"→ Yes, all processing happens on our secure server. Images are automatically deleted after 1 hour."},{"question":"Is there a usage limit?","answer":"→ Up to 20 images per batch, unlimited batches. For larger volumes, check our enterprise API."},{"question":"Will I lose quality when compressing?","answer":"→ Quality loss is minimal and imperceptible to the human eye at 80-90% settings. We optimize for web while maintaining visual quality."}]});}),
+];
+
+//# sourceMappingURL=_worktrees_pro-version_i18n_locales_en_faq_json_93847987._.js.map

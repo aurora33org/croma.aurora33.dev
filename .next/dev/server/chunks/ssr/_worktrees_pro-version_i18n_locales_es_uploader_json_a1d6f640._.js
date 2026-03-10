@@ -1,0 +1,7 @@
+module.exports = [
+"[project]/.worktrees/pro-version/i18n/locales/es/uploader.json (json)", ((__turbopack_context__) => {
+
+__turbopack_context__.v({"dropzone":{"title":"Arrastra y suelta imágenes aquí","subtitle":"o haz click para explorar tus archivos","fileSizeLimit":"Por ahora solo aceptamos archivos de hasta 8 MB","futureNote":"En el futuro permitiremos archivos más grandes"},"badges":{"free":"Sin Instalaciones","secure":"Procesamiento Seguro","fast":"Compresión Rápida"},"selectedImages":"Imágenes seleccionadas","addMoreImages":"Agregar más imágenes","removeButton":"Eliminar"});}),
+];
+
+//# sourceMappingURL=_worktrees_pro-version_i18n_locales_es_uploader_json_a1d6f640._.js.map
