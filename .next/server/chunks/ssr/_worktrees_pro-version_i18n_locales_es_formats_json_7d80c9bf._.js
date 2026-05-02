@@ -1,3 +1,0 @@
-module.exports=[60139,a=>{a.v({heading:"Guía de Formatos de Imagen",formats:[{title:"WebP",description:"Mejor compresión sin pérdida de calidad visible. Ideal para web moderna. Reduce tamaño hasta 30% vs JPEG."},{title:"JPEG",description:"Compatible universalmente. Perfecto para fotografías. No soporta transparencias."},{title:"PNG",description:"Soporta transparencias. Ideal para logos e ilustraciones. Archivos más pesados."}]})}];
-
-//# sourceMappingURL=_worktrees_pro-version_i18n_locales_es_formats_json_7d80c9bf._.js.map

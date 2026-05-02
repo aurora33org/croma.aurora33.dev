@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 3, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/.worktrees/pro-version/i18n/locales/es/pricing.json"],"sourcesContent":["{\"title\":\"Planes de Precios\",\"subtitle\":\"Elige el plan perfecto para ti\",\"free\":{\"name\":\"Gratuito\",\"description\":\"Para usuarios ocasionales\",\"batches_per_day\":\"5 lotes al día\",\"images_per_batch\":\"5 imágenes por lote\",\"max_batches\":\"6 lotes máximos al día\",\"max_file_size\":\"7 MB por imagen\",\"formats\":\"Formatos: WebP, JPEG, PNG\",\"compression_time\":\"~5-7 segundos por lote\",\"button\":\"Ya usándolo\",\"button_alt\":\"Usar Gratis\"},\"pro\":{\"name\":\"Pro\",\"description\":\"Para usuarios avanzados\",\"batches_per_day\":\"15 lotes al día\",\"images_per_batch\":\"15 imágenes por lote\",\"max_batches\":\"15 lotes máximos al día\",\"max_file_size\":\"12 MB por imagen\",\"formats\":\"Formatos: WebP, JPEG, PNG\",\"compression_time\":\"~5-7 segundos por lote\",\"button\":\"Registrarse Gratis\"},\"limit_reached\":{\"images_title\":\"Límite de imágenes alcanzado\",\"images_message\":\"Actualiza a Pro para comprimir hasta 15 imágenes por lote.\",\"sessions_title\":\"Límite diario alcanzado\",\"sessions_message\":\"Ya alcanzaste tu límite de 6 lotes hoy. Vuelve en 23 horas o actualiza a Pro.\"}}"],"names":[],"mappings":"AAAA"}},
-    {"offset": {"line": 3, "column": 1059}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
-}

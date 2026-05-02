@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 3, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/.worktrees/pro-version/i18n/locales/en/common.json"],"sourcesContent":["{\"navigation\":{\"tagline\":\"croma.aurora33\",\"themeToggleAriaLabel\":\"Toggle dark mode\",\"tool\":\"Tool\",\"pricing\":\"Pricing\"},\"footer\":{\"madeWith\":\"Made with ❤️ and AI, by\",\"needCustomSolutions\":\"Need custom solutions for your business?\",\"links\":{\"webDevelopment\":\"Web Development\",\"consulting\":\"Consulting\",\"contact\":\"Contact\"},\"copyrightText\":\"All rights reserved\"},\"create_account\":\"Create Account\",\"email\":\"Email\",\"password\":\"Password\",\"confirm_password\":\"Confirm Password\",\"register\":\"REGISTER\",\"registering\":\"Registering...\",\"cancel\":\"CANCEL\",\"password_min_length\":\"Password must be at least 8 characters\",\"invalid_email\":\"Please enter a valid email\",\"passwords_dont_match\":\"Passwords do not match\",\"must_accept_terms\":\"You must accept the terms and conditions\",\"registration_failed\":\"Registration failed\",\"signin_failed\":\"Failed to sign in\",\"error_occurred\":\"An error occurred. Please try again.\",\"password_requirements\":\"Minimum 8 characters\",\"accept_terms_and_marketing\":\"I accept the terms and conditions and want to receive marketing emails\"}"],"names":[],"mappings":"AAAA"}},
-    {"offset": {"line": 3, "column": 1072}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
-}

@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 16, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/.worktrees/pro-version/middleware.ts"],"sourcesContent":["import { withAuth } from \"next-auth/middleware\";\n\nexport const middleware = withAuth({\n  pages: {\n    signIn: \"/auth/login\",\n  },\n});\n\nexport const config = {\n  matcher: [\"/admin/:path*\", \"/dashboard/:path*\"],\n};\n"],"names":[],"mappings":";;;;;;AAAA;;AAEO,MAAM,aAAa,IAAA,+LAAQ,EAAC;IACjC,OAAO;QACL,QAAQ;IACV;AACF;AAEO,MAAM,SAAS;IACpB,SAAS;QAAC;QAAiB;KAAoB;AACjD"}}]
-}
