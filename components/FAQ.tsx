@@ -8,7 +8,7 @@ export function FAQ() {
       <h3 className="text-2xl font-normal text-text dark:text-text-dark mb-6">{t('heading')}</h3>
       <div className="space-y-4">
         {questions.map((item: { question: string; answer: string }, index: number) => (
-          <div key={index} className="bg-white dark:bg-container-dark border border-gray-200 dark:border-gray-700 rounded-xl p-6">
+          <div key={index} className="bg-card p-6" style={{ border: '1px solid var(--border)' }}>
             <h4 className="font-normal text-text dark:text-text-dark mb-2">{item.question}</h4>
             <p className="text-base text-text-muted dark:text-text-muted-dark pl-4">
               {item.answer}

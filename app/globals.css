@@ -1,83 +1,78 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Syne:wght@400..800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: "Kangge";
-  src: url("/fonts/Kangge.woff2") format("woff2"),
-       url("/fonts/Kangge.ttf") format("truetype");
-  font-weight: 400;
-  font-display: swap;
-}
-
 @layer base {
-  /* Light mode as DEFAULT */
   :root {
-    --bg: #F8F8F8;
-    --text: #191A1B;
-    --text-muted: #4c5052;
-    --primary: #F84733;
-    --container: #FCF6F0;
+    --background:         oklch(0.9849 0.0029 264.5421);
+    --foreground:         oklch(0.2795 0.0204 260.6090);
+    --card:               oklch(1.0000 0 0);
+    --primary:            oklch(0.5511 0.1602 284.9492);
+    --primary-foreground: oklch(1.0000 0 0);
+    --secondary:          oklch(0.9409 0.0196 260.1696);
+    --muted:              oklch(0.9642 0.0041 271.3692);
+    --muted-foreground:   oklch(0.5011 0.0196 259.4168);
+    --border:             oklch(0.9206 0.0092 258.3368);
+    --rule:               oklch(0.9206 0.0092 258.3368 / 0.65);
+    --chart-1:            oklch(0.5511 0.1602 284.9492);
+    --chart-2:            oklch(0.6495 0.1408 250.4113);
+    --chart-3:            oklch(0.6351 0.1085 205.1732);
+    --chart-4:            oklch(0.5800 0.1800 267.0000);
+    --chart-5:            oklch(0.6194 0.1996 20.0616);
     color-scheme: light;
   }
 
-  /* Dark mode - when html HAS .dark class */
   html.dark {
-    --bg: #191A1B;
-    --text: #F6F6F6;
-    --text-muted: #F3DDCA;
-    --primary: #F84733;
-    --container: #221A19;
+    --background:         oklch(0.1716 0.0097 255.6513);
+    --foreground:         oklch(0.9203 0.0150 260.7292);
+    --card:               oklch(0.2081 0.0153 261.6011);
+    --primary:            oklch(0.6992 0.1399 284.9900);
+    --primary-foreground: oklch(0.1716 0.0097 255.6513);
+    --secondary:          oklch(0.2995 0.0301 260.5101);
+    --muted:              oklch(0.2501 0.0193 258.3593);
+    --muted-foreground:   oklch(0.6999 0.0198 258.3637);
+    --border:             oklch(0.2996 0.0161 259.7938);
+    --rule:               oklch(0.2996 0.0161 259.7938 / 0.75);
+    --chart-1:            oklch(0.6992 0.1399 284.9900);
+    --chart-2:            oklch(0.6507 0.1194 249.4864);
+    --chart-3:            oklch(0.7151 0.1216 201.6738);
+    --chart-4:            oklch(0.6800 0.1800 267.0000);
+    --chart-5:            oklch(0.6944 0.1966 19.6034);
     color-scheme: dark;
   }
 
+  html, body {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
   body {
-    background-color: var(--bg);
-    color: var(--text);
-    font-family: 'Quicksand', sans-serif;
-    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.4s, color 0.4s;
     text-wrap: pretty;
   }
 
-  h1 {
-    font-family: "Kangge", sans-serif;
-    transition: color 0.4s ease;
+  ::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
   }
 
-  h2, h3, h4, h5, h6 {
-    font-family: 'Syne', sans-serif;
-    transition: color 0.4s ease;
-  }
-
-  * {
-    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
-  }
-
-  /* Fade animations */
   @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+    from { opacity: 0; }
+    to   { opacity: 1; }
   }
 
   @keyframes fadeOut {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-    }
+    from { opacity: 1; }
+    to   { opacity: 0; }
   }
 
-  .animate-fade-in {
-    animation: fadeIn 0.5s ease-in-out forwards;
-  }
-
-  .animate-fade-out {
-    animation: fadeOut 0.5s ease-in-out forwards;
-  }
+  .animate-fade-in  { animation: fadeIn  0.5s ease-in-out forwards; }
+  .animate-fade-out { animation: fadeOut 0.5s ease-in-out forwards; }
 }
+
+@keyframes hud-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+.hud-cursor { animation: hud-blink 1.1s step-end infinite; }

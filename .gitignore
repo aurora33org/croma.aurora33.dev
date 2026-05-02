@@ -28,6 +28,7 @@ Thumbs.db
 # Build outputs
 dist/
 build/
+.next/
 
 # Git worktrees
 .worktrees/
