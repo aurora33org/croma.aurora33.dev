@@ -12,7 +12,7 @@ export function Footer() {
       <div className="max-w-[1480px] mx-auto px-5 md:px-10">
         {/* Logo grande Instrument Serif */}
         <a
-          href="https://aurora33.dev"
+          href="https://aurora33.org"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block py-16 md:py-24"

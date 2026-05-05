@@ -124,7 +124,7 @@ export function DownloadView({ stats, onDownload, onReset, onSubscribe }: Downlo
 
           <p className="text-base text-text-muted dark:text-text-muted-dark">
             {t('leadCapture.linkText')}{' '}
-            <a href="https://aurora33.dev" className="text-primary hover:underline font-medium">
+            <a href="https://aurora33.org" className="text-primary hover:underline font-medium">
               {t('leadCapture.linkLabel')}
             </a>
           </p>
