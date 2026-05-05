@@ -42,7 +42,7 @@ async function getLocale(): Promise<Locale> {
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
-  const baseUrl = "https://croma.aurora33.dev";
+  const baseUrl = "https://croma.aurora33.org";
 
   return {
     title: locale === "en"
@@ -91,7 +91,7 @@ export default async function RootLayout({
             key={l}
             rel="alternate"
             hrefLang={l}
-            href={`https://croma.aurora33.dev?lang=${l}`}
+            href={`https://croma.aurora33.org?lang=${l}`}
           />
         ))}
         {/* Inline script to apply dark mode before hydration — prevents flash */}
