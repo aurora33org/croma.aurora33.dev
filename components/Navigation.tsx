@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { Sun, Moon } from 'lucide-react';
+import { Sun, Moon, Menu, X } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
@@ -9,53 +9,39 @@ import { LanguageToggle } from './LanguageToggle';
 import { UserProfile } from './UserProfile';
 import { useTranslations } from '@/lib/i18n-context';
 
+const NAV_LINKS = [
+  { href: '/tool',        labelKey: 'navigation.tool' },
+  { href: '/pricing',     labelKey: 'navigation.pricing' },
+  { href: '/auth/login',  labelKey: 'navigation.login' },
+] as const;
+
 export function Navigation() {
   const [isDark, setIsDark] = useState(false);
-  const themeRef = useRef<string | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const initialized = useRef(false);
   const { data: session } = useSession();
   const pathname = usePathname();
   const t = useTranslations('common');
 
-  const isActive = (path: string) => pathname === path || pathname.startsWith(path + '/');
-
-  const navLinkClass = (active: boolean) =>
-    `text-sm font-medium transition-colors ${
-      active
-        ? 'text-primary dark:text-primary'
-        : 'text-text-muted dark:text-text-muted-dark hover:text-text dark:hover:text-text-dark'
-    }`;
+  const isActive = (href: string) =>
+    href === pathname || pathname.startsWith(href + '/');
 
   useEffect(() => {
-    // Only initialize once on client mount
     if (initialized.current) return;
     initialized.current = true;
-
-    const savedTheme = localStorage.getItem('theme');
+    const saved = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const isCurrentlyDark = savedTheme ? savedTheme === 'dark' : prefersDark;
-
-    // Store initial theme
-    themeRef.current = isCurrentlyDark ? 'dark' : 'light';
-
-    // Apply theme class to HTML element
-    if (isCurrentlyDark) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-
-    setIsDark(isCurrentlyDark);
+    const dark = saved ? saved === 'dark' : prefersDark;
+    if (dark) document.documentElement.classList.add('dark');
+    else document.documentElement.classList.remove('dark');
+    setIsDark(dark);
   }, []);
 
   const handleThemeToggle = () => {
-    // Read current state from DOM (source of truth), not JS state
-    const isCurrentlyDark = document.documentElement.classList.contains('dark');
-    const newIsDark = !isCurrentlyDark;
-    setIsDark(newIsDark);
-    themeRef.current = newIsDark ? 'dark' : 'light';
-
-    if (newIsDark) {
+    const currentlyDark = document.documentElement.classList.contains('dark');
+    const next = !currentlyDark;
+    setIsDark(next);
+    if (next) {
       document.documentElement.classList.add('dark');
       localStorage.setItem('theme', 'dark');
     } else {
@@ -64,51 +50,148 @@ export function Navigation() {
     }
   };
 
+  const backdropStyle = {
+    background: 'color-mix(in srgb, var(--background) 88%, transparent)',
+    backdropFilter: 'blur(16px)',
+    WebkitBackdropFilter: 'blur(16px)',
+  } as const;
+
   return (
-    <div className="py-4 sm:py-6 md:py-8 px-4 sm:px-8 md:px-16 lg:px-20 xl:px-[120px] max-w-[1720px] mx-auto mb-4 sm:mb-6 md:mb-8 border-b border-gray-200 dark:border-gray-700 bg-background dark:bg-bg-dark">
-      <div className="flex items-center justify-between">
-        {/* Logo and Brand */}
-        <Link href="/tool">
-          <h2 className="font-bold hover:opacity-80 transition-opacity" style={{ fontFamily: '"Kangge", sans-serif', fontSize: 'calc(2.25rem * 0.8)', marginBottom: '-0.5rem' }}>
-            <span className="text-primary">croma.</span><span className="text-text dark:text-text-dark">aurora<sup>33</sup></span>
-          </h2>
-        </Link>
-
-        {/* Navigation links (Center) */}
-        <nav className="hidden md:flex items-center gap-8">
-          <Link href="/tool" className={navLinkClass(isActive('/tool'))} aria-current={isActive('/tool') ? 'page' : undefined}>
-            {t('navigation.tool')}
+    <>
+      <header className="fixed top-0 left-0 right-0 z-40 flex items-stretch justify-between">
+        {/* Left: logo + nav */}
+        <div
+          className="flex items-stretch"
+          style={{ ...backdropStyle, borderBottom: '1px solid var(--border)', borderRight: '1px solid var(--border)' }}
+        >
+          {/* Logo */}
+          <Link
+            href="/tool"
+            className="flex items-center px-5 py-3"
+            style={{ borderRight: '1px solid var(--border)' }}
+          >
+            <span
+              className="font-[family-name:var(--font-geist-mono)] font-semibold text-[13px] tracking-[0.16em] uppercase select-none"
+              style={{ color: 'var(--primary)' }}
+            >
+              croma.
+            </span>
+            <span
+              className="font-[family-name:var(--font-geist-mono)] font-semibold text-[13px] tracking-[0.16em] uppercase select-none"
+              style={{ color: 'var(--foreground)' }}
+            >
+              aurora33<span className="hud-cursor">_</span>
+            </span>
           </Link>
-          <Link href="/pricing" className={navLinkClass(isActive('/pricing'))} aria-current={isActive('/pricing') ? 'page' : undefined}>
-            {t('navigation.pricing') || 'Pricing'}
-          </Link>
-          <Link href="/auth/login" className={navLinkClass(isActive('/auth/login'))} aria-current={isActive('/auth/login') ? 'page' : undefined}>
-            Login
-          </Link>
-        </nav>
 
-        {/* Toggles Container */}
-        <div className="flex items-center gap-4">
-          {/* User Profile */}
-          {session?.user && <UserProfile />}
+          {/* Desktop nav links */}
+          <nav className="hidden md:flex items-stretch">
+            {NAV_LINKS.map(({ href, labelKey }) => {
+              const active = isActive(href);
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  className="flex items-center px-5 py-3 font-[family-name:var(--font-geist-mono)] text-[13px] tracking-[0.16em] uppercase transition-none"
+                  style={{
+                    color: active ? 'var(--foreground)' : 'var(--muted-foreground)',
+                    borderRight: '1px solid var(--border)',
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!active) e.currentTarget.style.color = 'var(--foreground)';
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!active) e.currentTarget.style.color = 'var(--muted-foreground)';
+                  }}
+                  aria-current={active ? 'page' : undefined}
+                >
+                  {t(labelKey as any) || labelKey.split('.').pop()}
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
 
-          {/* Language Toggle */}
-          <LanguageToggle />
+        {/* Right: toggles (desktop) */}
+        <div
+          className="hidden md:flex items-stretch"
+          style={{ ...backdropStyle, borderBottom: '1px solid var(--border)', borderLeft: '1px solid var(--border)' }}
+        >
+          {session?.user && (
+            <div className="flex items-center px-4" style={{ borderLeft: '1px solid var(--border)' }}>
+              <UserProfile />
+            </div>
+          )}
 
-          {/* Theme Toggle */}
+          <div className="flex items-center px-4" style={{ borderLeft: '1px solid var(--border)' }}>
+            <LanguageToggle />
+          </div>
+
           <button
             onClick={handleThemeToggle}
-            className="relative inline-flex items-center justify-between h-8 w-16 px-1 rounded-full transition-all duration-500 bg-gray-300 dark:bg-contrast"
-            aria-label="Toggle dark mode"
+            className="flex items-center gap-2 px-4 py-3 font-[family-name:var(--font-geist-mono)] text-[11px] tracking-[0.2em] uppercase"
+            style={{ color: 'var(--muted-foreground)', borderLeft: '1px solid var(--border)' }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--foreground)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--muted-foreground)'; }}
+            aria-label={t('navigation.themeToggleAriaLabel' as any) || 'Toggle dark mode'}
           >
-            <Sun size={16} className="flex-shrink-0 transition-colors text-black relative z-10 ml-1" />
-            <span
-              className="absolute inline-block h-6 w-6 transform rounded-full transition-all duration-500 bg-white translate-x-0 dark:bg-black dark:translate-x-8"
-            />
-            <Moon size={16} className="flex-shrink-0 transition-colors text-white relative z-10 mr-1" />
+            {isDark ? <Sun size={14} /> : <Moon size={14} />}
           </button>
         </div>
-      </div>
-    </div>
+
+        {/* Mobile: hamburger */}
+        <button
+          className="md:hidden flex items-center px-5 py-3"
+          style={{ ...backdropStyle, borderBottom: '1px solid var(--border)', color: 'var(--foreground)' }}
+          onClick={() => setMobileOpen((v) => !v)}
+          aria-label="Toggle menu"
+        >
+          {mobileOpen ? <X size={18} /> : <Menu size={18} />}
+        </button>
+      </header>
+
+      {/* Mobile overlay */}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 z-30 flex flex-col pt-[48px] md:hidden"
+          style={{ background: 'var(--background)' }}
+        >
+          <nav className="flex flex-col flex-1">
+            {NAV_LINKS.map(({ href, labelKey }) => (
+              <Link
+                key={href}
+                href={href}
+                className="flex items-center px-5 py-5 text-xl font-medium tracking-[-0.02em]"
+                style={{
+                  color: isActive(href) ? 'var(--foreground)' : 'var(--muted-foreground)',
+                  borderBottom: '1px solid var(--border)',
+                }}
+                onClick={() => setMobileOpen(false)}
+              >
+                {t(labelKey as any) || labelKey.split('.').pop()}
+              </Link>
+            ))}
+          </nav>
+
+          <div
+            className="flex items-center justify-between px-5 py-4"
+            style={{ borderTop: '1px solid var(--border)' }}
+          >
+            <LanguageToggle />
+            <button
+              onClick={handleThemeToggle}
+              className="flex items-center gap-2 font-[family-name:var(--font-geist-mono)] text-[11px] tracking-[0.2em] uppercase"
+              style={{ color: 'var(--muted-foreground)' }}
+            >
+              {isDark ? <Sun size={14} /> : <Moon size={14} />}
+              <span>{isDark ? 'Light' : 'Dark'}</span>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Spacer para compensar el header fijo */}
+      <div className="h-[48px]" />
+    </>
   );
 }

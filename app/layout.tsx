@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Press_Start_2P } from "next/font/google";
+import { Geist, Geist_Mono, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import { ReactNode } from "react";
 import { cookies } from "next/headers";
 import { locales, defaultLocale, type Locale } from "@/i18n/config";
@@ -20,9 +20,16 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const pixelFont = Press_Start_2P({
-  weight: "400",
-  variable: "--font-pixel",
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument",
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains",
   subsets: ["latin"],
   display: "swap",
 });
@@ -35,7 +42,7 @@ async function getLocale(): Promise<Locale> {
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
-  const baseUrl = "https://croma.aurora33.dev";
+  const baseUrl = "https://croma.aurora33.org";
 
   return {
     title: locale === "en"
@@ -77,14 +84,14 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions);
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <head>
         {locales.map((l) => (
           <link
             key={l}
             rel="alternate"
             hrefLang={l}
-            href={`https://croma.aurora33.dev?lang=${l}`}
+            href={`https://croma.aurora33.org?lang=${l}`}
           />
         ))}
         {/* Inline script to apply dark mode before hydration — prevents flash */}
@@ -95,7 +102,7 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${pixelFont.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} antialiased`}
       >
         <Providers
           session={session}

@@ -10,28 +10,49 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Primary color - same for both light and dark
-        primary: '#F84733',
+        // Aurora33 semantic tokens
+        background:         'var(--background)',
+        foreground:         'var(--foreground)',
+        card:               'var(--card)',
+        primary:            'var(--primary)',
+        'primary-foreground': 'var(--primary-foreground)',
+        secondary:          'var(--secondary)',
+        muted:              'var(--muted)',
+        'muted-foreground': 'var(--muted-foreground)',
+        border:             'var(--border)',
+        rule:               'var(--rule)',
+        'chart-1':          'var(--chart-1)',
+        'chart-2':          'var(--chart-2)',
+        'chart-3':          'var(--chart-3)',
+        'chart-4':          'var(--chart-4)',
+        'chart-5':          'var(--chart-5)',
 
-        // Light mode colors (default)
-        background: '#F8F8F8',
-        text: '#191A1B',
-        'text-muted': '#4c5052',
-        container: '#FCF6F0',
-        contrast: '#F84733',
-        'contrast-v2': '#FCF6F0',
-
-        // Dark mode colors - use dark: prefix in components
-        'bg-dark': '#191A1B',
-        'text-dark': '#F6F6F6',
-        'text-muted-dark': '#FCF5EF',
-        'container-dark': '#3B3C3E',
+        // Legacy aliases — backward-compat para componentes no refactorizados
+        text:               'var(--foreground)',
+        'text-muted':       'var(--muted-foreground)',
+        'bg-dark':          'var(--background)',
+        'text-dark':        'var(--foreground)',
+        'text-muted-dark':  'var(--muted-foreground)',
+        container:          'var(--card)',
+        contrast:           'var(--primary)',
+        'contrast-v2':      'var(--secondary)',
       },
       fontFamily: {
-        syne: ['Syne', 'sans-serif'],
-        kangge: ['Kangge', 'sans-serif'],
-        quicksand: ['Quicksand', 'sans-serif'],
-        pixel: ['var(--font-pixel)', 'monospace'],
+        'geist-sans': ['var(--font-geist-sans)', 'ui-sans-serif', 'sans-serif'],
+        'geist-mono': ['var(--font-geist-mono)', 'ui-monospace', 'monospace'],
+        instrument:   ['var(--font-instrument)', 'ui-serif', 'serif'],
+        jetbrains:    ['var(--font-jetbrains)', 'ui-monospace', 'monospace'],
+      },
+      borderRadius: {
+        none:    '0',
+        sm:      '0',
+        DEFAULT: '0',
+        md:      '0',
+        lg:      '0',
+        xl:      '0',
+        '2xl':   '0',
+        '3xl':   '0',
+        full:    '9999px',
       },
     },
   },
