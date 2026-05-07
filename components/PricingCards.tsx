@@ -33,7 +33,7 @@ export function PricingCards({ onSelectPro }: PricingCardsProps) {
       {/* Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-12">
         {/* Free Card */}
-        <div className="relative rounded-lg border border-container dark:border-container-dark bg-background dark:bg-bg-dark p-6 sm:p-8 md:p-10 shadow-sm flex flex-col">
+        <div className="relative rounded-lg border border-container dark:border-card bg-background dark:bg-bg-dark p-6 sm:p-8 md:p-10 shadow-sm flex flex-col">
           <div className="mb-6">
             <h3 className="text-2xl sm:text-3xl font-bold text-text dark:text-text-dark mb-2">
               {t('free.name')}
@@ -68,7 +68,7 @@ export function PricingCards({ onSelectPro }: PricingCardsProps) {
           {/* Button */}
           <button
             disabled
-            className="mt-auto w-full py-3 px-4 rounded-lg bg-contrast-v2 dark:bg-container-dark text-text-muted dark:text-text-muted-dark font-medium cursor-not-allowed opacity-60"
+            className="mt-auto w-full py-3 px-4 rounded-lg bg-contrast-v2 dark:bg-card text-text-muted dark:text-text-muted-dark font-medium cursor-not-allowed opacity-60"
           >
             {t('free.button')}
           </button>

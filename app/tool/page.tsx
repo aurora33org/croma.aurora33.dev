@@ -400,7 +400,7 @@ export default function Home() {
                 <h2 className="text-2xl font-bold text-text dark:text-text-dark mb-6">{t('uploader.selectedImages')}</h2>
                 <div className="space-y-3">
                   {files.map((file, index) => (
-                    <div key={index} className="bg-white dark:bg-container-dark border border-gray-200 dark:border-gray-700 rounded-lg p-4 flex items-center justify-between gap-4">
+                    <div key={index} className="bg-white dark:bg-card border border-gray-200 dark:border-gray-700 rounded-lg p-4 flex items-center justify-between gap-4">
                       <div className="flex items-center gap-3 flex-1">
                         <img
                           src={URL.createObjectURL(file)}
@@ -491,7 +491,7 @@ export default function Home() {
             aria-hidden="true"
           />
           <div
-            className="bg-white dark:bg-container-dark rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-6 sm:p-8 max-w-md w-full relative"
+            className="bg-white dark:bg-card rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-6 sm:p-8 max-w-md w-full relative"
             role="dialog"
             aria-modal="true"
             onClick={(e) => e.stopPropagation()}
@@ -542,7 +542,7 @@ export default function Home() {
             aria-hidden="true"
           />
           <div
-            className="bg-white dark:bg-container-dark rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-6 sm:p-8 max-w-md w-full relative"
+            className="bg-white dark:bg-card rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-6 sm:p-8 max-w-md w-full relative"
             role="dialog"
             aria-modal="true"
             onClick={(e) => e.stopPropagation()}

@@ -141,7 +141,7 @@ export default function RegisterModal({
 
       {/* Modal */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div className="w-full max-w-md rounded-lg shadow-xl bg-white dark:bg-container-dark border border-gray-200 dark:border-gray-700 p-8">
+        <div className="w-full max-w-md rounded-lg shadow-xl bg-white dark:bg-card border border-gray-200 dark:border-gray-700 p-8">
           {/* Close button */}
           <button
             onClick={onClose}

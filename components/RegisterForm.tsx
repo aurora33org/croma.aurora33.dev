@@ -80,7 +80,7 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto p-6 bg-container dark:bg-container-dark rounded-xl border border-primary/20">
+    <div className="w-full max-w-md mx-auto p-6 bg-container dark:bg-card rounded-xl border border-primary/20">
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
           <div className="p-3 bg-red-100 dark:bg-red-900 border border-red-400 dark:border-red-700 rounded text-red-700 dark:text-red-200 text-sm">
