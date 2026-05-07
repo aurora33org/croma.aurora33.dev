@@ -11,7 +11,10 @@ export function createUploadMiddleware(uploadDir: string) {
       cb(null, uploadDir);
     },
     filename: (_req, file, cb) => {
-      const uniqueName = `${Date.now()}-${file.originalname}`;
+      const ext = file.originalname.replace(/^.*(\.[^/.]+)$/, '$1');
+      const nameWithoutExt = file.originalname.replace(/\.[^/.]+$/, '');
+      const rand = Math.floor(Math.random() * 90) + 10;
+      const uniqueName = `${nameWithoutExt}-a33${rand}${ext}`;
       cb(null, uniqueName);
     }
   });

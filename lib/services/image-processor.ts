@@ -77,6 +77,14 @@ class ImageProcessor {
       // Convert to target format and save
       await pipeline
         .toFormat(format as any, formatConfig)
+        .withMetadata({
+          exif: {
+            IFD0: {
+              Software: 'Aurora33 Image Compressor (aurora33.org)',
+              Copyright: `© ${new Date().getFullYear()} Aurora33`,
+            }
+          }
+        })
         .toFile(outputPath);
 
       // Get file sizes

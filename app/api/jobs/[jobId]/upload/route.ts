@@ -101,7 +101,10 @@ export async function POST(
 
     for (const file of files) {
       const buffer = await file.arrayBuffer();
-      const filename = `${Date.now()}-${file.name}`;
+      const ext = file.name.replace(/^.*(\.[^/.]+)$/, '$1');
+      const nameWithoutExt = file.name.replace(/\.[^/.]+$/, '');
+      const rand = Math.floor(Math.random() * 90) + 10;
+      const filename = `${nameWithoutExt}-a33${rand}${ext}`;
       const filepath = path.join(uploadDir, filename);
 
       await fs.writeFile(filepath, Buffer.from(buffer));
