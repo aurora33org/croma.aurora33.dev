@@ -91,7 +91,7 @@ export function ImageUploader({ onFilesSelected, onShowSettings }: ImageUploader
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         onClick={() => document.getElementById('file-input')?.click()}
-        className={`bg-contrast-v2 dark:bg-container-dark border-2 border-primary rounded-3xl p-4 sm:p-6 md:p-8 lg:p-12 text-center cursor-pointer transition-colors min-h-[300px] sm:min-h-[350px] lg:min-h-[400px] flex flex-col items-center justify-center ${
+        className={`bg-contrast-v2 dark:bg-card border-2 border-primary rounded-3xl p-4 sm:p-6 md:p-8 lg:p-12 text-center cursor-pointer transition-colors min-h-[300px] sm:min-h-[350px] lg:min-h-[400px] flex flex-col items-center justify-center ${
           dragOver ? 'bg-primary/5 dark:bg-primary/10' : ''
         }`}
         style={{
