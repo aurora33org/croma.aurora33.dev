@@ -46,13 +46,13 @@ export const config = {
  */
 export const TIER_LIMITS = {
   FREE: {
-    MAX_FILES: parseInt(process.env.MAX_FILES_FREE || '5', 10),
-    MAX_FILE_SIZE: parseInt(process.env.MAX_FILE_MB_FREE || '7', 10) * 1024 * 1024,
+    MAX_FILES: parseInt(process.env.NEXT_PUBLIC_MAX_FILES_FREE || '5', 10),
+    MAX_FILE_SIZE: parseInt(process.env.NEXT_PUBLIC_MAX_FILE_MB_FREE || '7', 10) * 1024 * 1024,
     MAX_DAILY_USAGE: 6,
   },
   PRO: {
-    MAX_FILES: parseInt(process.env.MAX_FILES_PRO || '15', 10),
-    MAX_FILE_SIZE: parseInt(process.env.MAX_FILE_MB_PRO || '12', 10) * 1024 * 1024,
+    MAX_FILES: parseInt(process.env.NEXT_PUBLIC_MAX_FILES_PRO || '15', 10),
+    MAX_FILE_SIZE: parseInt(process.env.NEXT_PUBLIC_MAX_FILE_MB_PRO || '12', 10) * 1024 * 1024,
     MAX_DAILY_USAGE: 20,
   },
 };
