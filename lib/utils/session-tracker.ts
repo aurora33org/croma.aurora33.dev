@@ -16,7 +16,7 @@ export interface SessionLimits {
 // FREE TIER LIMITS
 const FREE_BATCHES_LIMIT = 6;
 const FREE_IMAGES_LIMIT = 5;
-const FREE_MAX_FILE_SIZE = 7_000_000; // 7MB
+const FREE_MAX_FILE_SIZE = parseInt(process.env.MAX_FILE_MB_FREE || '7', 10) * 1024 * 1024;
 const RESET_INTERVAL_HOURS = 23;
 
 export function getSessionLimits(): SessionLimits {

@@ -78,7 +78,7 @@ export async function GET(request: Request) {
     });
 
     // Transform to include userEmail at top level
-    const transformedJobs = jobs.map((job) => ({
+    const transformedJobs = jobs.map((job: typeof jobs[number]) => ({
       id: job.id,
       userId: job.userId,
       userEmail: job.user.email,

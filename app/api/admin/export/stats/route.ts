@@ -42,7 +42,7 @@ export async function POST() {
     });
 
     const totalBytes = jobsResult.reduce(
-      (sum, job) => sum + Number(job.originalSize),
+      (sum: number, job: { originalSize: bigint | number | null }) => sum + Number(job.originalSize),
       0
     );
     const totalGB = totalBytes / (1024 * 1024 * 1024);

@@ -46,16 +46,16 @@ export const config = {
  */
 export const TIER_LIMITS = {
   FREE: {
-    MAX_FILES: 5,                          // Max files per request
-    MAX_FILE_SIZE: 7 * 1024 * 1024,       // 7MB per file
-    MAX_DAILY_USAGE: 6,                   // Max compressions per day
+    MAX_FILES: parseInt(process.env.MAX_FILES_FREE || '5', 10),
+    MAX_FILE_SIZE: parseInt(process.env.MAX_FILE_MB_FREE || '7', 10) * 1024 * 1024,
+    MAX_DAILY_USAGE: 6,
   },
   PRO: {
-    MAX_FILES: 15,                         // Max files per request
-    MAX_FILE_SIZE: 12 * 1024 * 1024,      // 12MB per file
-    MAX_DAILY_USAGE: 20,                  // Max compressions per day
+    MAX_FILES: parseInt(process.env.MAX_FILES_PRO || '15', 10),
+    MAX_FILE_SIZE: parseInt(process.env.MAX_FILE_MB_PRO || '12', 10) * 1024 * 1024,
+    MAX_DAILY_USAGE: 20,
   },
-} as const;
+};
 
 /**
  * Available tier names
