@@ -4,10 +4,13 @@ export const config = {
     nodeEnv: process.env.NODE_ENV || 'development'
   },
 
-  // Upload limits
+  // Upload limits — ceiling is the highest tier so middleware never blocks before tier validation
   upload: {
-    maxFileSize: parseInt(process.env.MAX_FILE_SIZE || '10485760', 10), // 10MB
-    maxFiles: parseInt(process.env.MAX_FILES || '20', 10),
+    maxFileSize: Math.max(
+      parseInt(process.env.NEXT_PUBLIC_MAX_FILE_MB_FREE || '7', 10),
+      parseInt(process.env.NEXT_PUBLIC_MAX_FILE_MB_PRO || '12', 10)
+    ) * 1024 * 1024,
+    maxFiles: parseInt(process.env.NEXT_PUBLIC_MAX_FILES_PRO || '20', 10),
     allowedMimeTypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/avif']
   },
 
