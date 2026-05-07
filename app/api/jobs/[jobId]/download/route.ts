@@ -41,7 +41,7 @@ export async function GET(
     const fileBuffer = await fs.readFile(zipPath);
 
     const response = new NextResponse(fileBuffer);
-    response.headers.set('Content-Disposition', `attachment; filename="compressed-images-${jobId}.zip"`);
+    response.headers.set('Content-Disposition', `attachment; filename="aurora-croma-${jobId.slice(0, 8)}.zip"`);
     response.headers.set('Content-Type', 'application/zip');
     response.headers.set('Content-Length', fileBuffer.length.toString());
     return response;

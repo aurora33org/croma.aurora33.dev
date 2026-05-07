@@ -256,7 +256,7 @@ export default function Home() {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `compressed-images-${jobId}.zip`;
+      a.download = `aurora-croma-${jobId.slice(0, 8)}.zip`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
