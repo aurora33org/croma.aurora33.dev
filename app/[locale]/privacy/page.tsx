@@ -84,22 +84,6 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-text dark:text-text-dark mb-3">{s('s7.title')}</h2>
-            <p className="text-text-muted dark:text-text-muted-dark leading-relaxed mb-3">{s('s7.intro')}</p>
-            <ul className="list-disc list-inside space-y-2 text-text-muted dark:text-text-muted-dark mb-3">
-              {(t.raw('sections.s7.items') as LabeledItem[]).map((item, i) => (
-                <li key={i}><strong className="text-text dark:text-text-dark">{item.label}</strong> {item.text}</li>
-              ))}
-            </ul>
-            <p className="text-text-muted dark:text-text-muted-dark leading-relaxed">
-              {s('s7.outro')}{' '}
-              <a href="mailto:hola@aurora33.org" className="text-primary hover:opacity-80 transition-opacity">
-                hola@aurora33.org
-              </a>.
-            </p>
-          </section>
-
-          <section>
             <h2 className="text-xl font-bold text-text dark:text-text-dark mb-3">{s('s8.title')}</h2>
             <p className="text-text-muted dark:text-text-muted-dark leading-relaxed">{s('s8.body')}</p>
           </section>

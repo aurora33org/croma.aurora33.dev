@@ -45,30 +45,20 @@
       "title": "6. Data Retention",
       "body": "Uploaded images are deleted automatically about one hour after processing. Technical logs are kept only as long as necessary to operate and protect the Service. Since there are no accounts, we store no long-term personal data."
     },
-    "s7": {
-      "title": "7. Your Rights",
-      "intro": "Because we collect no identifiable personal data or accounts, there is no profile to access or delete. Even so, depending on your jurisdiction, you may:",
-      "items": [
-        { "label": "Information:", "text": "ask us for details about how the technical processing described here works." },
-        { "label": "Local preferences:", "text": "clear your language and theme at any time from your browser settings." },
-        { "label": "Complaint:", "text": "lodge a complaint with the competent data protection authority." }
-      ],
-      "outro": "For any privacy inquiry, contact us at"
-    },
     "s8": {
-      "title": "8. Cookies",
-      "body": "We use a single essential cookie to remember your language preference. Your theme (light/dark) is stored in your browser's local storage. We do not use analytics or third-party advertising cookies."
+      "title": "7. Cookies",
+      "body": "We use only one essential cookie to remember your language. We do not use analytics or advertising cookies."
     },
     "s9": {
-      "title": "9. Security",
+      "title": "8. Security",
       "body": "We apply industry-standard measures: encrypted HTTPS transport, automatic deletion of uploaded files, and restricted server access. Since we collect no passwords or account data, there are no credentials that could be leaked."
     },
     "s10": {
-      "title": "10. Changes to This Policy",
+      "title": "9. Changes to This Policy",
       "body": "We may update this Privacy Policy periodically. We will revise the Last updated date at the top of this page. Continued use of the Service after changes constitutes your acceptance of the revised Policy."
     },
     "s11": {
-      "title": "11. Contact",
+      "title": "10. Contact",
       "body": "For privacy questions, contact Aurora33 at"
     }
   },

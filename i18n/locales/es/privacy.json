@@ -45,30 +45,20 @@
       "title": "6. Retención de Datos",
       "body": "Las imágenes subidas se eliminan automáticamente alrededor de una hora después de procesarse. Los registros técnicos se conservan solo el tiempo necesario para operar y proteger el Servicio. Como no hay cuentas, no almacenamos datos personales a largo plazo."
     },
-    "s7": {
-      "title": "7. Tus Derechos",
-      "intro": "Como no recopilamos datos personales identificables ni cuentas, no hay un perfil que consultar o eliminar. Aun así, dependiendo de tu jurisdicción, puedes:",
-      "items": [
-        { "label": "Información:", "text": "pedirnos detalles sobre cómo funciona el tratamiento técnico descrito aquí." },
-        { "label": "Preferencias locales:", "text": "borrar en cualquier momento tu idioma y tema desde la configuración de tu navegador." },
-        { "label": "Reclamación:", "text": "presentar una reclamación ante la autoridad de protección de datos competente." }
-      ],
-      "outro": "Para cualquier consulta de privacidad, contáctanos en"
-    },
     "s8": {
-      "title": "8. Cookies",
-      "body": "Usamos una única cookie esencial para recordar tu preferencia de idioma. Tu tema (claro/oscuro) se guarda en el almacenamiento local de tu navegador. No usamos cookies de analítica ni publicitarias de terceros."
+      "title": "7. Cookies",
+      "body": "Usamos solo una cookie esencial para recordar tu idioma. No usamos cookies de analítica ni publicitarias."
     },
     "s9": {
-      "title": "9. Seguridad",
+      "title": "8. Seguridad",
       "body": "Aplicamos medidas estándar del sector: transporte cifrado HTTPS, borrado automático de los archivos subidos y acceso restringido al servidor. Como no recopilamos contraseñas ni datos de cuenta, no hay credenciales que puedan filtrarse."
     },
     "s10": {
-      "title": "10. Cambios en esta Política",
+      "title": "9. Cambios en esta Política",
       "body": "Podemos actualizar esta Política de Privacidad periódicamente. Actualizaremos la fecha de Última actualización en la parte superior de esta página. El uso continuado del Servicio tras los cambios implica tu aceptación de la Política revisada."
     },
     "s11": {
-      "title": "11. Contacto",
+      "title": "10. Contacto",
       "body": "Para preguntas sobre privacidad, contacta a Aurora33 en"
     }
   },
