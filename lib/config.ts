@@ -2,8 +2,8 @@
  * Single set of upload limits for everyone (no tiers, no auth).
  */
 export const DEFAULT_LIMITS = {
-  MAX_FILES: parseInt(process.env.NEXT_PUBLIC_MAX_FILES || '20', 10),
-  MAX_FILE_SIZE: parseInt(process.env.NEXT_PUBLIC_MAX_FILE_MB || '15', 10) * 1024 * 1024,
+  MAX_FILES: parseInt(process.env.NEXT_PUBLIC_MAX_FILES || '100', 10),
+  MAX_FILE_SIZE: parseInt(process.env.NEXT_PUBLIC_MAX_FILE_MB || '100', 10) * 1024 * 1024,
 };
 
 export const config = {
