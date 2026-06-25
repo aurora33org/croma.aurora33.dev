@@ -28,22 +28,6 @@ export async function POST() {
   }
 }
 
-/**
- * GET /api/jobs
- * Get all jobs (debugging/monitoring only)
- */
-export async function GET() {
-  try {
-    const jobs = jobManager.getAllJobs();
-    return NextResponse.json({
-      success: true,
-      jobs
-    });
-  } catch (error: unknown) {
-    const err = error instanceof Error ? error : new Error(String(error));
-    return NextResponse.json(
-      { success: false, error: err.message },
-      { status: 500 }
-    );
-  }
-}
+// NOTE: No GET handler here on purpose. Listing all jobs would expose every
+// active job id to anyone, and since downloads are authorized only by the
+// (secret) job id, that would let anyone fetch other users' results.
