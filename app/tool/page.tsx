@@ -1,7 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
+import { useState } from 'react';
 import { useTranslations } from '@/lib/i18n-context';
 import { ImageUploader } from '@/components/ImageUploader';
 import { CompressionSettings } from '@/components/CompressionSettings';
@@ -11,12 +10,7 @@ import { ErrorView } from '@/components/ErrorView';
 import { FormatGuide } from '@/components/FormatGuide';
 import { FAQ } from '@/components/FAQ';
 import { Footer } from '@/components/Footer';
-import { LoginPrompt } from '@/components/LoginPrompt';
-import { LimitExceededView } from '@/components/LimitExceededView';
-import RegisterModal from '@/components/RegisterModal';
-import { TIER_LIMITS } from '@/lib/config';
 import { logger } from '@/lib/utils/logger';
-import { getSessionLimits, incrementSessionCount, incrementImageCount, clearSessionData } from '@/lib/utils/session-tracker';
 
 type ViewType = 'upload' | 'settings' | 'processing' | 'download' | 'error';
 
@@ -28,7 +22,6 @@ interface FileStats {
 
 export default function Home() {
   const t = useTranslations();
-  const { data: session, status } = useSession();
   const [currentView, setCurrentView] = useState<ViewType>('upload');
   const [files, setFiles] = useState<File[]>([]);
   const [jobId, setJobId] = useState<string | null>(null);
@@ -37,7 +30,6 @@ export default function Home() {
   const [totalFiles, setTotalFiles] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
   const [stats, setStats] = useState<FileStats | undefined>();
-  const [dailyLimitExceeded, setDailyLimitExceeded] = useState(false);
 
   const [settings, setSettings] = useState({
     format: 'webp',
@@ -49,63 +41,9 @@ export default function Home() {
   const [isCompressing, setIsCompressing] = useState(false);
   const [showFormatWarning, setShowFormatWarning] = useState(false);
   const [showAvifWarning, setShowAvifWarning] = useState(false);
-  const [showRegisterModal, setShowRegisterModal] = useState(false);
-  const [registerModalContext, setRegisterModalContext] = useState<'image_limit' | 'session_limit' | undefined>();
-  const [sessionLimits, setSessionLimits] = useState<ReturnType<typeof getSessionLimits> | null>(null);
-
-  // Check daily usage before rendering
-  useEffect(() => {
-    const checkDailyLimit = async () => {
-      if (session?.user?.id) {
-        try {
-          const response = await fetch(`/api/user/usage?userId=${session.user.id}`);
-          const data = await response.json() as { success: boolean; data?: { remaining: number } };
-
-          if (data.success && data.data && data.data.remaining === 0) {
-            setDailyLimitExceeded(true);
-          }
-        } catch (error) {
-          const errorMessage = error instanceof Error ? error.message : String(error);
-          logger.error('Error checking daily limit', { error: errorMessage });
-        }
-      }
-    };
-
-    if (currentView === 'upload' && session?.user?.id) {
-      checkDailyLimit();
-    }
-  }, [currentView, session?.user?.id]);
-
-  // Load session limits for anonymous users on mount
-  useEffect(() => {
-    if (!session?.user?.id) {
-      // Anonymous user - check localStorage limits
-      const limits = getSessionLimits();
-      setSessionLimits(limits);
-    }
-  }, [session?.user?.id]);
 
   const handleFilesSelected = (newFiles: File[]) => {
-    // Check if user is authenticated
-    if (!session?.user?.id) {
-      // Anonymous user - check limits
-      const limits = getSessionLimits();
-      const totalImages = (files.length || 0) + newFiles.length;
-
-      if (totalImages > limits.imagesPerBatchLimit) {
-        setRegisterModalContext('image_limit');
-        setShowRegisterModal(true);
-        return;
-      }
-
-      if (limits.batchesUsed >= limits.batchesLimit) {
-        setRegisterModalContext('session_limit');
-        setShowRegisterModal(true);
-        return;
-      }
-    }
-
-    // Original logic - Si ya hay archivos, agregar los nuevos; si no, reemplazar
+    // Si ya hay archivos, agregar los nuevos; si no, reemplazar
     if (files.length > 0) {
       setFiles([...files, ...newFiles]);
     } else {
@@ -204,8 +142,7 @@ export default function Home() {
       // Step 4: Poll for completion
       let isComplete = false;
       let pollCount = 0;
-      const tier = session?.user?.tier || 'FREE';
-      const maxPolls = settings.format === 'avif' ? (tier === 'PRO' ? 240 : 180) : 120;
+      const maxPolls = settings.format === 'avif' ? 180 : 120;
 
       while (!isComplete && pollCount < maxPolls) {
         await new Promise(resolve => setTimeout(resolve, 1000));
@@ -289,40 +226,9 @@ export default function Home() {
     setCurrentView('settings');
   };
 
-  const handleSubscribe = async (email: string) => {
-    if (!email) return;
-    logger.debug('Subscribe', { email });
-  };
-
-  // Show loading state while checking auth
-  if (status === 'loading') {
-    return (
-      <main className="min-h-screen bg-background dark:bg-bg-dark text-text dark:text-text-dark">
-        <div className="px-4 sm:px-8 md:px-16 lg:px-20 xl:px-[120px] max-w-[1720px] mx-auto flex items-center justify-center min-h-[400px]">
-          <div className="text-center">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4" />
-            <p className="text-text-muted dark:text-text-muted-dark">Loading...</p>
-          </div>
-        </div>
-      </main>
-    );
-  }
-
   return (
     <main className="min-h-screen bg-background dark:bg-bg-dark text-text dark:text-text-dark">
-      {/* If user is authenticated and daily limit exceeded, show limit view */}
-      {session?.user && dailyLimitExceeded && (
-        <LimitExceededView
-          tier={session.user.tier || 'FREE'}
-          limit={TIER_LIMITS[(session.user.tier as 'FREE' | 'PRO') || 'FREE'].MAX_DAILY_USAGE}
-          onClose={() => setDailyLimitExceeded(false)}
-        />
-      )}
-
-
-
-
-      {currentView === 'upload' && !dailyLimitExceeded && (
+      {currentView === 'upload' && (
         <>
           <div className="px-4 sm:px-8 md:px-16 lg:px-20 xl:px-[120px] max-w-[1720px] mx-auto">
             <div className="flex flex-col mb-8 sm:mb-12 md:mb-16 mt-8 sm:mt-12 md:mt-16">
@@ -453,7 +359,6 @@ export default function Home() {
           stats={stats}
           onDownload={handleDownload}
           onReset={handleReset}
-          onSubscribe={handleSubscribe}
         />
       )}
 
@@ -466,20 +371,10 @@ export default function Home() {
 
       {currentView === 'upload' && (
         <>
-          {!session?.user && <LoginPrompt />}
           <FormatGuide />
           <FAQ />
         </>
       )}
-
-      <RegisterModal
-        isOpen={showRegisterModal}
-        onClose={() => {
-          setShowRegisterModal(false);
-          setRegisterModalContext(undefined);
-        }}
-        context={registerModalContext}
-      />
 
       {showFormatWarning && (
         <div
@@ -558,9 +453,7 @@ export default function Home() {
                   {t('settings.avifWarning.title')}
                 </h3>
                 <p className="text-sm text-text-muted dark:text-text-muted-dark">
-                  {session?.user?.tier === 'PRO'
-                    ? t('settings.avifWarning.descriptionPro')
-                    : t('settings.avifWarning.descriptionFree')}
+                  {t('settings.avifWarning.descriptionFree')}
                 </p>
               </div>
             </div>

@@ -1,9 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { useSession } from 'next-auth/react';
 import { useTranslations } from '@/lib/i18n-context';
-import { TIER_LIMITS } from '@/lib/config';
+import { DEFAULT_LIMITS } from '@/lib/config';
 
 interface ImageUploaderProps {
   onFilesSelected: (files: File[]) => void;
@@ -12,14 +11,11 @@ interface ImageUploaderProps {
 
 export function ImageUploader({ onFilesSelected, onShowSettings }: ImageUploaderProps) {
   const t = useTranslations('uploader');
-  const { data: session } = useSession();
   const [dragOver, setDragOver] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const userTier = (session?.user?.tier as 'FREE' | 'PRO') || 'FREE';
-  const limits = TIER_LIMITS[userTier];
-  const maxFileSize = limits.MAX_FILE_SIZE;
-  const maxFiles = limits.MAX_FILES;
+  const maxFileSize = DEFAULT_LIMITS.MAX_FILE_SIZE;
+  const maxFiles = DEFAULT_LIMITS.MAX_FILES;
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -58,7 +54,7 @@ export function ImageUploader({ onFilesSelected, onShowSettings }: ImageUploader
 
     // Check file count
     if (validFiles.length > maxFiles) {
-      setError(t('errors.max_files', { maxFiles, tier: userTier }));
+      setError(t('errors.max_files', { maxFiles }));
       return;
     }
 
@@ -66,7 +62,7 @@ export function ImageUploader({ onFilesSelected, onShowSettings }: ImageUploader
     const oversizedFiles = validFiles.filter(file => file.size > maxFileSize);
     if (oversizedFiles.length > 0) {
       const maxSizeMB = (maxFileSize / (1024 * 1024)).toFixed(0);
-      setError(t('errors.file_size', { maxSizeMB, tier: userTier }));
+      setError(t('errors.file_size', { maxSizeMB }));
       return;
     }
 

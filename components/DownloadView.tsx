@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
 import { useTranslations, useLocale } from '@/lib/i18n-context';
+
+const AURORA_CONTACT_URL = 'https://aurora33.org/contacto';
 
 interface FileStats {
   originalSize: number;
@@ -13,7 +14,6 @@ interface DownloadViewProps {
   stats?: FileStats;
   onDownload: () => void;
   onReset: () => void;
-  onSubscribe?: (email: string) => void;
 }
 
 function formatFileSize(bytes: number, locale: string) {
@@ -25,11 +25,10 @@ function formatFileSize(bytes: number, locale: string) {
   return new Intl.NumberFormat(locale, { minimumFractionDigits: 0, maximumFractionDigits: 2 }).format(value) + ' ' + sizes[i];
 }
 
-export function DownloadView({ stats, onDownload, onReset, onSubscribe }: DownloadViewProps) {
+export function DownloadView({ stats, onDownload, onReset }: DownloadViewProps) {
   const t = useTranslations('download');
   const tHero = useTranslations('hero');
   const locale = useLocale();
-  const [email, setEmail] = useState('');
 
   const originalSize = stats?.originalSize || 0;
   const compressedSize = stats?.compressedSize || 0;
@@ -101,33 +100,19 @@ export function DownloadView({ stats, onDownload, onReset, onSubscribe }: Downlo
           {t('downloadButton')}
         </button>
 
-        {/* Lead Capture Card */}
+        {/* Aurora33 Contact CTA */}
         <div className="bg-gradient-to-br from-primary/5 dark:from-primary/10 to-primary/10 dark:to-primary/20 border border-primary/20 dark:border-primary/30 rounded-xl p-4 sm:p-6 md:p-8 text-center mb-4 sm:mb-6">
           <h4 className="text-xl font-normal text-text dark:text-text-dark mb-2">{t('leadCapture.heading')}</h4>
           <p className="text-text-muted dark:text-text-muted-dark mb-4">{t('leadCapture.description')}</p>
 
-          <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-4">
-            <input
-              type="email"
-              placeholder={t('leadCapture.emailPlaceholder')}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg dark:bg-gray-800 text-text dark:text-text-dark focus:ring-2 focus:ring-primary focus:border-transparent"
-            />
-            <button
-              onClick={() => onSubscribe?.(email)}
-              className="bg-primary hover:bg-primary/90 text-white font-semibold px-6 py-3 rounded-lg transition-all whitespace-nowrap"
-            >
-              {t('leadCapture.subscribeButton')}
-            </button>
-          </div>
-
-          <p className="text-base text-text-muted dark:text-text-muted-dark">
-            {t('leadCapture.linkText')}{' '}
-            <a href="https://aurora33.org" className="text-primary hover:underline font-medium">
-              {t('leadCapture.linkLabel')}
-            </a>
-          </p>
+          <a
+            href={AURORA_CONTACT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-3 rounded-lg transition-all whitespace-nowrap"
+          >
+            {t('leadCapture.subscribeButton')}
+          </a>
         </div>
 
         {/* Reset Button */}

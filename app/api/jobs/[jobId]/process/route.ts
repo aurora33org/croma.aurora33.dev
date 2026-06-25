@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import path from 'path';
 import { jobManager, storageService } from '@/lib/services';
 import { imageProcessor } from '@/lib/services/image-processor';
@@ -8,8 +6,6 @@ import { zipService } from '@/lib/services/zip-service';
 import { config } from '@/lib/config';
 import { NotFoundError, BadRequestError } from '@/lib/utils/errors';
 import { logger } from '@/lib/utils/logger';
-import { getUserTier } from '@/lib/services/user-service';
-import { checkDailyUsage, incrementDailyUsage } from '@/lib/services/rate-limiter';
 
 interface ProcessRequest {
   format: string;
@@ -23,31 +19,18 @@ interface ProcessRequest {
 
 /**
  * POST /api/jobs/:jobId/process
- * Start compression processing for uploaded images
- * Checks daily usage limit before processing and increments after completion
+ * Start compression processing for uploaded images (no auth)
  */
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ jobId: string }> }
 ) {
   try {
-    const session = await getServerSession(authOptions);
-    const userId = (session?.user as any)?.id || null;
-    const isAnonymous = !userId;
-
     const { jobId } = await params;
     const job = jobManager.getJob(jobId);
 
     if (!job) {
       throw new NotFoundError('Job');
-    }
-
-    // Verify ownership: authenticated users must own the job
-    if (!isAnonymous && job.userId !== userId) {
-      return NextResponse.json(
-        { success: false, error: 'Forbidden: Job belongs to another user' },
-        { status: 403 }
-      );
     }
 
     if (job.status !== 'uploaded') {
@@ -61,18 +44,6 @@ export async function POST(
       throw new BadRequestError(
         `Invalid format. Allowed: ${config.outputFormats.join(', ')}`
       );
-    }
-
-    // Daily usage check only for authenticated users
-    const userTier = isAnonymous ? 'FREE' : await getUserTier(userId);
-    if (!isAnonymous) {
-      const canProcess = await checkDailyUsage(userId, userTier);
-      if (!canProcess) {
-        return NextResponse.json(
-          { success: false, error: 'Daily compression limit exceeded' },
-          { status: 429 }
-        );
-      }
     }
 
     // Set job settings and status
@@ -107,7 +78,6 @@ export async function POST(
 
         // Update job with results
         let successCount = 0;
-        let totalOriginalSize = 0;
 
         for (const fileResult of result.results) {
           if (fileResult.success) {
@@ -117,7 +87,6 @@ export async function POST(
               fileResult.originalSize,
               fileResult.compressedSize
             );
-            totalOriginalSize += fileResult.originalSize;
             successCount++;
           }
         }
@@ -126,14 +95,9 @@ export async function POST(
         const zipPath = path.join(storageService.getJobDir(jobId), 'processed.zip');
         await zipService.createZip(processedDir, zipPath);
 
-        // Increment daily usage only for authenticated users
-        if (!isAnonymous && userId) {
-          await incrementDailyUsage(userId, totalOriginalSize);
-        }
-
         jobManager.setJobStatus(jobId, 'completed');
         logger.success(
-          `Job ${jobId} completed: ${successCount}/${result.results.length} files processed (user: ${userId || 'anon'})`
+          `Job ${jobId} completed: ${successCount}/${result.results.length} files processed`
         );
       } catch (error: unknown) {
         const err = error instanceof Error ? error : new Error(String(error));

@@ -15,7 +15,7 @@
   "removeButton": "Remove",
   "errors": {
     "no_valid_files": "No valid image files selected",
-    "max_files": "Maximum {maxFiles} files allowed for {tier} tier",
-    "file_size": "File size exceeds {maxSizeMB}MB limit for {tier} tier"
+    "max_files": "Maximum {maxFiles} files allowed",
+    "file_size": "File size exceeds {maxSizeMB}MB limit"
   }
 }

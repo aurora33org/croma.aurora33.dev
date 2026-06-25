@@ -13,11 +13,8 @@
   "downloadButton": "Descargar Imágenes Comprimidas",
   "leadCapture": {
     "heading": "¿Te gustó esta herramienta?",
-    "description": "Recibe tips de optimización web y mejores prácticas",
-    "emailPlaceholder": "tu@email.com",
-    "subscribeButton": "Suscribirse",
-    "linkText": "o descubre nuestros",
-    "linkLabel": "servicios de desarrollo web"
+    "description": "En Aurora33 creamos soluciones web a la medida de tu negocio. Hablemos de tu proyecto.",
+    "subscribeButton": "Contacta a Aurora33"
   },
   "resetButton": "Comenzar de Nuevo"
 }

@@ -13,11 +13,8 @@
   "downloadButton": "Download Compressed Images",
   "leadCapture": {
     "heading": "Did you like this tool?",
-    "description": "Get web optimization tips and best practices",
-    "emailPlaceholder": "your@email.com",
-    "subscribeButton": "Subscribe",
-    "linkText": "or discover our",
-    "linkLabel": "web development services"
+    "description": "At Aurora33 we build custom web solutions for your business. Let's talk about your project.",
+    "subscribeButton": "Contact Aurora33"
   },
   "resetButton": "Start Over"
 }

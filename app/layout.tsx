@@ -3,11 +3,8 @@ import { Geist, Geist_Mono, Instrument_Serif, JetBrains_Mono } from "next/font/g
 import { ReactNode } from "react";
 import { cookies } from "next/headers";
 import { locales, defaultLocale, type Locale } from "@/i18n/config";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { Providers } from "@/app/providers";
 import { Navigation } from "@/components/Navigation";
-import { initializeAdmin } from "@/lib/admin-init";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -76,12 +73,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
-  // Initialize admin user on startup
-  await initializeAdmin();
-
   const locale = await getLocale();
   const messages = (await import(`@/i18n/locales/${locale}`)).default as any;
-  const session = await getServerSession(authOptions);
 
   return (
     <html lang={locale} suppressHydrationWarning>
@@ -105,7 +98,6 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} antialiased`}
       >
         <Providers
-          session={session}
           locale={locale}
           messages={messages}
         >

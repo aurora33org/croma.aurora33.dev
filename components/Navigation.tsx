@@ -2,24 +2,21 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { Sun, Moon, Menu, X } from 'lucide-react';
-import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { LanguageToggle } from './LanguageToggle';
-import { UserProfile } from './UserProfile';
 import { useTranslations } from '@/lib/i18n-context';
 
+const AURORA_CONTACT_URL = 'https://aurora33.org/contacto';
+
 const NAV_LINKS = [
-  { href: '/tool',        labelKey: 'navigation.tool' },
-  { href: '/pricing',     labelKey: 'navigation.pricing' },
-  { href: '/auth/login',  labelKey: 'navigation.login' },
+  { href: '/tool', labelKey: 'navigation.tool' },
 ] as const;
 
 export function Navigation() {
   const [isDark, setIsDark] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const initialized = useRef(false);
-  const { data: session } = useSession();
   const pathname = usePathname();
   const t = useTranslations('common');
 
@@ -117,11 +114,17 @@ export function Navigation() {
           className="hidden md:flex items-stretch"
           style={{ ...backdropStyle, borderBottom: '1px solid var(--border)', borderLeft: '1px solid var(--border)' }}
         >
-          {session?.user && (
-            <div className="flex items-center px-4" style={{ borderLeft: '1px solid var(--border)' }}>
-              <UserProfile />
-            </div>
-          )}
+          <a
+            href={AURORA_CONTACT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center px-5 py-3 font-[family-name:var(--font-geist-mono)] text-[13px] tracking-[0.16em] uppercase"
+            style={{ color: 'var(--primary)', borderLeft: '1px solid var(--border)' }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--foreground)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--primary)'; }}
+          >
+            {t('navigation.contact' as any) || 'Contacto'}
+          </a>
 
           <div className="flex items-center px-4" style={{ borderLeft: '1px solid var(--border)' }}>
             <LanguageToggle />
@@ -171,6 +174,16 @@ export function Navigation() {
                 {t(labelKey as any) || labelKey.split('.').pop()}
               </Link>
             ))}
+            <a
+              href={AURORA_CONTACT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center px-5 py-5 text-xl font-medium tracking-[-0.02em]"
+              style={{ color: 'var(--primary)', borderBottom: '1px solid var(--border)' }}
+              onClick={() => setMobileOpen(false)}
+            >
+              {t('navigation.contact' as any) || 'Contacto'}
+            </a>
           </nav>
 
           <div

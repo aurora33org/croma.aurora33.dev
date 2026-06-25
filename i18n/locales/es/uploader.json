@@ -15,7 +15,7 @@
   "removeButton": "Eliminar",
   "errors": {
     "no_valid_files": "No se seleccionaron im\u00e1genes v\u00e1lidas",
-    "max_files": "M\u00e1ximo {maxFiles} archivos permitidos para el nivel {tier}",
-    "file_size": "El tama\u00f1o del archivo supera el l\u00edmite de {maxSizeMB}MB para el nivel {tier}"
+    "max_files": "M\u00e1ximo {maxFiles} archivos permitidos",
+    "file_size": "El tama\u00f1o del archivo supera el l\u00edmite de {maxSizeMB}MB"
   }
 }

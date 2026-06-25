@@ -1,30 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { promises as fs } from 'fs';
 import path from 'path';
 import { jobManager, storageService } from '@/lib/services';
 import { parseMultipartForm } from '@/lib/middleware/multer-handler';
 import { NotFoundError, BadRequestError } from '@/lib/utils/errors';
 import { logger } from '@/lib/utils/logger';
-import { TIER_LIMITS } from '@/lib/config';
-import { getUserTier } from '@/lib/services/user-service';
-import { checkDailyUsage } from '@/lib/services/rate-limiter';
+import { DEFAULT_LIMITS } from '@/lib/config';
 
 /**
  * POST /api/jobs/:jobId/upload
- * Upload image files for a compression job
- * Anonymous users allowed with FREE tier limits; authenticated users use their tier
+ * Upload image files for a compression job (no auth, single limit set)
  */
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ jobId: string }> }
 ) {
   try {
-    const session = await getServerSession(authOptions);
-    const userId = (session?.user as any)?.id || null;
-    const isAnonymous = !userId;
-
     const { jobId } = await params;
     const job = jobManager.getJob(jobId);
 
@@ -32,35 +23,8 @@ export async function POST(
       throw new NotFoundError('Job');
     }
 
-    // Verify ownership: authenticated users must own the job;
-    // anonymous jobs (userId 'anon') are accessible by anyone with the jobId (UUID is secret enough)
-    if (!isAnonymous && job.userId !== userId) {
-      return NextResponse.json(
-        { success: false, error: 'Forbidden: Job belongs to another user' },
-        { status: 403 }
-      );
-    }
-
     if (job.status !== 'created') {
       throw new BadRequestError(`Cannot upload to job in status: ${job.status}`);
-    }
-
-    // Get tier limits: authenticated users get their DB tier, anonymous always FREE
-    const userTier = isAnonymous ? 'FREE' : await getUserTier(userId);
-    const tierLimits = TIER_LIMITS[userTier];
-
-    // Daily usage check only applies to authenticated users (anonymous tracking is client-side)
-    if (!isAnonymous) {
-      const canUpload = await checkDailyUsage(userId, userTier);
-      if (!canUpload) {
-        return NextResponse.json(
-          {
-            success: false,
-            error: `Daily compression limit exceeded for ${userTier} tier (${tierLimits.MAX_DAILY_USAGE} per day)`
-          },
-          { status: 429 }
-        );
-      }
     }
 
     const uploadDir = storageService.getUploadDir(jobId);
@@ -80,17 +44,17 @@ export async function POST(
       throw new BadRequestError('No files were uploaded');
     }
 
-    // Validate file count and sizes against tier limits
-    if (files.length > tierLimits.MAX_FILES) {
+    // Validate file count and sizes against the single default limit set
+    if (files.length > DEFAULT_LIMITS.MAX_FILES) {
       throw new BadRequestError(
-        `Too many files. Maximum ${tierLimits.MAX_FILES} files per request for ${userTier} tier`
+        `Too many files. Maximum ${DEFAULT_LIMITS.MAX_FILES} files per request`
       );
     }
 
     for (const file of files) {
-      if (file.size > tierLimits.MAX_FILE_SIZE) {
+      if (file.size > DEFAULT_LIMITS.MAX_FILE_SIZE) {
         throw new BadRequestError(
-          `File "${file.name}" exceeds maximum size of ${Math.round(tierLimits.MAX_FILE_SIZE / (1024 * 1024))}MB for ${userTier} tier`
+          `File "${file.name}" exceeds maximum size of ${Math.round(DEFAULT_LIMITS.MAX_FILE_SIZE / (1024 * 1024))}MB`
         );
       }
     }
@@ -128,7 +92,7 @@ export async function POST(
       totalSize
     });
 
-    logger.success(`Uploaded ${files.length} files for job ${jobId} (user: ${userId || 'anon'})`);
+    logger.success(`Uploaded ${files.length} files for job ${jobId}`);
 
     return NextResponse.json({
       success: true,
