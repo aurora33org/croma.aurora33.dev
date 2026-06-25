@@ -34,6 +34,7 @@ module.exports = {
         'text-dark':        'var(--foreground)',
         'text-muted-dark':  'var(--muted-foreground)',
         container:          'var(--card)',
+        'container-dark':   'var(--card)',
         contrast:           'var(--primary)',
         'contrast-v2':      'var(--secondary)',
       },
