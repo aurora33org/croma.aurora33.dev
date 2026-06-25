@@ -7,7 +7,7 @@
     },
     {
       "question": "¿Hay límite de uso?",
-      "answer": "→ Hasta 20 imágenes por lote, sin límite de lotes. Para volúmenes mayores, consulta nuestra API empresarial."
+      "answer": "→ Hasta {maxFiles} imágenes por lote, sin límite de lotes. Para volúmenes mayores, consulta nuestra API empresarial."
     },
     {
       "question": "¿Pierdo calidad al comprimir?",

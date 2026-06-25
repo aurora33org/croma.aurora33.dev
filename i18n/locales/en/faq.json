@@ -7,7 +7,7 @@
     },
     {
       "question": "Is there a usage limit?",
-      "answer": "→ Up to 20 images per batch, unlimited batches. For larger volumes, check our enterprise API."
+      "answer": "→ Up to {maxFiles} images per batch, unlimited batches. For larger volumes, check our enterprise API."
     },
     {
       "question": "Will I lose quality when compressing?",

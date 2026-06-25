@@ -1,6 +1,7 @@
 'use client';
 
 import { useTranslations, useLocale } from '@/lib/i18n-context';
+import { DEFAULT_LIMITS } from '@/lib/config';
 
 const baseUrl = 'https://croma.aurora33.org';
 
@@ -37,7 +38,9 @@ export function JsonLd() {
       name: q.question,
       acceptedAnswer: {
         '@type': 'Answer',
-        text: q.answer.replace(/^→\s*/, ''),
+        text: q.answer
+          .replace(/^→\s*/, '')
+          .replace(/\{maxFiles\}/g, String(DEFAULT_LIMITS.MAX_FILES)),
       },
     })),
   };
