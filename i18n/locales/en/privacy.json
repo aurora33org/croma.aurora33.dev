@@ -1,87 +1,75 @@
 {
   "heading": "Privacy Policy",
-  "lastUpdated": "Last updated: February 26, 2026",
-  "back": "\u2190 Back to Croma",
+  "lastUpdated": "Last updated: June 25, 2026",
+  "back": "← Back to Croma",
   "sections": {
     "s1": {
       "title": "1. Who We Are",
-      "body": "Croma is a product by Aurora33 (we, us, our). We operate the image compression tool available at croma.aurora33.org. This Privacy Policy explains how we collect, use, and protect your personal data when you use our Service."
+      "body": "Croma is a product of Aurora33 (we, us, our). We operate the image compression tool available at croma.aurora33.org. Croma requires no registration or account and collects no identifiable personal data. This Policy explains what information is involved when you use the Service."
     },
     "s2": {
-      "title": "2. Data We Collect",
-      "intro": "We collect the following categories of personal data:",
+      "title": "2. Data We Process",
+      "intro": "We do not ask for your name, email, or password. The only information involved is:",
       "items": [
-        { "label": "Account data:", "text": "email address and encrypted password when you register" },
-        { "label": "Usage data:", "text": "number of compression jobs, file counts, and usage metrics tied to your account" },
-        { "label": "Technical data:", "text": "IP address, browser type, and session data collected automatically via logs" },
-        { "label": "Uploaded files:", "text": "images are processed in-memory and deleted automatically after one hour \u2014 we do not store or inspect their contents" }
+        { "label": "Uploaded files:", "text": "your images are processed temporarily and deleted automatically after one hour. We do not store, inspect, or share them." },
+        { "label": "Technical data:", "text": "temporary server logs (IP address, browser type) generated automatically to operate and protect the Service." },
+        { "label": "Local preferences:", "text": "your language and theme (light/dark) are stored in your own browser (localStorage and a language cookie), not on our servers." }
       ]
     },
     "s3": {
-      "title": "3. How We Use Your Data",
-      "intro": "We use your personal data for the following purposes:",
+      "title": "3. How We Use This Information",
+      "intro": "The information above is used solely to:",
       "items": [
-        { "label": "Service delivery:", "text": "to operate your account, apply usage limits, and provide compression features" },
-        { "label": "Product communications:", "text": "to send you updates, new features, and improvements related to Croma" },
-        { "label": "Marketing by Aurora33:", "text": "to inform you about other products, tools, and services developed or offered by Aurora33" },
-        { "label": "Promotional offers:", "text": "to send promotional campaigns, discounts, and special offers for Aurora33 products and selected third-party partnerships" },
-        { "label": "Newsletter:", "text": "if you opted in at registration, to send you our periodic newsletter covering product news, tips, and updates" },
-        { "label": "Analytics:", "text": "to understand how the Service is used and improve it" },
-        { "label": "Legal compliance:", "text": "to meet applicable legal obligations" }
+        { "label": "Provide the Service:", "text": "receive, compress, and return your images." },
+        { "label": "Security and stability:", "text": "prevent abuse and keep the Service running through technical logs." }
       ],
-      "outro": "Marketing and newsletter emails are only sent to users who explicitly consented at the time of registration. You may withdraw this consent at any time (see Section 7)."
+      "outro": "We do not use your data for marketing, newsletters, or profiling, because we collect no contact information."
     },
     "s4": {
       "title": "4. Legal Basis for Processing",
-      "intro": "We process your personal data under the following legal bases:",
+      "intro": "We process technical information under the following legal bases:",
       "items": [
-        { "label": "Contract performance:", "text": "to provide the Service you signed up for" },
-        { "label": "Consent:", "text": "for marketing emails, newsletters, and promotional communications \u2014 you gave explicit consent at registration" },
-        { "label": "Legitimate interest:", "text": "for product analytics and service improvements" },
-        { "label": "Legal obligation:", "text": "where required by applicable law" }
+        { "label": "Legitimate interest:", "text": "to operate, protect, and improve the Service." },
+        { "label": "Legal obligation:", "text": "where required by applicable law." }
       ]
     },
     "s5": {
       "title": "5. Data Sharing",
-      "intro": "We do not sell your personal data. We may share your data with:",
+      "intro": "We do not sell or trade personal data. Technical information may pass through:",
       "items": [
-        { "label": "Service providers:", "text": "trusted third-party vendors (hosting, database, email delivery) who process data on our behalf under data processing agreements" },
-        { "label": "Aurora33 group:", "text": "other products or projects operated under the Aurora33 umbrella, solely for the purposes described in Section 3" },
-        { "label": "Legal authorities:", "text": "when required by law or to protect the rights and safety of Aurora33 or its users" }
+        { "label": "Hosting provider:", "text": "the infrastructure running the Service processes requests temporarily to deliver your result." },
+        { "label": "Legal authorities:", "text": "only when required by law or to protect the rights and safety of Aurora33 or its users." }
       ]
     },
     "s6": {
       "title": "6. Data Retention",
-      "body": "We retain your account data for as long as your account is active. Uploaded image files are automatically deleted after one hour of inactivity. If you delete your account, we will erase your personal data within 30 days, except where retention is required by law."
+      "body": "Uploaded images are deleted automatically about one hour after processing. Technical logs are kept only as long as necessary to operate and protect the Service. Since there are no accounts, we store no long-term personal data."
     },
     "s7": {
       "title": "7. Your Rights",
-      "intro": "Depending on your jurisdiction, you may have the following rights regarding your personal data:",
+      "intro": "Because we collect no identifiable personal data or accounts, there is no profile to access or delete. Even so, depending on your jurisdiction, you may:",
       "items": [
-        { "label": "Access:", "text": "request a copy of the data we hold about you" },
-        { "label": "Rectification:", "text": "correct inaccurate or incomplete data" },
-        { "label": "Erasure:", "text": "request deletion of your data (right to be forgotten)" },
-        { "label": "Objection:", "text": "object to data processing based on legitimate interest" },
-        { "label": "Withdraw consent:", "text": "unsubscribe from marketing or newsletter emails at any time by clicking the unsubscribe link in any email or contacting us directly" },
-        { "label": "Portability:", "text": "request your data in a structured, machine-readable format" }
+        { "label": "Information:", "text": "ask us for details about how the technical processing described here works." },
+        { "label": "Local preferences:", "text": "clear your language and theme at any time from your browser settings." },
+        { "label": "Complaint:", "text": "lodge a complaint with the competent data protection authority." }
       ],
-      "outro": "To exercise any of these rights, contact us at"
+      "outro": "For any privacy inquiry, contact us at"
     },
     "s8": {
       "title": "8. Cookies",
-      "body": "We use essential cookies to maintain your session and language preferences. We do not use third-party advertising cookies. You can disable cookies in your browser settings, though this may affect Service functionality."
+      "body": "We use a single essential cookie to remember your language preference. Your theme (light/dark) is stored in your browser's local storage. We do not use analytics or third-party advertising cookies."
     },
     "s9": {
       "title": "9. Security",
-      "body": "We implement industry-standard security measures including encrypted passwords (bcrypt), HTTPS transport, and restricted server access. However, no system is completely secure. We encourage you to use a strong, unique password for your account."
+      "body": "We apply industry-standard measures: encrypted HTTPS transport, automatic deletion of uploaded files, and restricted server access. Since we collect no passwords or account data, there are no credentials that could be leaked."
     },
     "s10": {
       "title": "10. Changes to This Policy",
-      "body": "We may update this Privacy Policy from time to time. We will update the Last updated date at the top of this page. Continued use of the Service after changes constitutes your acceptance of the revised Policy."
+      "body": "We may update this Privacy Policy periodically. We will revise the Last updated date at the top of this page. Continued use of the Service after changes constitutes your acceptance of the revised Policy."
     },
     "s11": {
       "title": "11. Contact",
-      "body": "For privacy-related questions or to exercise your rights, contact Aurora33 at"
+      "body": "For privacy questions, contact Aurora33 at"
     }
   },
   "footer": {

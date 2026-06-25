@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import { ReactNode } from "react";
-import { cookies } from "next/headers";
-import { locales, defaultLocale, type Locale } from "@/i18n/config";
+import { notFound } from "next/navigation";
+import { locales, type Locale } from "@/i18n/config";
 import { Providers } from "@/app/providers";
 import { Navigation } from "@/components/Navigation";
-import "./globals.css";
+import "../globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,62 +31,69 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-async function getLocale(): Promise<Locale> {
-  const cookieStore = await cookies();
-  const locale = cookieStore.get("NEXT_LOCALE")?.value;
-  return locales.includes(locale as Locale) ? (locale as Locale) : defaultLocale;
+const baseUrl = "https://croma.aurora33.org";
+
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
 }
 
-export async function generateMetadata(): Promise<Metadata> {
-  const locale = await getLocale();
-  const baseUrl = "https://croma.aurora33.org";
+export async function generateMetadata(
+  { params }: { params: Promise<{ locale: string }> }
+): Promise<Metadata> {
+  const { locale } = await params;
+  if (!locales.includes(locale as Locale)) notFound();
+
+  const url = `${baseUrl}/${locale}`;
+  const title = locale === "en"
+    ? "Croma — Free Bulk Image Compressor by Aurora33"
+    : "Croma — Compresor de Imágenes Gratis por Aurora33";
+  const description = locale === "en"
+    ? "Compress, resize and convert images to WebP, JPEG, PNG or AVIF. Free, no sign-up, your images are never stored. Built by Aurora33."
+    : "Comprime, redimensiona y convierte imágenes a WebP, JPEG, PNG o AVIF. Gratis, sin registro y sin almacenar tus imágenes. Hecho por Aurora33.";
 
   return {
-    title: locale === "en"
-      ? "Croma - Image Compression Tool"
-      : "Croma - Compresor de Imágenes",
-    description: locale === "en"
-      ? "Optimize your images for any project. Compress, resize, and convert to WebP, JPEG, or PNG"
-      : "Optimiza tus imágenes para cualquier proyecto. Comprime, redimensiona y convierte a WebP, JPEG o PNG",
+    metadataBase: new URL(baseUrl),
+    title,
+    description,
     openGraph: {
-      title: locale === "en"
-        ? "Croma - Image Compression Tool"
-        : "Croma - Compresor de Imágenes",
-      description: locale === "en"
-        ? "Optimize your images for any project"
-        : "Optimiza tus imágenes para cualquier proyecto",
-      url: baseUrl,
-      locale: locale,
+      title,
+      description,
+      url,
+      siteName: "Croma by Aurora33",
+      locale,
       type: "website",
     },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
     alternates: {
-      canonical: baseUrl,
-      languages: Object.fromEntries(
-        locales.map((l) => [l, `${baseUrl}?lang=${l}`])
-      ),
+      canonical: url,
+      languages: {
+        es: `${baseUrl}/es`,
+        en: `${baseUrl}/en`,
+        "x-default": `${baseUrl}/es`,
+      },
     },
   };
 }
 
-export default async function RootLayout({
+export default async function LocaleLayout({
   children,
+  params,
 }: Readonly<{
   children: ReactNode;
+  params: Promise<{ locale: string }>;
 }>) {
-  const locale = await getLocale();
+  const { locale } = await params;
+  if (!locales.includes(locale as Locale)) notFound();
+
   const messages = (await import(`@/i18n/locales/${locale}`)).default as any;
 
   return (
     <html lang={locale} suppressHydrationWarning>
       <head>
-        {locales.map((l) => (
-          <link
-            key={l}
-            rel="alternate"
-            hrefLang={l}
-            href={`https://croma.aurora33.org?lang=${l}`}
-          />
-        ))}
         {/* Inline script to apply dark mode before hydration — prevents flash */}
         <script
           dangerouslySetInnerHTML={{
@@ -97,10 +104,7 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} antialiased`}
       >
-        <Providers
-          locale={locale}
-          messages={messages}
-        >
+        <Providers locale={locale as Locale} messages={messages}>
           <Navigation />
           {children}
         </Providers>

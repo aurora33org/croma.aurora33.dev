@@ -5,12 +5,13 @@ import { Sun, Moon, Menu, X } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { LanguageToggle } from './LanguageToggle';
-import { useTranslations } from '@/lib/i18n-context';
+import { useTranslations, useLocale } from '@/lib/i18n-context';
 
 const AURORA_CONTACT_URL = 'https://aurora33.org/contacto';
 
+// `to` is appended to the locale root (e.g. '' -> /es, '/terms' -> /es/terms)
 const NAV_LINKS = [
-  { href: '/tool', labelKey: 'navigation.tool' },
+  { to: '', labelKey: 'navigation.tool' },
 ] as const;
 
 export function Navigation() {
@@ -18,7 +19,10 @@ export function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const initialized = useRef(false);
   const pathname = usePathname();
+  const locale = useLocale();
   const t = useTranslations('common');
+
+  const localeHref = (to: string) => `/${locale}${to}`;
 
   const isActive = (href: string) =>
     href === pathname || pathname.startsWith(href + '/');
@@ -63,7 +67,7 @@ export function Navigation() {
         >
           {/* Logo */}
           <Link
-            href="/tool"
+            href={localeHref('')}
             className="flex items-center px-5 py-3"
             style={{ borderRight: '1px solid var(--border)' }}
           >
@@ -83,7 +87,8 @@ export function Navigation() {
 
           {/* Desktop nav links */}
           <nav className="hidden md:flex items-stretch">
-            {NAV_LINKS.map(({ href, labelKey }) => {
+            {NAV_LINKS.map(({ to, labelKey }) => {
+              const href = localeHref(to);
               const active = isActive(href);
               return (
                 <Link
@@ -160,20 +165,23 @@ export function Navigation() {
           style={{ background: 'var(--background)' }}
         >
           <nav className="flex flex-col flex-1">
-            {NAV_LINKS.map(({ href, labelKey }) => (
-              <Link
-                key={href}
-                href={href}
-                className="flex items-center px-5 py-5 text-xl font-medium tracking-[-0.02em]"
-                style={{
-                  color: isActive(href) ? 'var(--foreground)' : 'var(--muted-foreground)',
-                  borderBottom: '1px solid var(--border)',
-                }}
-                onClick={() => setMobileOpen(false)}
-              >
-                {t(labelKey as any) || labelKey.split('.').pop()}
-              </Link>
-            ))}
+            {NAV_LINKS.map(({ to, labelKey }) => {
+              const href = localeHref(to);
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  className="flex items-center px-5 py-5 text-xl font-medium tracking-[-0.02em]"
+                  style={{
+                    color: isActive(href) ? 'var(--foreground)' : 'var(--muted-foreground)',
+                    borderBottom: '1px solid var(--border)',
+                  }}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {t(labelKey as any) || labelKey.split('.').pop()}
+                </Link>
+              );
+            })}
             <a
               href={AURORA_CONTACT_URL}
               target="_blank"

@@ -1,10 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { useTranslations } from '@/lib/i18n-context';
+import { useTranslations, useLocale } from '@/lib/i18n-context';
 
 export default function TermsPage() {
   const t = useTranslations('terms');
+  const locale = useLocale();
 
   const s = (key: string) => t(`sections.${key}`);
 
@@ -12,7 +13,7 @@ export default function TermsPage() {
     <main className="min-h-screen bg-background dark:bg-bg-dark">
       <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="mb-10">
-          <Link href="/tool" className="text-primary hover:opacity-80 transition-opacity text-sm">
+          <Link href={`/${locale}`} className="text-primary hover:opacity-80 transition-opacity text-sm">
             {t('back')}
           </Link>
         </div>
@@ -97,9 +98,9 @@ export default function TermsPage() {
         </div>
 
         <div className="mt-16 pt-8 border-t border-gray-200 dark:border-gray-700 text-sm text-text-muted dark:text-text-muted-dark text-center">
-          <Link href="/privacy" className="text-primary hover:opacity-80 transition-opacity">{t('footer.privacy')}</Link>
+          <Link href={`/${locale}/privacy`} className="text-primary hover:opacity-80 transition-opacity">{t('footer.privacy')}</Link>
           <span className="mx-3">·</span>
-          <Link href="/tool" className="hover:text-text dark:hover:text-text-dark transition-colors">{t('footer.backToApp')}</Link>
+          <Link href={`/${locale}`} className="hover:text-text dark:hover:text-text-dark transition-colors">{t('footer.backToApp')}</Link>
         </div>
       </div>
     </main>

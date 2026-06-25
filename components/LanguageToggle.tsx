@@ -1,48 +1,31 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
+import { useLocale } from '@/lib/i18n-context';
+import { locales } from '@/i18n/config';
 
 export function LanguageToggle() {
   const router = useRouter();
-  const [language, setLanguage] = useState('es');
-  const langRef = useRef<'es' | 'en'>('es');
-  const initialized = useRef(false);
-
-  useEffect(() => {
-    // Only initialize once on client mount
-    if (initialized.current) return;
-    initialized.current = true;
-
-    // Check localStorage and default to Spanish
-    const savedLanguage = localStorage.getItem('preferred-language') as 'es' | 'en' | null;
-    const cookieLanguage = document.cookie
-      .split('; ')
-      .find(row => row.startsWith('NEXT_LOCALE='))
-      ?.split('=')[1] as 'es' | 'en' | undefined;
-
-    const currentLanguage = savedLanguage || cookieLanguage || 'es';
-    langRef.current = currentLanguage;
-    setLanguage(currentLanguage);
-  }, []);
+  const pathname = usePathname();
+  const language = useLocale();
 
   const toggleLanguage = () => {
     const newLanguage = language === 'es' ? 'en' : 'es';
-    langRef.current = newLanguage;
 
-    // Update localStorage
+    // Swap the first path segment for the new locale
+    const segments = pathname.split('/');
+    if (locales.includes(segments[1] as typeof locales[number])) {
+      segments[1] = newLanguage;
+    } else {
+      segments.splice(1, 0, newLanguage);
+    }
+    const target = segments.join('/') || `/${newLanguage}`;
+
+    // Remember preference (cookie read by middleware on next root visit)
     localStorage.setItem('preferred-language', newLanguage);
+    document.cookie = `NEXT_LOCALE=${newLanguage}; path=/; max-age=${60 * 60 * 24 * 365}`;
 
-    // Update cookie for server-side (expires in 1 year)
-    const expiresAt = new Date();
-    expiresAt.setFullYear(expiresAt.getFullYear() + 1);
-    document.cookie = `NEXT_LOCALE=${newLanguage}; path=/; expires=${expiresAt.toUTCString()}`;
-
-    // Update state
-    setLanguage(newLanguage);
-
-    // Refresh the page to apply new language (using router.refresh instead of reload)
-    router.refresh();
+    router.push(target);
   };
 
   return (

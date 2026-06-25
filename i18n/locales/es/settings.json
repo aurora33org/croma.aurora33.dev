@@ -28,7 +28,6 @@
   "avifWarning": {
     "title": "AVIF puede tardar más de lo normal",
     "descriptionFree": "La conversión a AVIF es más lenta que otros formatos. El proceso puede tardar hasta 3 minutos. Por favor, no cierres la pestaña.",
-    "descriptionPro": "La conversión a AVIF es más lenta que otros formatos. El proceso puede tardar hasta 4 minutos. Por favor, no cierres la pestaña.",
     "cancel": "Cancelar",
     "continue": "Entendido, continuar"
   }

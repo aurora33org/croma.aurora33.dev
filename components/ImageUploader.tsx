@@ -147,6 +147,13 @@ export function ImageUploader({ onFilesSelected, onShowSettings }: ImageUploader
           </svg>
           <span className="text-base font-medium text-text-muted dark:text-text-muted-dark">{t('badges.fast')}</span>
         </div>
+
+        <div className="flex items-center gap-3">
+          <svg className="w-6 h-6 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+          <span className="text-base font-medium text-text-muted dark:text-text-muted-dark">{t('badges.noSignup')}</span>
+        </div>
       </div>
     </div>
   );

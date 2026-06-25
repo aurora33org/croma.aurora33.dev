@@ -5,16 +5,16 @@
   "sections": {
     "s1": {
       "title": "1. Aceptaci\u00f3n de los T\u00e9rminos",
-      "body": "Al acceder o utilizar Croma (el Servicio), operado por Aurora33 (nosotros, nos, nuestro), aceptas estar sujeto a estos T\u00e9rminos de Servicio. Si no est\u00e1s de acuerdo, por favor no uses el Servicio. Estos t\u00e9rminos aplican a todos los visitantes, usuarios y cuentas registradas."
+      "body": "Al acceder o utilizar Croma (el Servicio), operado por Aurora33 (nosotros, nos, nuestro), aceptas estar sujeto a estos T\u00e9rminos de Servicio. Si no est\u00e1s de acuerdo, por favor no uses el Servicio. Estos t\u00e9rminos aplican a todos los visitantes y usuarios."
     },
     "s2": {
       "title": "2. Descripci\u00f3n del Servicio",
-      "body": "Croma es una herramienta web de compresi\u00f3n y conversi\u00f3n de im\u00e1genes en lotes. El Servicio se ofrece de forma gratuita en el plan Free y bajo un plan de pago o promocional en el plan Pro. Aurora33 se reserva el derecho de modificar, suspender o discontinuar cualquier parte del Servicio en cualquier momento."
+      "body": "Croma es una herramienta web de compresi\u00f3n y conversi\u00f3n de im\u00e1genes en lotes. El Servicio es totalmente gratuito y no requiere registro ni la creaci\u00f3n de una cuenta. Aurora33 se reserva el derecho de modificar, suspender o discontinuar cualquier parte del Servicio en cualquier momento."
     },
     "s3": {
-      "title": "3. Cuentas de Usuario",
-      "body1": "Para acceder a las funciones Pro, debes crear una cuenta con una direcci\u00f3n de correo electr\u00f3nico v\u00e1lida y una contrase\u00f1a. Eres responsable de mantener la confidencialidad de tus credenciales y de toda la actividad que ocurra bajo tu cuenta.",
-      "body2": "Debes tener al menos 16 a\u00f1os para crear una cuenta. Al registrarte, confirmas que la informaci\u00f3n que proporcionas es veraz y est\u00e1 actualizada."
+      "title": "3. Servicio Gratuito y Sin Registro",
+      "body1": "Croma no requiere registro, inicio de sesi\u00f3n ni cuenta de usuario. No solicitamos correo electr\u00f3nico, contrase\u00f1a ni ning\u00fan dato personal para usar la herramienta.",
+      "body2": "Cualquier persona puede usar el Servicio de forma gratuita, dentro de los l\u00edmites t\u00e9cnicos vigentes (n\u00famero de im\u00e1genes por lote y tama\u00f1o m\u00e1ximo por archivo)."
     },
     "s4": {
       "title": "4. Uso Aceptable",
@@ -26,7 +26,7 @@
         "Revender o sublicenciar el acceso al Servicio sin permiso escrito",
         "Subir malware o archivos maliciosos"
       ],
-      "outro": "Aurora33 se reserva el derecho de suspender o cancelar cuentas que violen estas reglas."
+      "outro": "Aurora33 se reserva el derecho de restringir o bloquear el acceso a quien viole estas reglas."
     },
     "s5": {
       "title": "5. Contenido Subido",
@@ -42,8 +42,8 @@
       "body2": "En la m\u00e1xima medida permitida por la ley, Aurora33 no ser\u00e1 responsable de ning\u00fan da\u00f1o indirecto, incidental, especial o consecuente derivado del uso o la imposibilidad de usar el Servicio, incluyendo la p\u00e9rdida de datos."
     },
     "s8": {
-      "title": "8. Cancelaci\u00f3n",
-      "body": "Puedes eliminar tu cuenta en cualquier momento contact\u00e1ndonos. Aurora33 puede cancelar o suspender tu cuenta si incumples estos T\u00e9rminos. Tras la cancelaci\u00f3n, tu derecho a usar el Servicio cesa de inmediato."
+      "title": "8. Disponibilidad del Servicio",
+      "body": "El Servicio se ofrece sin garant\u00eda de disponibilidad continua. Aurora33 puede restringir o bloquear el acceso a quien incumpla estos T\u00e9rminos. Como no hay cuentas, no necesitas hacer nada para dejar de usar el Servicio: basta con no acceder a \u00e9l."
     },
     "s9": {
       "title": "9. Cambios en estos T\u00e9rminos",

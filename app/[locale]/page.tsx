@@ -10,6 +10,7 @@ import { ErrorView } from '@/components/ErrorView';
 import { FormatGuide } from '@/components/FormatGuide';
 import { FAQ } from '@/components/FAQ';
 import { Footer } from '@/components/Footer';
+import { JsonLd } from '@/components/JsonLd';
 import { logger } from '@/lib/utils/logger';
 
 type ViewType = 'upload' | 'settings' | 'processing' | 'download' | 'error';
@@ -228,6 +229,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-background dark:bg-bg-dark text-text dark:text-text-dark">
+      <JsonLd />
       {currentView === 'upload' && (
         <>
           <div className="px-4 sm:px-8 md:px-16 lg:px-20 xl:px-[120px] max-w-[1720px] mx-auto">

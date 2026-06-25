@@ -8,7 +8,8 @@
   "badges": {
     "free": "No Installation",
     "secure": "Secure Processing",
-    "fast": "Fast Compression"
+    "fast": "Fast Compression",
+    "noSignup": "No Sign-up"
   },
   "selectedImages": "Selected images",
   "addMoreImages": "Add more images",
