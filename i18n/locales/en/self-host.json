@@ -1,29 +1,57 @@
 {
-  "eyebrow": "Open source · Self-host",
+  "eyebrow": "Free and open source",
   "heading": "Remove the limits",
-  "intro": "This hosted version applies limits to stay free and stable. Croma is open source: run it yourself and set your own limits.",
+  "intro": "The online version has a limit so it can stay free for everyone. Run your own copy and the limit is up to you — and it's still free.",
   "limits": {
-    "title": "Limits by where you run it",
-    "hosted": "This version",
-    "local": "Self-host (local)",
-    "custom": "Your call",
-    "customValue": "configurable",
-    "files": "files",
-    "perFile": "MB/file"
+    "title": "Images at a time",
+    "hosted": "Online version",
+    "local": "Your own copy",
+    "custom": "As many as you want",
+    "customValue": "your call",
+    "perFile": "MB per image"
+  },
+  "easy": {
+    "badge": "Easiest · nothing to install",
+    "title": "Put it online in 1 click",
+    "intro": "Railway creates your own copy and gives you a link to use and share it. There's a free plan to get started.",
+    "deployAlt": "Deploy on Railway",
+    "steps": [
+      "Click the button below.",
+      "Create a free Railway account (with your email or your GitHub account).",
+      "Wait a couple of minutes. Done: you'll have your own link to use Croma."
+    ],
+    "note": "Later you can raise the limit from the Railway dashboard. No coding needed."
   },
   "local": {
-    "title": "1. Run it locally",
-    "intro": "No database, no configuration. Requires Node.js 20.9 or newer.",
-    "note": "Local default: 30 files / 50 MB. To raise them, set NEXT_PUBLIC_MAX_FILES and NEXT_PUBLIC_MAX_FILE_MB before building."
+    "badge": "For anyone who wants it on their computer",
+    "title": "Install it on your computer",
+    "intro": "A few more steps, but all free and 100% private (your images never leave your machine). Pick your system:",
+    "node": {
+      "title": "1. Install Node.js",
+      "desc": "It's the program Croma needs to run. Download the version marked “LTS” and click Next until it finishes.",
+      "cta": "Download Node.js"
+    },
+    "download": {
+      "title": "2. Download Croma",
+      "desc": "Get the project and unzip the folder wherever you like (your Desktop, for example).",
+      "cta": "Download Croma (ZIP)"
+    },
+    "open": {
+      "title": "3. Open a terminal inside that folder"
+    },
+    "run": {
+      "title": "4. Start Croma",
+      "desc": "Type the first line and press Enter; when it finishes, type the second. Keep it open while you use Croma.",
+      "openAt": "When it tells you to, open this address in your browser:"
+    }
   },
-  "railway": {
-    "title": "2. Deploy on Railway",
-    "intro": "Your own instance in one click. No database and no required variables.",
-    "deployAlt": "Deploy on Railway",
-    "note": "Behind a proxy/custom domain, set TRUST_FORWARDED_HOST=true (or list your domain in ALLOWED_ORIGINS). For conservative limits use NEXT_PUBLIC_HOST=server. Legal pages are hidden unless NEXT_PUBLIC_LEGAL=on. Health check at /api/health."
+  "os": {
+    "mac": "Open the “Terminal” app, type cd followed by a space, drag the Croma folder onto the window, and press Enter.",
+    "windows": "Open the Croma folder, right-click inside it and choose “Open in Terminal”.",
+    "linux": "Right-click inside the Croma folder and choose “Open terminal here”."
   },
   "copy": "Copy",
   "copied": "Copied",
   "backToTool": "← Back to the tool",
-  "viewRepo": "View the repository on GitHub"
+  "viewRepo": "View the code on GitHub"
 }

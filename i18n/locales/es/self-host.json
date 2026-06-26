@@ -1,29 +1,57 @@
 {
-  "eyebrow": "Open source · Self-host",
+  "eyebrow": "Gratis y de código abierto",
   "heading": "Quita los límites",
-  "intro": "Esta versión hosteada aplica límites para mantenerla gratis y estable. Croma es de código abierto: instálalo tú y manda tú los límites.",
+  "intro": "La versión online tiene un límite para que pueda ser gratis para todos. Si pones tu propia copia, el límite lo decides tú — y te sigue saliendo gratis.",
   "limits": {
-    "title": "Límites por dónde lo corras",
-    "hosted": "Esta versión",
-    "local": "Self-host (local)",
-    "custom": "A tu medida",
-    "customValue": "configurable",
-    "files": "archivos",
-    "perFile": "MB/archivo"
+    "title": "Cuántas imágenes por vez",
+    "hosted": "Versión online",
+    "local": "Tu propia copia",
+    "custom": "Las que tú quieras",
+    "customValue": "tú decides",
+    "perFile": "MB por imagen"
+  },
+  "easy": {
+    "badge": "Lo más fácil · sin instalar nada",
+    "title": "Ponla en internet en 1 clic",
+    "intro": "Railway crea tu propia copia y te da un enlace para usarla y compartirla. Tiene un plan gratis para empezar.",
+    "deployAlt": "Desplegar en Railway",
+    "steps": [
+      "Haz clic en el botón de abajo.",
+      "Crea una cuenta gratis en Railway (con tu correo o tu cuenta de GitHub).",
+      "Espera un par de minutos. Listo: tendrás tu propio enlace para usar Croma."
+    ],
+    "note": "Después puedes subir el límite desde el panel de Railway. No necesitas saber programar."
   },
   "local": {
-    "title": "1. Córrelo en local",
-    "intro": "Sin base de datos, sin configuración. Requiere Node.js 20.9 o superior.",
-    "note": "Por defecto en local: 30 archivos / 50 MB. Para subirlos, define NEXT_PUBLIC_MAX_FILES y NEXT_PUBLIC_MAX_FILE_MB antes de compilar."
+    "badge": "Para quien quiera tenerla en su computadora",
+    "title": "Instálala en tu computadora",
+    "intro": "Unos pasos más, pero todo gratis y 100% privado (tus imágenes nunca salen de tu equipo). Elige tu sistema:",
+    "node": {
+      "title": "1. Instala Node.js",
+      "desc": "Es el programa que Croma necesita para funcionar. Descarga la versión que dice “LTS” y dale Siguiente hasta terminar.",
+      "cta": "Descargar Node.js"
+    },
+    "download": {
+      "title": "2. Descarga Croma",
+      "desc": "Baja el proyecto y descomprime la carpeta donde quieras (por ejemplo, en el Escritorio).",
+      "cta": "Descargar Croma (ZIP)"
+    },
+    "open": {
+      "title": "3. Abre una terminal dentro de esa carpeta"
+    },
+    "run": {
+      "title": "4. Enciende Croma",
+      "desc": "Escribe la primera línea y pulsa Enter; cuando termine, escribe la segunda. Déjala abierta mientras uses Croma.",
+      "openAt": "Cuando lo indique, abre esta dirección en tu navegador:"
+    }
   },
-  "railway": {
-    "title": "2. Despliega en Railway",
-    "intro": "Tu propia instancia en un clic. Sin base de datos ni variables obligatorias.",
-    "deployAlt": "Desplegar en Railway",
-    "note": "Detrás de proxy/dominio propio, pon TRUST_FORWARDED_HOST=true (o lista tu dominio en ALLOWED_ORIGINS). Para límites conservadores usa NEXT_PUBLIC_HOST=server. Las páginas legales están ocultas salvo NEXT_PUBLIC_LEGAL=on. Health check en /api/health."
+  "os": {
+    "mac": "Abre la app “Terminal”, escribe cd seguido de un espacio, arrastra la carpeta de Croma a la ventana y pulsa Enter.",
+    "windows": "Abre la carpeta de Croma, haz clic derecho dentro y elige “Abrir en Terminal”.",
+    "linux": "Haz clic derecho dentro de la carpeta de Croma y elige “Abrir terminal aquí”."
   },
   "copy": "Copiar",
   "copied": "Copiado",
   "backToTool": "← Volver a la herramienta",
-  "viewRepo": "Ver el repositorio en GitHub"
+  "viewRepo": "Ver el código en GitHub"
 }
