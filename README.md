@@ -58,7 +58,7 @@ npm start
 
 Spin up your own personal instance in seconds:
 
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/m9KKnY?referralCode=ncM0Kc&utm_medium=integration&utm_source=template&utm_campaign=generic)
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/tuPVWF?referralCode=ncM0Kc&utm_medium=integration&utm_source=template&utm_campaign=generic)
 
 No database and no required variables — Railway auto‑detects Next.js (via `railway.json` → Railpack) and serves it with a health check at `/api/health`.
 
