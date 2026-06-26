@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useTranslations, useLocale } from '@/lib/i18n-context';
+import { showLegal } from '@/lib/config';
 
 export function Footer() {
   const t = useTranslations('common');
@@ -61,26 +62,28 @@ export function Footer() {
             © {currentYear} Aurora33 · {t('footer.copyrightText' as any)}
           </span>
 
-          <div className="flex items-center gap-6">
-            <Link
-              href={`/${locale}/terms`}
-              className="font-[family-name:var(--font-geist-mono)] text-[10px] tracking-[0.2em] uppercase"
-              style={{ color: 'var(--muted-foreground)' }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--primary)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--muted-foreground)'; }}
-            >
-              {t('footer.terms' as any)}
-            </Link>
-            <Link
-              href={`/${locale}/privacy`}
-              className="font-[family-name:var(--font-geist-mono)] text-[10px] tracking-[0.2em] uppercase"
-              style={{ color: 'var(--muted-foreground)' }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--primary)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--muted-foreground)'; }}
-            >
-              {t('footer.privacy' as any)}
-            </Link>
-          </div>
+          {showLegal && (
+            <div className="flex items-center gap-6">
+              <Link
+                href={`/${locale}/terms`}
+                className="font-[family-name:var(--font-geist-mono)] text-[10px] tracking-[0.2em] uppercase"
+                style={{ color: 'var(--muted-foreground)' }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--primary)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--muted-foreground)'; }}
+              >
+                {t('footer.terms' as any)}
+              </Link>
+              <Link
+                href={`/${locale}/privacy`}
+                className="font-[family-name:var(--font-geist-mono)] text-[10px] tracking-[0.2em] uppercase"
+                style={{ color: 'var(--muted-foreground)' }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--primary)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--muted-foreground)'; }}
+              >
+                {t('footer.privacy' as any)}
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </footer>

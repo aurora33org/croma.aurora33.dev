@@ -18,6 +18,11 @@ export const DEFAULT_LIMITS = {
   MAX_FILE_SIZE: parseInt(process.env.NEXT_PUBLIC_MAX_FILE_MB || String(preset.fileMb), 10) * 1024 * 1024,
 };
 
+// Show the Terms/Privacy pages + footer links. OFF by default so self-hosters
+// don't expose Aurora33's legal docs as their own. Opt in with
+// NEXT_PUBLIC_LEGAL=on (the official hosted instance sets this). Build-time.
+export const showLegal = process.env.NEXT_PUBLIC_LEGAL === 'on';
+
 // Runtime resilience / abuse-protection knobs. Server-side only (plain env,
 // applied at runtime — change on the host without a rebuild). Defaults follow
 // the same local/server preset: "server" is conservative to fit small hosts.

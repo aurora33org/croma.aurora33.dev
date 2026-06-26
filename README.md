@@ -79,6 +79,10 @@ Everything works out of the box. To tweak limits, set these env vars (all option
 
 Next.js 16 (App Router) · React 19 · Sharp · TailwindCSS · custom lightweight i18n.
 
+## Self‑hosting note
+
+The bundled **Terms** and **Privacy** pages are written for Aurora33, so they are **hidden by default** (`/terms` and `/privacy` return 404 and the footer links don't show). Only set `NEXT_PUBLIC_LEGAL=on` if you actually operate under those documents. You are responsible for your own legal compliance.
+
 ## License
 
 Croma is **free for personal and non‑commercial use**. You may use, modify and share it — but **you may not use it commercially or sell it**. It must stay free. See [`LICENSE`](./LICENSE) (PolyForm Noncommercial 1.0.0).

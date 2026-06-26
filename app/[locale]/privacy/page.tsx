@@ -1,7 +1,9 @@
 'use client';
 
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import { useTranslations, useLocale } from '@/lib/i18n-context';
+import { showLegal } from '@/lib/config';
 
 interface LabeledItem {
   label: string;
@@ -9,6 +11,8 @@ interface LabeledItem {
 }
 
 export default function PrivacyPage() {
+  if (!showLegal) notFound();
+
   const t = useTranslations('privacy');
   const locale = useLocale();
 
