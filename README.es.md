@@ -58,7 +58,7 @@ npm start
 
 Levanta tu propia instancia personal en segundos:
 
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/tuPVWF?referralCode=ncM0Kc&utm_medium=integration&utm_source=template&utm_campaign=generic)
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/cromaaurora33live)
 
 Sin base de datos ni variables obligatorias — Railway detecta Next.js automáticamente (vía `railway.json` → Railpack) y lo sirve con health check en `/api/health`.
 
