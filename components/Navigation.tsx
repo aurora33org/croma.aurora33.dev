@@ -13,7 +13,6 @@ const AURORA_CONTACT_URL = 'https://aurora33.org/contacto';
 // `to` is appended to the locale root (e.g. '' -> /es, '/terms' -> /es/terms)
 const NAV_LINKS = [
   { to: '', labelKey: 'navigation.tool' },
-  { to: '/self-host', labelKey: 'navigation.selfHost' },
 ] as const;
 
 export function Navigation() {
@@ -121,6 +120,33 @@ export function Navigation() {
           className="hidden md:flex items-stretch"
           style={{ ...backdropStyle, borderBottom: '1px solid var(--border)', borderLeft: '1px solid var(--border)' }}
         >
+          <Link
+            href={localeHref('/self-host')}
+            className="flex items-center px-5 py-3 font-[family-name:var(--font-geist-mono)] text-[13px] tracking-[0.16em] uppercase"
+            style={{
+              color: isActive(localeHref('/self-host')) ? 'var(--foreground)' : 'var(--muted-foreground)',
+              borderLeft: '1px solid var(--border)',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--foreground)'; }}
+            onMouseLeave={(e) => {
+              if (!isActive(localeHref('/self-host'))) e.currentTarget.style.color = 'var(--muted-foreground)';
+            }}
+          >
+            {t('navigation.selfHost' as any) || 'Sin límites'}
+          </Link>
+
+          <a
+            href={GITHUB_REPO_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-5 py-3 font-[family-name:var(--font-geist-mono)] text-[13px] tracking-[0.16em] uppercase"
+            style={{ color: 'var(--muted-foreground)', borderLeft: '1px solid var(--border)' }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--foreground)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--muted-foreground)'; }}
+          >
+            <Github size={15} /> GitHub
+          </a>
+
           <a
             href={AURORA_CONTACT_URL}
             target="_blank"
@@ -131,19 +157,6 @@ export function Navigation() {
             onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--primary)'; }}
           >
             {t('navigation.contact' as any) || 'Contacto'}
-          </a>
-
-          <a
-            href={GITHUB_REPO_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub"
-            className="flex items-center px-4 py-3"
-            style={{ color: 'var(--muted-foreground)', borderLeft: '1px solid var(--border)' }}
-            onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--foreground)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--muted-foreground)'; }}
-          >
-            <Github size={16} />
           </a>
 
           <div className="flex items-center px-4" style={{ borderLeft: '1px solid var(--border)' }}>
@@ -197,16 +210,17 @@ export function Navigation() {
                 </Link>
               );
             })}
-            <a
-              href={AURORA_CONTACT_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href={localeHref('/self-host')}
               className="flex items-center px-5 py-5 text-xl font-medium tracking-[-0.02em]"
-              style={{ color: 'var(--primary)', borderBottom: '1px solid var(--border)' }}
+              style={{
+                color: isActive(localeHref('/self-host')) ? 'var(--foreground)' : 'var(--muted-foreground)',
+                borderBottom: '1px solid var(--border)',
+              }}
               onClick={() => setMobileOpen(false)}
             >
-              {t('navigation.contact' as any) || 'Contacto'}
-            </a>
+              {t('navigation.selfHost' as any) || 'Sin límites'}
+            </Link>
             <a
               href={GITHUB_REPO_URL}
               target="_blank"
@@ -216,6 +230,16 @@ export function Navigation() {
               onClick={() => setMobileOpen(false)}
             >
               <Github size={20} /> GitHub
+            </a>
+            <a
+              href={AURORA_CONTACT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center px-5 py-5 text-xl font-medium tracking-[-0.02em]"
+              style={{ color: 'var(--primary)', borderBottom: '1px solid var(--border)' }}
+              onClick={() => setMobileOpen(false)}
+            >
+              {t('navigation.contact' as any) || 'Contacto'}
             </a>
           </nav>
 
