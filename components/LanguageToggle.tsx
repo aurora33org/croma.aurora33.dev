@@ -4,13 +4,23 @@ import { useRouter, usePathname } from 'next/navigation';
 import { useLocale } from '@/lib/i18n-context';
 import { locales } from '@/i18n/config';
 
+// Persist the language preference (module scope so it's a plain side effect).
+function persistLocale(loc: string) {
+  try {
+    localStorage.setItem('preferred-language', loc);
+    document.cookie = `NEXT_LOCALE=${loc}; path=/; max-age=${60 * 60 * 24 * 365}`;
+  } catch {
+    // ignore (e.g. storage disabled)
+  }
+}
+
 export function LanguageToggle() {
   const router = useRouter();
   const pathname = usePathname();
   const language = useLocale();
 
-  const toggleLanguage = () => {
-    const newLanguage = language === 'es' ? 'en' : 'es';
+  const setLanguage = (newLanguage: typeof locales[number]) => {
+    if (newLanguage === language) return;
 
     // Swap the first path segment for the new locale
     const segments = pathname.split('/');
@@ -21,31 +31,37 @@ export function LanguageToggle() {
     }
     const target = segments.join('/') || `/${newLanguage}`;
 
-    // Remember preference (cookie read by middleware on next root visit)
-    localStorage.setItem('preferred-language', newLanguage);
-    document.cookie = `NEXT_LOCALE=${newLanguage}; path=/; max-age=${60 * 60 * 24 * 365}`;
-
+    persistLocale(newLanguage); // cookie read by middleware on next root visit
     router.push(target);
   };
 
   return (
-    <button
-      onClick={toggleLanguage}
-      className="relative inline-flex items-center justify-between h-8 w-14 px-1 rounded-full transition-all duration-500 bg-gray-300 dark:bg-gray-700"
-      aria-label="Toggle language"
-      title={language === 'es' ? 'Switch to English' : 'Cambiar a Español'}
+    <div
+      className="flex items-stretch self-center"
+      style={{ border: '1px solid var(--border)' }}
+      role="group"
+      aria-label="Language"
     >
-      <span className="flex items-center justify-center flex-1 text-xs font-bold text-gray-800 dark:text-gray-100 z-10 transition-opacity duration-500">
-        ES
-      </span>
-      <span
-        className={`absolute left-0.3 inline-flex items-center justify-center h-6 w-6 transform rounded-full transition-all duration-500 bg-white dark:bg-gray-900 ${
-          language === 'en' ? 'translate-x-6' : 'translate-x-0'
-        }`}
-      />
-      <span className="flex items-center justify-center flex-1 text-xs font-bold text-gray-800 dark:text-gray-100 z-10 transition-opacity duration-500">
-        EN
-      </span>
-    </button>
+      {locales.map((loc, i) => {
+        const active = loc === language;
+        return (
+          <button
+            key={loc}
+            onClick={() => setLanguage(loc)}
+            aria-pressed={active}
+            className="px-2.5 py-1.5 font-[family-name:var(--font-geist-mono)] text-[11px] tracking-[0.16em] uppercase transition-none"
+            style={{
+              background: active ? 'var(--primary)' : 'transparent',
+              color: active ? 'var(--primary-foreground)' : 'var(--muted-foreground)',
+              borderLeft: i > 0 ? '1px solid var(--border)' : undefined,
+            }}
+            onMouseEnter={(e) => { if (!active) e.currentTarget.style.color = 'var(--foreground)'; }}
+            onMouseLeave={(e) => { if (!active) e.currentTarget.style.color = 'var(--muted-foreground)'; }}
+          >
+            {loc}
+          </button>
+        );
+      })}
+    </div>
   );
 }
