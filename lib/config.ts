@@ -48,6 +48,10 @@ export const runtime = {
     .split(',')
     .map((o) => o.trim())
     .filter(Boolean),
+  // Behind a trusted proxy/custom domain (Railway, Cloudflare) the public host
+  // arrives in x-forwarded-host. Only honor it when the operator opts in — the
+  // header is client-spoofable when the app is directly exposed.
+  trustForwardedHost: process.env.TRUST_FORWARDED_HOST === 'true',
 };
 
 export const config = {
