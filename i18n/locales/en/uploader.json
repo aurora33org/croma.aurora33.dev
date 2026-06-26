@@ -3,7 +3,7 @@
     "title": "Drag and drop images here",
     "subtitle": "or click to browse your files",
     "fileSizeLimit": "For now we only accept files up to 8 MB",
-    "futureNote": "In the future we will allow larger files"
+    "needMore": "Need more? Remove the limits →"
   },
   "badges": {
     "free": "No Installation",

@@ -33,3 +33,6 @@ build/
 
 # Git worktrees
 .worktrees/
+
+# Local Claude Code config
+.claude/

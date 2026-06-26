@@ -3,7 +3,7 @@
     "title": "Arrastra y suelta imágenes aquí",
     "subtitle": "o haz click para explorar tus archivos",
     "fileSizeLimit": "Por ahora solo aceptamos archivos de hasta 8 MB",
-    "futureNote": "En el futuro permitiremos archivos más grandes"
+    "needMore": "¿Necesitas más? Quítale los límites →"
   },
   "badges": {
     "free": "Sin Instalaciones",

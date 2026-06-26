@@ -24,7 +24,7 @@ export function Footer() {
             href="https://aurora33.org/contacto"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center whitespace-nowrap bg-primary hover:bg-primary/90 text-white font-semibold px-7 py-3 rounded-xl transition-all"
+            className="inline-flex items-center justify-center whitespace-nowrap bg-primary hover:bg-primary/90 text-white font-semibold px-7 py-3 rounded-none transition-all"
           >
             {t('footer.links.contact' as any)}
           </a>

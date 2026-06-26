@@ -34,7 +34,7 @@ export function ProcessingView({ progress, processedCount = 0, totalFiles = 0, q
       </div>
 
       <div className="py-8 sm:py-12 md:py-16 px-4 sm:px-8 md:px-16 lg:px-20 xl:px-[120px] max-w-[1720px] mx-auto mb-4 sm:mb-6 md:mb-8 text-center">
-        <div className="bg-white dark:bg-container-dark rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 sm:p-6 md:p-8 lg:p-12">
+        <div className="bg-white dark:bg-container-dark rounded-none shadow-sm border border-gray-200 dark:border-gray-700 p-4 sm:p-6 md:p-8 lg:p-12">
           {/* Spinner */}
         <div className="mb-6">
           <svg className="animate-spin h-16 w-16 text-primary mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -61,7 +61,7 @@ export function ProcessingView({ progress, processedCount = 0, totalFiles = 0, q
         <p className="text-base text-text-muted dark:text-text-muted-dark mb-8">{t('progress', { progress })}</p>
 
         {/* Rotating Tips */}
-        <div className="bg-primary/5 dark:bg-primary/10 border-l-4 border-primary rounded-lg p-6 text-left">
+        <div className="bg-primary/5 dark:bg-primary/10 border-l-4 border-primary rounded-none p-6 text-left">
           <p className="font-semibold text-primary mb-2">{t('tipsIntro')}</p>
           <p className="text-text-muted dark:text-text-muted-dark text-base leading-relaxed">{tips[currentTip]}</p>
         </div>

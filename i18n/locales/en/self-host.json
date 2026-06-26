@@ -1,7 +1,16 @@
 {
+  "eyebrow": "Open source · Self-host",
   "heading": "Remove the limits",
   "intro": "This hosted version applies limits to stay free and stable. Croma is open source: run it yourself and set your own limits.",
-  "currentLimits": "This version: {files} files · {mb} MB per file.",
+  "limits": {
+    "title": "Limits by where you run it",
+    "hosted": "This version",
+    "local": "Self-host (local)",
+    "custom": "Your call",
+    "customValue": "configurable",
+    "files": "files",
+    "perFile": "MB/file"
+  },
   "local": {
     "title": "1. Run it locally",
     "intro": "No database, no configuration. Requires Node.js 20.9 or newer.",
@@ -13,6 +22,8 @@
     "deployAlt": "Deploy on Railway",
     "note": "Behind a proxy/custom domain, set TRUST_FORWARDED_HOST=true (or list your domain in ALLOWED_ORIGINS). For conservative limits use NEXT_PUBLIC_HOST=server. Legal pages are hidden unless NEXT_PUBLIC_LEGAL=on. Health check at /api/health."
   },
+  "copy": "Copy",
+  "copied": "Copied",
   "backToTool": "← Back to the tool",
   "viewRepo": "View the repository on GitHub"
 }
