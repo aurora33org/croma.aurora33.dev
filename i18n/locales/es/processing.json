@@ -1,6 +1,7 @@
 {
   "title": "Procesando tus imágenes",
   "status": {
+    "queued": "En cola, esperando turno...",
     "starting": "Iniciando...",
     "processing": "Procesadas {count} de {total} imágenes...",
     "finalizing": "Finalizando..."

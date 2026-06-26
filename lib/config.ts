@@ -18,6 +18,33 @@ export const DEFAULT_LIMITS = {
   MAX_FILE_SIZE: parseInt(process.env.NEXT_PUBLIC_MAX_FILE_MB || String(preset.fileMb), 10) * 1024 * 1024,
 };
 
+// Runtime resilience / abuse-protection knobs. Server-side only (plain env,
+// applied at runtime — change on the host without a rebuild). Defaults follow
+// the same local/server preset: "server" is conservative to fit small hosts.
+const isServerMode = process.env.NEXT_PUBLIC_HOST === 'server';
+const runtimePreset = isServerMode
+  ? { maxConcurrent: 1, maxQueue: 8, rateMax: 5, sharp: 1 }
+  : { maxConcurrent: 2, maxQueue: 30, rateMax: 30, sharp: 2 };
+
+const intEnv = (name: string, fallback: number) =>
+  parseInt(process.env[name] || String(fallback), 10);
+
+export const runtime = {
+  maxConcurrentJobs: intEnv('MAX_CONCURRENT_JOBS', runtimePreset.maxConcurrent),
+  maxQueue: intEnv('MAX_QUEUE', runtimePreset.maxQueue),
+  rateLimitMax: intEnv('RATE_LIMIT_MAX', runtimePreset.rateMax),
+  rateLimitWindowMin: intEnv('RATE_LIMIT_WINDOW_MIN', 5),
+  sharpConcurrency: intEnv('SHARP_CONCURRENCY', runtimePreset.sharp),
+  // Same-origin guard for mutating API routes. Self-hosters who want to call
+  // the API directly can disable it with ENFORCE_SAME_ORIGIN=false.
+  enforceSameOrigin: process.env.ENFORCE_SAME_ORIGIN !== 'false',
+  // Optional extra allowed origins (comma-separated hostnames).
+  allowedOrigins: (process.env.ALLOWED_ORIGINS || '')
+    .split(',')
+    .map((o) => o.trim())
+    .filter(Boolean),
+};
+
 export const config = {
   server: {
     port: parseInt(process.env.PORT || '3000', 10),

@@ -4,6 +4,7 @@ import path from 'path';
 import { jobManager, storageService } from '@/lib/services';
 import { parseMultipartForm } from '@/lib/middleware/multer-handler';
 import { NotFoundError, BadRequestError } from '@/lib/utils/errors';
+import { assertSameOrigin } from '@/lib/utils/origin-check';
 import { logger } from '@/lib/utils/logger';
 import { DEFAULT_LIMITS } from '@/lib/config';
 
@@ -16,6 +17,13 @@ export async function POST(
   { params }: { params: Promise<{ jobId: string }> }
 ) {
   try {
+    if (!assertSameOrigin(request)) {
+      return NextResponse.json(
+        { success: false, error: 'forbidden_origin' },
+        { status: 403 }
+      );
+    }
+
     const { jobId } = await params;
     const job = jobManager.getJob(jobId);
 

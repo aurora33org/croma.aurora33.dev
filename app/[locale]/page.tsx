@@ -31,6 +31,7 @@ export default function Home() {
   const [totalFiles, setTotalFiles] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
   const [stats, setStats] = useState<FileStats | undefined>();
+  const [isQueued, setIsQueued] = useState(false);
 
   const [settings, setSettings] = useState({
     format: 'webp',
@@ -140,12 +141,16 @@ export default function Home() {
       const processData = await processResponse.json();
       if (!processData.success) throw new Error(processData.error);
 
-      // Step 4: Poll for completion
+      // Step 4: Poll for completion.
+      // Queue waiting time uses a separate budget so jobs don't time out while
+      // waiting for a free slot; the processing budget only counts once running.
       let isComplete = false;
       let pollCount = 0;
+      let queuedPolls = 0;
       const maxPolls = settings.format === 'avif' ? 180 : 120;
+      const maxQueuedPolls = 600; // up to ~10 min waiting in queue
 
-      while (!isComplete && pollCount < maxPolls) {
+      while (!isComplete && pollCount < maxPolls && queuedPolls < maxQueuedPolls) {
         await new Promise(resolve => setTimeout(resolve, 1000));
 
         const statusResponse = await fetch(`/api/jobs/${newJobId}/status`);
@@ -153,6 +158,7 @@ export default function Home() {
 
         if (statusData.status === 'completed') {
           isComplete = true;
+          setIsQueued(false);
           setProgress(100);
           setStats({
             originalSize: statusData.originalSize,
@@ -162,13 +168,16 @@ export default function Home() {
           setCurrentView('download');
         } else if (statusData.status === 'failed') {
           throw new Error(statusData.error || 'Processing failed');
+        } else if (statusData.status === 'queued') {
+          setIsQueued(true);
+          queuedPolls++;
         } else {
+          setIsQueued(false);
           setProcessedCount(statusData.processedCount);
           const estimatedProgress = 30 + (statusData.progress * 0.7);
           setProgress(Math.min(estimatedProgress, 99));
+          pollCount++;
         }
-
-        pollCount++;
       }
 
       if (!isComplete) {
@@ -176,9 +185,15 @@ export default function Home() {
       }
     } catch (error: unknown) {
       const err = error instanceof Error ? error : new Error(String(error));
-      const errorMessage = err instanceof Error ? err.message : String(err);
-      logger.error('Compression error', { error: errorMessage });
-      setErrorMessage(errorMessage || t('errors.defaultMessage', { defaultValue: 'An error occurred during compression' }));
+      const code = err instanceof Error ? err.message : String(err);
+      logger.error('Compression error', { error: code });
+      // Map known server error codes to friendly localized messages.
+      const known = ['server_busy', 'rate_limited', 'forbidden_origin'];
+      const friendly = known.includes(code)
+        ? t(`errors.${code}` as any)
+        : t('errors.defaultMessage', { defaultValue: 'An error occurred during compression' });
+      setErrorMessage(friendly);
+      setIsQueued(false);
       setCurrentView('error');
     } finally {
       setIsCompressing(false);
@@ -213,6 +228,7 @@ export default function Home() {
     setProgress(0);
     setProcessedCount(0);
     setTotalFiles(0);
+    setIsQueued(false);
     setSettings({
       format: 'webp',
       quality: 80,
@@ -353,7 +369,7 @@ export default function Home() {
       )}
 
       {currentView === 'processing' && (
-        <ProcessingView progress={progress} processedCount={processedCount} totalFiles={totalFiles} />
+        <ProcessingView progress={progress} processedCount={processedCount} totalFiles={totalFiles} queued={isQueued} />
       )}
 
       {currentView === 'download' && (

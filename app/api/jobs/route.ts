@@ -1,13 +1,30 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { jobManager, storageService } from '@/lib/services';
+import { rateLimiter, getClientIp } from '@/lib/services/rate-limiter';
+import { assertSameOrigin } from '@/lib/utils/origin-check';
 import { logger } from '@/lib/utils/logger';
 
 /**
  * POST /api/jobs
- * Create a new compression job (no auth)
+ * Create a new compression job (no auth). Throttled per IP + same-origin only.
  */
-export async function POST() {
+export async function POST(request: NextRequest) {
   try {
+    if (!assertSameOrigin(request)) {
+      return NextResponse.json(
+        { success: false, error: 'forbidden_origin' },
+        { status: 403 }
+      );
+    }
+
+    const { ok, retryAfterSec } = rateLimiter.check(getClientIp(request));
+    if (!ok) {
+      return NextResponse.json(
+        { success: false, error: 'rate_limited' },
+        { status: 429, headers: { 'Retry-After': String(retryAfterSec) } }
+      );
+    }
+
     const job = jobManager.createJob('anon');
     await storageService.createJobDirectories(job.id);
 

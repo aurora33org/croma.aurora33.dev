@@ -7,9 +7,10 @@ interface ProcessingViewProps {
   progress: number;
   processedCount?: number;
   totalFiles?: number;
+  queued?: boolean;
 }
 
-export function ProcessingView({ progress, processedCount = 0, totalFiles = 0 }: ProcessingViewProps) {
+export function ProcessingView({ progress, processedCount = 0, totalFiles = 0, queued = false }: ProcessingViewProps) {
   const t = useTranslations('processing');
   const tHero = useTranslations('hero');
   const tips = t.raw('tips');
@@ -44,9 +45,10 @@ export function ProcessingView({ progress, processedCount = 0, totalFiles = 0 }:
 
         <h2 className="text-2xl font-bold text-text dark:text-text-dark mb-2">{t('title')}</h2>
         <p className="text-text-muted dark:text-text-muted-dark mb-6">
-          {progress === 0 && t('status.starting')}
-          {progress > 0 && progress < 100 && totalFiles > 0 && t('status.processing', { count: processedCount, total: totalFiles })}
-          {progress === 100 && t('status.finalizing')}
+          {queued && t('status.queued')}
+          {!queued && progress === 0 && t('status.starting')}
+          {!queued && progress > 0 && progress < 100 && totalFiles > 0 && t('status.processing', { count: processedCount, total: totalFiles })}
+          {!queued && progress === 100 && t('status.finalizing')}
         </p>
 
         {/* Progress Bar */}

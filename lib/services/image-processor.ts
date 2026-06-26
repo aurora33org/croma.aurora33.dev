@@ -1,7 +1,12 @@
 import sharp from 'sharp';
 import path from 'path';
 import { promises as fs } from 'fs';
+import { runtime } from '../config';
 import { logger } from '../utils/logger';
+
+// Cap libvips threads so concurrent jobs don't oversubscribe the CPU.
+sharp.concurrency(runtime.sharpConcurrency);
+logger.info(`Sharp concurrency set to ${sharp.concurrency()}`);
 
 interface FormatConfig {
   quality?: number;

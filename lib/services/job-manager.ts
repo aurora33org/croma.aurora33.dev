@@ -16,7 +16,7 @@ interface ProcessedFile {
 interface Job {
   id: string;
   userId: string;
-  status: 'created' | 'uploading' | 'uploaded' | 'processing' | 'completed' | 'failed';
+  status: 'created' | 'uploading' | 'uploaded' | 'queued' | 'processing' | 'completed' | 'failed';
   uploadedFiles: JobFile[];
   processedFiles: ProcessedFile[];
   settings: any;
