@@ -8,6 +8,25 @@ import { assertSameOrigin } from '@/lib/utils/origin-check';
 import { logger } from '@/lib/utils/logger';
 import { DEFAULT_LIMITS } from '@/lib/config';
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+// Extension is derived from the validated MIME type, never from the client name.
+const EXT_BY_MIME: Record<string, string> = {
+  'image/jpeg': '.jpg',
+  'image/jpg': '.jpg',
+  'image/png': '.png',
+  'image/webp': '.webp',
+  'image/avif': '.avif',
+  'image/gif': '.gif',
+};
+
+/** Keep a friendly, path-safe base name from the (untrusted) client filename. */
+function safeBaseName(name: string): string {
+  const base = path.basename(name).replace(/\.[^/.]+$/, ''); // strip dirs + ext
+  const cleaned = base.replace(/[^a-zA-Z0-9-_ ]/g, '_').trim().slice(0, 80);
+  return cleaned || 'image';
+}
+
 /**
  * POST /api/jobs/:jobId/upload
  * Upload image files for a compression job (no auth, single limit set)
@@ -25,6 +44,10 @@ export async function POST(
     }
 
     const { jobId } = await params;
+    if (!UUID_RE.test(jobId)) {
+      throw new BadRequestError('Invalid job id');
+    }
+
     const job = jobManager.getJob(jobId);
 
     if (!job) {
@@ -71,13 +94,25 @@ export async function POST(
     let totalSize = 0;
     const uploadedFiles: Array<{ filename: string; size: number; mimetype: string }> = [];
 
+    const resolvedUploadDir = path.resolve(uploadDir);
+
     for (const file of files) {
       const buffer = await file.arrayBuffer();
-      const ext = file.name.replace(/^.*(\.[^/.]+)$/, '$1');
-      const nameWithoutExt = file.name.replace(/\.[^/.]+$/, '');
+
+      // Extension from the validated MIME type (allowlist), not the client name.
+      const ext = EXT_BY_MIME[file.type];
+      if (!ext) {
+        throw new BadRequestError(`Unsupported file type: ${file.type}`);
+      }
+
       const rand = Math.floor(Math.random() * 90) + 10;
-      const filename = `${nameWithoutExt}-a33${rand}${ext}`;
-      const filepath = path.join(uploadDir, filename);
+      const filename = `${safeBaseName(file.name)}-a33${rand}${ext}`;
+      const filepath = path.resolve(resolvedUploadDir, filename);
+
+      // Defense-in-depth: the resolved path must stay inside the upload dir.
+      if (filepath !== resolvedUploadDir && !filepath.startsWith(resolvedUploadDir + path.sep)) {
+        throw new BadRequestError('Invalid file path');
+      }
 
       await fs.writeFile(filepath, Buffer.from(buffer));
 
