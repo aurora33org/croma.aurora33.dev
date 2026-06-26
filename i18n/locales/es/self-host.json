@@ -1,0 +1,18 @@
+{
+  "heading": "Quita los límites",
+  "intro": "Esta versión hosteada aplica límites para mantenerla gratis y estable. Croma es de código abierto: instálalo tú y manda tú los límites.",
+  "currentLimits": "Esta versión: {files} archivos · {mb} MB por archivo.",
+  "local": {
+    "title": "1. Córrelo en local",
+    "intro": "Sin base de datos, sin configuración. Requiere Node.js 20.9 o superior.",
+    "note": "Por defecto en local: 30 archivos / 50 MB. Para subirlos, define NEXT_PUBLIC_MAX_FILES y NEXT_PUBLIC_MAX_FILE_MB antes de compilar."
+  },
+  "railway": {
+    "title": "2. Despliega en Railway",
+    "intro": "Tu propia instancia en un clic. Sin base de datos ni variables obligatorias.",
+    "deployAlt": "Desplegar en Railway",
+    "note": "Detrás de proxy/dominio propio, pon TRUST_FORWARDED_HOST=true (o lista tu dominio en ALLOWED_ORIGINS). Para límites conservadores usa NEXT_PUBLIC_HOST=server. Las páginas legales están ocultas salvo NEXT_PUBLIC_LEGAL=on. Health check en /api/health."
+  },
+  "backToTool": "← Volver a la herramienta",
+  "viewRepo": "Ver el repositorio en GitHub"
+}

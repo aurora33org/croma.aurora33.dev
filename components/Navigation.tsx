@@ -1,17 +1,19 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { Sun, Moon, Menu, X } from 'lucide-react';
+import { Sun, Moon, Menu, X, Github } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { LanguageToggle } from './LanguageToggle';
 import { useTranslations, useLocale } from '@/lib/i18n-context';
+import { GITHUB_REPO_URL } from '@/lib/links';
 
 const AURORA_CONTACT_URL = 'https://aurora33.org/contacto';
 
 // `to` is appended to the locale root (e.g. '' -> /es, '/terms' -> /es/terms)
 const NAV_LINKS = [
   { to: '', labelKey: 'navigation.tool' },
+  { to: '/self-host', labelKey: 'navigation.selfHost' },
 ] as const;
 
 export function Navigation() {
@@ -131,6 +133,19 @@ export function Navigation() {
             {t('navigation.contact' as any) || 'Contacto'}
           </a>
 
+          <a
+            href={GITHUB_REPO_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+            className="flex items-center px-4 py-3"
+            style={{ color: 'var(--muted-foreground)', borderLeft: '1px solid var(--border)' }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--foreground)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--muted-foreground)'; }}
+          >
+            <Github size={16} />
+          </a>
+
           <div className="flex items-center px-4" style={{ borderLeft: '1px solid var(--border)' }}>
             <LanguageToggle />
           </div>
@@ -191,6 +206,16 @@ export function Navigation() {
               onClick={() => setMobileOpen(false)}
             >
               {t('navigation.contact' as any) || 'Contacto'}
+            </a>
+            <a
+              href={GITHUB_REPO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 px-5 py-5 text-xl font-medium tracking-[-0.02em]"
+              style={{ color: 'var(--foreground)', borderBottom: '1px solid var(--border)' }}
+              onClick={() => setMobileOpen(false)}
+            >
+              <Github size={20} /> GitHub
             </a>
           </nav>
 

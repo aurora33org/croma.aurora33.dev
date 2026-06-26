@@ -9,6 +9,7 @@ import faq from './faq.json';
 import formats from './formats.json';
 import terms from './terms.json';
 import privacy from './privacy.json';
+import selfHost from './self-host.json';
 
 export default {
   common,
@@ -22,4 +23,5 @@ export default {
   formats,
   terms,
   privacy,
+  selfHost,
 };
