@@ -10,7 +10,11 @@
     "reduction": "Reducción"
   },
   "savingsMessage": "🚀 Con este ahorro, tu sitio cargará más rápido",
-  "downloadButton": "Descargar Imágenes Comprimidas",
+  "downloadAllButton": "Descargar todo (ZIP)",
+  "fileList": {
+    "heading": "Tus imágenes",
+    "downloadAria": "Descargar {name}"
+  },
   "leadCapture": {
     "heading": "¿Te gustó esta herramienta?",
     "description": "En Aurora33 creamos soluciones web a la medida de tu negocio. Hablemos de tu proyecto.",

@@ -10,7 +10,11 @@
     "reduction": "Reduction"
   },
   "savingsMessage": "🚀 With these savings, your site will load faster",
-  "downloadButton": "Download Compressed Images",
+  "downloadAllButton": "Download all (ZIP)",
+  "fileList": {
+    "heading": "Your images",
+    "downloadAria": "Download {name}"
+  },
   "leadCapture": {
     "heading": "Did you like this tool?",
     "description": "At Aurora33 we build custom web solutions for your business. Let's talk about your project.",

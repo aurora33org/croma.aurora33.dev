@@ -149,7 +149,13 @@ class JobManager {
         ? Math.round(((job.originalSize - job.compressedSize) / job.originalSize) * 100)
         : 0,
       createdAt: job.createdAt,
-      error: job.error
+      error: job.error,
+      processedFiles: job.processedFiles.map(f => ({
+        filename: f.filename,
+        originalSize: f.originalSize,
+        compressedSize: f.compressedSize,
+        reduction: f.reduction
+      }))
     };
   }
 }

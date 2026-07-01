@@ -4,6 +4,7 @@
   "server_busy": "The server is busy right now. Please wait a moment and try again.",
   "rate_limited": "Too many requests. Please wait a moment before trying again.",
   "forbidden_origin": "Request not allowed.",
+  "downloadFailed": "Failed to download files",
   "notFound": {
     "heading": "Lost pixel!",
     "description": "In the compression scale, this page hit 0%. Head back home and compress your images.",

@@ -5,6 +5,8 @@ import { jobManager, storageService } from '@/lib/services';
 import { NotFoundError, BadRequestError } from '@/lib/utils/errors';
 import { logger } from '@/lib/utils/logger';
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 /**
  * GET /api/jobs/:jobId/download
  * Download the processed images as a ZIP file
@@ -15,6 +17,11 @@ export async function GET(
 ) {
   try {
     const { jobId } = await params;
+
+    if (!UUID_RE.test(jobId)) {
+      throw new BadRequestError('Invalid job id');
+    }
+
     const job = jobManager.getJob(jobId);
 
     if (!job) {

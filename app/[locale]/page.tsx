@@ -21,6 +21,13 @@ interface FileStats {
   reduction: number;
 }
 
+interface ProcessedFileInfo {
+  filename: string;
+  originalSize: number;
+  compressedSize: number;
+  reduction: number;
+}
+
 export default function Home() {
   const t = useTranslations();
   const [currentView, setCurrentView] = useState<ViewType>('upload');
@@ -31,6 +38,7 @@ export default function Home() {
   const [totalFiles, setTotalFiles] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
   const [stats, setStats] = useState<FileStats | undefined>();
+  const [processedFiles, setProcessedFiles] = useState<ProcessedFileInfo[]>([]);
   const [isQueued, setIsQueued] = useState(false);
 
   const [settings, setSettings] = useState({
@@ -165,6 +173,7 @@ export default function Home() {
             compressedSize: statusData.compressedSize,
             reduction: statusData.reduction
           });
+          setProcessedFiles(statusData.processedFiles || []);
           setCurrentView('download');
         } else if (statusData.status === 'failed') {
           throw new Error(statusData.error || 'Processing failed');
@@ -200,24 +209,42 @@ export default function Home() {
     }
   };
 
+  const triggerBlobDownload = async (url: string, downloadName: string) => {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error('download_failed');
+    const blob = await response.blob();
+    const objectUrl = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = objectUrl;
+    a.download = downloadName;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(objectUrl);
+    document.body.removeChild(a);
+  };
+
   const handleDownload = async () => {
     if (!jobId) return;
 
     try {
-      const response = await fetch(`/api/jobs/${jobId}/download`);
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `aurora-croma-${jobId.slice(0, 8)}.zip`;
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
+      await triggerBlobDownload(`/api/jobs/${jobId}/download`, `aurora-croma-${jobId.slice(0, 8)}.zip`);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error);
       logger.error('Download error', { error: errorMessage });
-      setErrorMessage(t('errors.downloadFailed', { defaultValue: 'Failed to download files' }));
+      setErrorMessage(t('errors.downloadFailed'));
+      setCurrentView('error');
+    }
+  };
+
+  const handleDownloadFile = async (filename: string) => {
+    if (!jobId) return;
+
+    try {
+      await triggerBlobDownload(`/api/jobs/${jobId}/download/${encodeURIComponent(filename)}`, filename);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      logger.error('Download file error', { error: errorMessage });
+      setErrorMessage(t('errors.downloadFailed'));
       setCurrentView('error');
     }
   };
@@ -228,6 +255,7 @@ export default function Home() {
     setProgress(0);
     setProcessedCount(0);
     setTotalFiles(0);
+    setProcessedFiles([]);
     setIsQueued(false);
     setSettings({
       format: 'webp',
@@ -325,11 +353,11 @@ export default function Home() {
                 <div className="space-y-3">
                   {files.map((file, index) => (
                     <div key={index} className="bg-white dark:bg-container-dark border border-gray-200 dark:border-gray-700 rounded-lg p-4 flex items-center justify-between gap-4">
-                      <div className="flex items-center gap-3 flex-1">
+                      <div className="flex items-center gap-3 flex-1 min-w-0">
                         <img
                           src={URL.createObjectURL(file)}
                           alt={file.name}
-                          className="w-12 h-12 object-cover rounded"
+                          className="w-12 h-12 object-cover rounded shrink-0"
                         />
                         <div className="flex-1 min-w-0">
                           <p className="font-semibold text-text dark:text-text-dark truncate">{file.name}</p>
@@ -375,7 +403,10 @@ export default function Home() {
       {currentView === 'download' && (
         <DownloadView
           stats={stats}
+          processedFiles={processedFiles}
+          jobId={jobId}
           onDownload={handleDownload}
+          onDownloadFile={handleDownloadFile}
           onReset={handleReset}
         />
       )}

@@ -4,6 +4,7 @@
   "server_busy": "El servidor está ocupado ahora mismo. Espera un momento e intenta de nuevo.",
   "rate_limited": "Demasiadas solicitudes. Espera un momento antes de volver a intentar.",
   "forbidden_origin": "Solicitud no permitida.",
+  "downloadFailed": "No se pudieron descargar los archivos",
   "notFound": {
     "heading": "¡Píxel perdido!",
     "description": "En la escala de compresión, esta página llegó al 0%. Vuelve al inicio y comprime tus imágenes.",
